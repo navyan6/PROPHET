@@ -1,13 +1,12 @@
-#!/usr/bin/env python3
+
 """
 Build a phylogenetic tree from the variant FASTA.
 
 Steps:
-  1. (Optional) Rebuild hiv_sequences.fasta from JSON using tree.py.
+  1. Rebuild hiv_sequences.fasta from JSON using tree.py.
   2. Run MAFFT to align sequences.
-  3. Run FastTree on the alignment to get a Newick tree file.
+  3. Run FastTree on the alignment to get a Newick tree
 
-You need MAFFT and FastTree installed (for example: conda install -c bioconda mafft fasttree).
 """
 
 from __future__ import annotations
@@ -24,10 +23,6 @@ from pipeline_paths import PipelinePaths, default_paths
 
 
 def _candidate_conda_fasttree_paths() -> list[Path]:
-    """
-    Common install locations for conda/mamba so we can find FastTree
-    even when it is not on PATH.
-    """
     home = Path.home()
     install_roots = [
         home / "miniconda3",
@@ -43,11 +38,6 @@ def _candidate_conda_fasttree_paths() -> list[Path]:
 
 
 def find_fasttree_executable(user_path: str | None) -> str | None:
-    """
-    Return a string you can pass to subprocess (command name or full path).
-
-    If user_path is set, try that first. Otherwise search PATH, then conda bins.
-    """
     if user_path is not None:
         as_path = Path(user_path)
         if as_path.is_file():
@@ -84,7 +74,6 @@ def run_fasttree(
     aligned_fasta: Path,
     output_newick: Path,
 ) -> None:
-    """Call FastTree with the LG model (-lg) and save Newick to a file."""
     with open(output_newick, "w", encoding="utf-8") as out_file:
         subprocess.run(
             [fasttree_command, "-lg", str(aligned_fasta)],

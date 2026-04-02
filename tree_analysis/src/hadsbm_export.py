@@ -1,17 +1,12 @@
 #!/usr/bin/env python3
 """
-Export a phylogenetic tree + sequences to JSON for HadSBM / BranchSBM experiments.
-
-The math object we save is roughly:
-  T = (graph G, split times t_k, split probabilities p_k, leaf endpoints pi_1,k)
+Export a phylogenetic tree + sequences to JSON for the rest of the pipeline
 
 This file reads:
   - a Newick tree (from FastTree),
   - the variant FASTA (same names as leaf labels),
-  - wild-type protease from the same UniProt JSON (or wildtype FASTA) as tree.py.
+  - wild-type protease from the same UniProt JSON (or wildtype FASTA) (tree.py).
 
-FastTree "confidence" on a node is SH-like local support — not the same as the
-paper's p_k. We store it as field sh_support on each split for optional use.
 """
 
 from __future__ import annotations
@@ -36,9 +31,8 @@ from pipeline_paths import PipelinePaths, default_paths
 class SplitEvent:
     """
     One binary split in the tree (one internal node with exactly two children).
-
     time_tau is in [0, 1] after we normalize by the longest root-to-tip path.
-    p_left + p_right should be 1.0 (we use uniform or length-based heuristic).
+    p_left + p_right should be 1
     """
 
     parent_index: int
@@ -51,10 +45,9 @@ class SplitEvent:
     branch_len_left: float
     branch_len_right: float
 
-
 @dataclass
 class LeafEndpoint:
-    """One leaf: where in the node list it is, its FASTA id, and its sequence."""
+    """a single leaf: where in the node list it is, its FASTA id, and its sequence."""
 
     node_index: int
     leaf_id: str
@@ -62,7 +55,6 @@ class LeafEndpoint:
 
 
 def branch_length_or_zero(clade) -> float:
-    """Bio.Phylo sometimes sets branch_length to None."""
     value = clade.branch_length
     if value is None:
         return 0.0
@@ -71,8 +63,7 @@ def branch_length_or_zero(clade) -> float:
 
 def read_fasta_as_dict(fasta_path: Path) -> dict[str, str]:
     """
-    Read FASTA into a dictionary: sequence id -> sequence string.
-
+    Read FASTA into a python dictionary: sequence id to string.
     Only the first word after '>' is used as the id (same as other scripts).
     """
     sequences: dict[str, str] = {}
@@ -101,8 +92,6 @@ def read_fasta_as_dict(fasta_path: Path) -> dict[str, str]:
 def list_nodes_preorder(root) -> list:
     """
     Return all clades in preorder (parent before children).
-
-    We use this order to assign integer indices 0..n-1 to nodes.
     """
     result: list = []
 
@@ -118,9 +107,6 @@ def list_nodes_preorder(root) -> list:
 def max_depth_root_to_any_leaf(clade, depth_so_far: float = 0.0) -> float:
     """
     Longest path length from the current clade down to any tip, in branch units.
-
-    depth_so_far is the distance from the tree root to the *parent side* of this
-    clade (we add this clade's own branch length when recursing).
     """
     my_branch = branch_length_or_zero(clade)
 
@@ -141,7 +127,7 @@ def max_depth_root_to_any_leaf(clade, depth_so_far: float = 0.0) -> float:
 
 def depth_from_root_to_clade(root, target, depth_so_far: float = 0.0) -> float | None:
     """
-    Total branch length along the path from tree root down to `target` (inclusive).
+    Total branch length along the path from tree root down to `target`.
 
     Returns None if target is not found under root.
     """
@@ -167,16 +153,11 @@ def build_hadsbm_bundle(
     prob_mode: str = "length",
 ) -> dict[str, Any]:
     """
-    Build the big dictionary we will json.dump.
-
-    prob_mode:
-      - "uniform": p_left = p_right = 0.5 at every split
-      - "length":  split probability proportional to child branch lengths
+    Build the big dictionary we will json.dump 
     """
     root = tree.root
     nodes = list_nodes_preorder(root)
 
-    # Map each clade object's id() to its index in `nodes` (preorder index).
     index_of: dict[int, int] = {}
     for index, clade in enumerate(nodes):
         index_of[id(clade)] = index
@@ -187,7 +168,7 @@ def build_hadsbm_bundle(
 
     num_nodes = len(nodes)
 
-    # Build undirected adjacency matrix (1 = edge).
+    # Build  adjacency matrix (1 = edge).
     adjacency = [[0 for _ in range(num_nodes)] for _ in range(num_nodes)]
     parent_of: list[int | None] = [None for _ in range(num_nodes)]
 
@@ -208,7 +189,7 @@ def build_hadsbm_bundle(
         if clade.is_terminal():
             continue
         if len(clade.clades) != 2:
-            # This exporter only records clean binary splits.
+            #make sure splits are binary
             continue
 
         parent_index = index_of[id(clade)]

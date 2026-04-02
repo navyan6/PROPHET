@@ -1,9 +1,8 @@
 """
 Central place for file paths used by the HIV / HadSBM pipeline.
 
-Why this exists: every script (phylogeny, plot, export) needs to read and write
-the same files. One dataclass avoids typos like different default names in each
-script.
+every script (phylogeny, plot, export) needs to read and write
+the same files
 """
 
 from __future__ import annotations

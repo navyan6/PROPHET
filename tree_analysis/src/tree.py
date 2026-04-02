@@ -1,8 +1,7 @@
 """
 Turn UniProt-style JSON into a FASTA of HIV protease sequences.
 
-Flow in plain words:
-  1. Load the wild-type polyprotein (long amino-acid string).
+  1. Load the wild-type sequence.
   2. Find where mature protease starts inside that string.
   3. For each VARIANT feature, if it is a single amino-acid change inside the
      protease window, build a new 99-letter sequence (WT protease with that
@@ -20,15 +19,10 @@ from pathlib import Path
 # Length of mature HIV protease (amino acids).
 PROTEASE_LEN = 99
 
-# Short peptide at the N-terminus of mature PR; used to find PR inside Gag-Pol.
-# Two strings because different references differ at one position (I vs V).
 PROTEASE_START_MARKERS = ("PQVTLWQR", "PQITLWQR")
 
 
 def protease_start_index(full_polyprotein: str) -> int:
-    """
-    Return the index (0-based) where mature protease begins, or -1 if not found.
-    """
     for marker in PROTEASE_START_MARKERS:
         position = full_polyprotein.find(marker)
         if position != -1:
@@ -51,7 +45,6 @@ def read_first_sequence_from_fasta(fasta_path: Path) -> str:
             if line == "":
                 continue
             if line.startswith(">"):
-                # If we already filled a sequence, return it (first record only).
                 if current_name is not None:
                     return "".join(sequence_chunks)
                 current_name = line[1:].split()[0]
@@ -69,9 +62,6 @@ def read_wildtype_polyprotein(
     wildtype_fasta: Path | None = None,
 ) -> str:
     """
-    Get the full Gag-Pol polyprotein string used as the reference.
-
-    Priority:
       1. If wildtype_fasta is given and the file exists, use its first sequence.
       2. Otherwise read key "sequence" from variants_json (UniProt JSON).
     """
@@ -101,7 +91,7 @@ def generate_variants_from_json(
     verbose: bool = False,
 ) -> None:
     """
-    Read UniProt JSON, write one FASTA sequence per usable VARIANT in protease.
+    Read UniProt JSON, write one FASTA sequence per usable variant
     """
     json_path = Path(json_file)
     output_path = Path(output_file)
@@ -139,7 +129,6 @@ def generate_variants_from_json(
             if feature_type is not None and feature_type != "VARIANT":
                 continue
 
-            # UniProt uses 1-based positions on the full polyprotein.
             position_zero_based = int(feature["begin"]) - 1
             wild_type_aa = feature["wildType"]
             alt_aa = feature["alternativeSequence"]
@@ -156,7 +145,6 @@ def generate_variants_from_json(
             )
 
             if protease_letters[local_index] != wild_type_aa:
-                # Reference does not match UniProt WT at this site; skip.
                 continue
 
             protease_letters[local_index] = alt_aa

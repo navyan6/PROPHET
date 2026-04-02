@@ -6,8 +6,6 @@ Run the whole pipeline in order:
   2. visualize_tree: PNG + leaf_paths.csv
   3. hadsbm_export: hadsbm_tree.json
 
-Other code (training, notebooks) can import default_paths() and call the same
-steps with the same file names.
 """
 
 from __future__ import annotations
@@ -27,12 +25,7 @@ def run_basic(
     prob_mode: str = "length",
     viz_ascii: bool = False,
 ) -> int:
-    """
-    Run the three stages. Return 0 if all succeeded, else first non-zero code.
 
-    We import heavy modules inside this function so `python -c "import ..."`
-    stays light when you only need paths.
-    """
     if paths is None:
         paths = default_paths()
 

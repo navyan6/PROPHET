@@ -1,5 +1,3 @@
-# HIV-1 protease variants: FASTA export -> MAFFT -> FastTree
-# Requires: Python 3, mafft (brew install mafft), FastTree (often: conda install -c bioconda fasttree)
 
 .PHONY: fasta phylogeny phylogeny-only visualize basic clean
 

@@ -1,5 +1,5 @@
 
-.PHONY: help test setup verify tree binding clean
+.PHONY: help test setup verify tree binding mog-dfm clean
 
 # Default help
 help:
@@ -13,7 +13,8 @@ help:
 	@echo "  make test     - Run smoke tests (no GPU required)"
 	@echo "  make verify   - Verify installation"
 	@echo "  make tree     - Build phylogenetic tree (MAFFT + FastTree)"
-	@echo "  make binding  - Run binding affinity (requires tree data)"
+	@echo "  make binding  - Evaluate random peptides with binding affinity"
+	@echo "  make mog-dfm  - Generate peptides optimized with MOG-DFM"
 	@echo "  make clean    - Remove generated files"
 	@echo ""
 
@@ -47,13 +48,21 @@ tree:
 PEPTIDE_SRC := peptide_optimization/src
 
 binding:
-	@echo "Computing binding affinity (CPU mode - use --device cuda:0 for GPU)..."
-	cd peptide_optimization && \
+	@echo "Computing binding affinity for random peptides (CPU mode)..."
+	@echo "For GPU: python $(PEPTIDE_SRC)/binding_affinity_simple.py --device cuda:0"
 	python $(PEPTIDE_SRC)/binding_affinity_simple.py \
-		--num-peptides 2 \
-		--device cpu \
-		--output /tmp/binding_results.json
-	@echo "✓ Results saved to: /tmp/binding_results.json"
+		--tree-json data/trees/hadsbm_tree.json \
+		--num-peptides 3 \
+		--device cpu
+
+mog-dfm:
+	@echo "Generating peptides with MOG-DFM (tree-weighted binding objective)..."
+	@echo "GPU mode by default - override with --device cpu"
+	python $(PEPTIDE_SRC)/mog_dfm_binding.py \
+		--tree-json data/trees/hadsbm_tree.json \
+		--num-peptides 3 \
+		--length 12 \
+		--device cuda:0
 
 # Cleanup
 clean:
@@ -61,5 +70,3 @@ clean:
 	rm -rf data/sequences/*.fasta data/trees/*.nwk data/trees/*.json
 	rm -rf __pycache__ peptide_optimization/__pycache__ tree_analysis/__pycache__
 	@echo "✓ Cleaned"
-
-.PHONY: help test setup verify tree binding clean

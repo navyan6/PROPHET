@@ -7,3 +7,33 @@ venv/
 .DS_Store
 *.egg-info/
 .eggs/
+
+# Large model checkpoints
+*.pth
+*.pt
+*.ckpt
+*.pkl
+*.pickle
+
+# Data files (can be very large)
+*.fasta
+*.nwk
+*.json
+data/
+
+# Output files
+results_*.json
+*.png
+*.csv
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,24 +1,65 @@
 
-.PHONY: fasta phylogeny phylogeny-only visualize basic clean
+.PHONY: help test setup verify tree binding clean
 
-fasta:
-	python3 tree.py
+# Default help
+help:
+	@echo "hadsbm-hiv GPU-Ready Pipeline"
+	@echo "=============================="
+	@echo ""
+	@echo "For GPU clusters: See GPU_QUICK_START.md"
+	@echo ""
+	@echo "Available targets:"
+	@echo "  make setup    - Install Python dependencies"
+	@echo "  make test     - Run smoke tests (no GPU required)"
+	@echo "  make verify   - Verify installation"
+	@echo "  make tree     - Build phylogenetic tree (MAFFT + FastTree)"
+	@echo "  make binding  - Run binding affinity (requires tree data)"
+	@echo "  make clean    - Remove generated files"
+	@echo ""
 
-# Regenerate FASTA, align with MAFFT, build tree with FastTree
-phylogeny:
-	python3 phylogeny.py
+# Setup and verification
+setup:
+	pip install --upgrade pip
+	pip install -r requirements.txt
+	@if [ ! -d PeptiVerse ]; then \
+		echo "Cloning PeptiVerse..."; \
+		git clone https://huggingface.co/ChatterjeeLab/PeptiVerse; \
+	fi
 
-# Use existing hiv_sequences.fasta only (no JSON re-export)
-phylogeny-only:
-	python3 phylogeny.py --skip-fasta
+test:
+	@python test_pipeline.py
 
-# Plot tree + leaf paths CSV (needs: pip install -r requirements.txt)
-visualize:
-	python3 visualize_tree.py
+verify: test
+	@echo "✓ Installation verified"
 
-# End-to-end basic pipeline (shared paths in pipeline_paths.py — import from other stages)
-basic:
-	python3 pipeline_basic.py
+# Tree analysis pipeline
+TREE_SRC := tree_analysis/src
 
+tree:
+	@echo "Building phylogenetic tree..."
+	@cd tree_analysis && \
+	python $(TREE_SRC)/tree.py --json ../data/variants/hiv-variants.json --out ../data/sequences/hiv_sequences.fasta --verbose && \
+	python $(TREE_SRC)/phylogeny.py && \
+	python $(TREE_SRC)/hadsbm_export.py --prob-mode length
+	@echo "✓ Tree saved to: data/trees/hadsbm_tree.json"
+
+# Binding affinity (GPU target)
+PEPTIDE_SRC := peptide_optimization/src
+
+binding:
+	@echo "Computing binding affinity (CPU mode - use --device cuda:0 for GPU)..."
+	cd peptide_optimization && \
+	python $(PEPTIDE_SRC)/binding_affinity_simple.py \
+		--num-peptides 2 \
+		--device cpu \
+		--output /tmp/binding_results.json
+	@echo "✓ Results saved to: /tmp/binding_results.json"
+
+# Cleanup
 clean:
-	rm -f hiv_sequences_aligned.fasta hiv_tree.nwk hiv_tree.png hiv_tree.svg leaf_paths.csv hadsbm_tree.json
+	@echo "Removing generated files..."
+	rm -rf data/sequences/*.fasta data/trees/*.nwk data/trees/*.json
+	rm -rf __pycache__ peptide_optimization/__pycache__ tree_analysis/__pycache__
+	@echo "✓ Cleaned"
+
+.PHONY: help test setup verify tree binding clean

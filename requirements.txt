@@ -1,2 +1,32 @@
+# Core scientific computing
+numpy<2
+scipy>=1.9.0
+torch==2.4.0
+torchvision==0.18.0
+torchaudio==2.4.0
+
+# ML frameworks
+transformers>=4.30.0
+xgboost>=2.0.0
+pytorch-lightning>=2.0.0
+scikit-learn>=1.2.0
+joblib>=1.2.0
+
+# Bioinformatics
 biopython>=1.80
-matplotlib>=3.5
+
+# Visualization
+matplotlib>=3.5.0
+
+# Data processing
+pandas>=1.5.0
+tqdm>=4.65.0
+
+# Development (optional)
+pytest>=7.0.0
+black>=23.0.0
+flake8>=6.0.0
+
+# Note for macOS users: libomp is required for XGBoost
+# Install with: brew install libomp
+# Set environment variable: export LDFLAGS=-L/opt/homebrew/opt/libomp/lib

@@ -2,7 +2,7 @@
 
 ## Overview
 
-This pipeline transforms HIV protease variant data into a phylogenetic tree with associated JSON data structure for downstream BranchSBM analysis. The process has **4 main stages**:
+This pipeline transforms HIV protease variant data into a phylogenetic tree with associated JSON data structure. The process has **4 main stages**:
 
 1. **Variant Generation** (`tree.py`) — Extract protease sequences from UniProt JSON
 2. **Tree Inference** (`phylogeny.py`) — Alignment + tree building (MAFFT → FastTree)

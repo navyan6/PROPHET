@@ -8,8 +8,6 @@ Pipeline:
 3. Compute binding affinity to each variant using PeptiVerse
 4. Weight affinities by variant probability from tree
 5. Output results as JSON
-
-This is designed to run efficiently on GPU and output weighted binding scores.
 """
 
 import sys
@@ -45,7 +43,7 @@ class BindingScore:
     """Results for one peptide evaluation."""
     sequence: str
     binding_per_variant: Dict[str, float]
-    weighted_binding: float  # Weighted by tree probabilities
+    weighted_binding: float  
     mean_binding: float
 
 
@@ -70,7 +68,7 @@ class VariantBindingPredictor:
         # Validate probabilities
         total_prob = sum(v.probability for v in variants)
         if abs(total_prob - 1.0) > 1e-6:
-            print(f"⚠️  Probabilities don't sum to 1.0 ({total_prob:.4f}), normalizing...")
+            print(f"Probabilities don't sum to 1.0 ({total_prob:.4f}), normalizing...")
             for v in variants:
                 v.probability /= total_prob
         
@@ -105,7 +103,7 @@ class VariantBindingPredictor:
         Compute binding affinity using PeptiVerse.
         
         Args:
-            peptide: Peptide sequence (amino acids)
+            peptide: Peptide sequence
             variant: Target HIV variant
         
         Returns:
@@ -137,7 +135,7 @@ class VariantBindingPredictor:
             
             return 0.0
         except Exception as e:
-            print(f"  ⚠️  Binding error for {variant.name}: {e}")
+            print(f"Binding error for {variant.name}: {e}")
             return 0.0
     
     def evaluate_peptide(self, peptide: str) -> BindingScore:
@@ -189,7 +187,7 @@ class VariantBindingPredictor:
         """
         results = []
         
-        print(f"\n🧬 Evaluating {num_peptides} peptides (length={peptide_length})")
+        print(f"\nEvaluating {num_peptides} peptides (length={peptide_length})")
         print("="*70)
         
         for i in range(num_peptides):
@@ -207,7 +205,7 @@ class VariantBindingPredictor:
         
         # Print summary
         print("\n" + "="*70)
-        print("📊 Top results (sorted by tree-weighted binding):")
+        print("Top results (sorted by tree-weighted binding):")
         for i, r in enumerate(results[:min(3, len(results))]):
             print(f"{i+1}. {r.sequence} | weighted: {r.weighted_binding:.4f}")
         
@@ -229,7 +227,7 @@ class VariantBindingPredictor:
             with open(output_file, "w") as f:
                 json.dump(results_dict, f, indent=2)
             
-            print(f"✓ Results saved to: {output_file}")
+            print(f"Results saved to: {output_file}")
         
         return results
 
@@ -250,7 +248,6 @@ def main(
         num_peptides: Number of random peptides to generate
         peptide_length: Length of each peptide
         output_file: Path to save results JSON
-        device: "cpu" or "cuda:0" etc.
         seed: Random seed for reproducibility
     """
     random.seed(seed)

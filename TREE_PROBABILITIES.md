@@ -2,7 +2,7 @@
 
 ## Overview
 
-The binding affinity pipeline now uses **tree-derived probabilities** as the weight vector for MOG-DFM optimization. Each HIV variant's probability is computed from the phylogenetic tree structure, not assumed to be uniform.
+The binding affinity pipeline uses **tree-derived probabilities** as the weight vector for MOG-DFM optimization. Each HIV variant's probability is computed from the phylogenetic tree structure, not assumed to be uniform.
 
 ## How Probabilities Are Computed
 
@@ -17,8 +17,8 @@ Each leaf's probability is the **product of split probabilities** along the path
       "parent_index": 0,
       "left_child_index": 1,
       "right_child_index": 2,
-      "p_left": 0.6,           // Split probability: left branch
-      "p_right": 0.4           // Split probability: right branch
+      "p_left": 0.6,           
+      "p_right": 0.4       
     },
     {
       "parent_index": 1,

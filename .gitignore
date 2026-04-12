@@ -27,6 +27,14 @@ results_*.json
 *.csv
 *.log
 
+# Exceptions for tree project outputs
+!covid_tree_gen/*.fasta
+!covid_tree_gen/*.nwk
+!covid_tree_gen/*.png
+!flu_tree/*.fasta
+!flu_tree/*.nwk
+!flu_tree/*.png
+
 # IDE
 .vscode/
 .idea/

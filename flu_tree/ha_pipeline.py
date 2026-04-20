@@ -16,7 +16,6 @@ HA_MIN = 1500
 HA_MAX = 1800
 SAMPLE_N = 1000
 
-# --- Step 1: Extract HA sequences in the 1500–1800 bp length range ---
 ha_records = []
 total = 0
 for record in SeqIO.parse(INPUT_FASTA, "fasta"):

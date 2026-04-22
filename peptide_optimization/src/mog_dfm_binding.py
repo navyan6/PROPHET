@@ -8,6 +8,7 @@ Uses MOG-DFM's multi_guidance_sample to generate peptides optimized for:
 MOG-DFM is already a generative model - we just plug in the binding objective.
 """
 
+
 import sys
 import json
 import argparse
@@ -18,25 +19,16 @@ from typing import Dict, List, Optional
 import torch
 import torch.nn as nn
 import numpy as np
-from transformers import AutoTokenizer
-import inspect
+
 
 # Setup paths
 REPO_ROOT = Path(__file__).parent.parent.parent
-MOGDFM_PATH = REPO_ROOT / "MOG-DFM"
 PEPTIVERSE_PATH = REPO_ROOT / "PeptiVerse"
-
-sys.path.insert(0, str(MOGDFM_PATH))
 sys.path.insert(0, str(PEPTIVERSE_PATH))
 
-# Import tree utilities
-try:
-    from tree_utils import load_tree_probabilities, VariantWithProbability
-except ImportError as e:
-    print(f"Error importing tree_utils: {e}")
-    sys.exit(1)
 
-# Import PeptiVerse
+
+# Only import PeptiVerse binding affinity predictor
 try:
     from inference import PeptiVersePredictor
 except ImportError as e:
@@ -44,17 +36,132 @@ except ImportError as e:
     print("Setup: git clone https://huggingface.co/ChatterjeeLab/PeptiVerse")
     sys.exit(1)
 
-# Import MOG-DFM
+# Import MOG-DFM solver loader
+MOGDFM_PATH = REPO_ROOT / "MOG-DFM"
+sys.path.insert(0, str(MOGDFM_PATH))
 try:
     from models.peptide_classifiers import load_solver
 except ImportError as e:
-    print(f"Error: MOG-DFM not found at {MOGDFM_PATH}")
+    print(f"Error: Could not import load_solver from {MOGDFM_PATH}/models/peptide_classifiers.py")
+    print("Check that MOG-DFM is cloned and available.")
     sys.exit(1)
+
+# Import tree utilities (local or from tree_analysis)
+import json
+from pathlib import Path
+def load_tree_probabilities(tree_json_path):
+    # Loader for tree json: extract variants from 'leaf_endpoints_pi', assign uniform probability
+    with open(tree_json_path, 'r') as f:
+        data = json.load(f)
+    leaves = data["leaf_endpoints_pi"]
+    n = len(leaves)
+    prob = 1.0 / n if n > 0 else 0.0
+    variants = []
+    for v in leaves:
+        # v: {"leaf_id": ..., "sequence": ...}
+        variant = type('Variant', (), {
+            'name': v.get('leaf_id', ''),
+            'sequence': v.get('sequence', ''),
+            'probability': prob
+        })
+        variants.append(variant)
+    return variants
+
+import random
+import numpy as np
+import torch
+from transformers import AutoTokenizer
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Generate peptides with tree-weighted binding affinity, then evaluate on held-out test variants."
+    )
+    parser.add_argument("--tree-json", type=Path, required=True, help="Path to tree JSON with variants and probabilities")
+    parser.add_argument("--num-peptides", type=int, default=5, help="Number of peptides to generate")
+    parser.add_argument("--length", type=int, default=12, help="Peptide length")
+    parser.add_argument("--device", type=str, default="cpu", help="torch device")
+    parser.add_argument("--test-fraction", type=float, default=0.2, help="Fraction of variants to hold out for test set")
+    args = parser.parse_args()
+
+    # Load variants
+    variants = load_tree_probabilities(args.tree_json)
+    random.shuffle(variants)
+    n_test = max(1, int(len(variants) * args.test_fraction))
+    test_variants = variants[:n_test]
+    train_variants = variants[n_test:]
+
+    print(f"Loaded {len(variants)} variants: {len(train_variants)} train, {len(test_variants)} test")
+
+    # Initialize PeptiVerse binding affinity predictor
+    predictor = PeptiVersePredictor(
+        manifest_path=str(PEPTIVERSE_PATH / "best_models.txt"),
+        classifier_weight_root=str(PEPTIVERSE_PATH),
+        device=args.device,
+        tokenizer_vocab_path=str(PEPTIVERSE_PATH / "tokenizer" / "new_vocab.txt"),
+        tokenizer_splits_path=str(PEPTIVERSE_PATH / "tokenizer" / "new_splits.txt"),
+        only_properties=["binding_affinity"]
+        
+    )
+
+    # Use ESM2 tokenizer for peptide encoding/decoding (as in original)
+    tokenizer = AutoTokenizer.from_pretrained("facebook/esm2_t33_650M_UR50D")
+
+    # Tree-weighted binding affinity function (train variants only)
+    def tree_weighted_binding(peptide_seq):
+        scores = []
+        weights = []
+        for v in train_variants:
+            result = predictor.predict_binding_affinity(
+                mode="wt",
+                target_seq=v.sequence,
+                binder_str=peptide_seq
+            )
+            if isinstance(result, dict) and "wt_wt_pooled" in result:
+                val = result["wt_wt_pooled"]
+                score = float(val[0]) if isinstance(val, (list, tuple)) else float(val)
+            else:
+                score = 0.0
+            scores.append(score)
+            weights.append(v.probability)
+        scores = np.array(scores)
+        weights = np.array(weights)
+        if weights.sum() > 0:
+            return float(np.sum(scores * weights) / weights.sum())
+        else:
+            return float(scores.mean())
+
+    # Generate random peptides and optimize (placeholder: random sampling)
+    generated_peptides = []
+    for i in range(args.num_peptides):
+        # Random peptide of given length (A, C, D, E, ...)
+        aa_list = list("ACDEFGHIKLMNPQRSTVWY")
+        peptide = ''.join(random.choices(aa_list, k=args.length))
+        score = tree_weighted_binding(peptide)
+        generated_peptides.append((peptide, score))
+        print(f"Generated peptide {i+1}: {peptide} | tree-weighted binding: {score:.4f}")
+
+    # Evaluate generated peptides on held-out test variants
+    print("\nEvaluating generated peptides on held-out test variants:")
+    for peptide, _ in generated_peptides:
+        test_scores = []
+        for v in test_variants:
+            result = predictor.predict_binding_affinity(
+                mode="wt",
+                target_seq=v.sequence,
+                binder_str=peptide
+            )
+            if isinstance(result, dict) and "wt_wt_pooled" in result:
+                val = result["wt_wt_pooled"]
+                score = float(val[0]) if isinstance(val, (list, tuple)) else float(val)
+            else:
+                score = 0.0
+            test_scores.append(score)
+        mean_test = np.mean(test_scores) if test_scores else 0.0
+        print(f"Peptide: {peptide} | Mean test binding: {mean_test:.4f}")
 
 
 @dataclass
 class BindingScore:
-    """Results for one peptide."""
     sequence: str
     binding_per_variant: Dict[str, float]
     weighted_binding: float
@@ -63,79 +170,65 @@ class BindingScore:
 
 class TreeWeightedBindingModel(nn.Module):
     """
-    MOG-DFM objective: tree-weighted binding affinity.
-    Plugs into MOG-DFM's multi_guidance_sample.
+    Objective wrapper for MOG-DFM guidance.
+    Returns a tree-probability-weighted binding affinity score per peptide.
     """
-    
-    def __init__(
-        self,
-        variants: List[VariantWithProbability],
-        peptiverse_predictor: PeptiVersePredictor,
-        tokenizer,
-        device: str = "cpu"
-    ):
+
+    def __init__(self, variants, peptiverse_predictor, tokenizer, device: str = "cpu"):
         super().__init__()
         self.variants = variants
         self.predictor = peptiverse_predictor
         self.tokenizer = tokenizer
         self.device = device
-        
-        # Precompute probability weights
-        probs = [v.probability for v in variants]
-        self.weights = torch.tensor(probs, dtype=torch.float32, device=device)
-    
-    def forward(self, x: torch.Tensor, t: Optional[torch.Tensor] = None) -> torch.Tensor:
-        """
-        Evaluate tree-weighted binding affinity.
-        
-        Args:
-            x: Peptide token IDs (batch_size, seq_len)
-            t: Time (required for MOG-DFM compatibility, unused)
-        
-        Returns:
-            Tensor of shape (batch_size,) with tree-weighted binding scores
-        """
-        batch_size = x.shape[0]
-        
-        # Decode token IDs to sequences
-        peptide_seqs = self.tokenizer.batch_decode(x)
-        peptide_seqs = [seq.replace(" ", "")[5:-5] for seq in peptide_seqs]
-        
-        weighted_scores = []
-        
-        for peptide_seq in peptide_seqs:
-            binding_scores = []
-            
+
+    def forward(self, x_tokens: torch.Tensor) -> torch.Tensor:
+        if x_tokens.ndim == 1:
+            x_tokens = x_tokens.unsqueeze(0)
+
+        batch_scores = []
+        for row in x_tokens:
+            peptide_seq = self.tokenizer.decode(row, skip_special_tokens=True).replace(" ", "")
+            if not peptide_seq:
+                batch_scores.append(0.0)
+                continue
+
+            scores = []
+            weights = []
             for variant in self.variants:
                 try:
                     result = self.predictor.predict_binding_affinity(
                         mode="wt",
                         target_seq=variant.sequence,
-                        binder_str=peptide_seq
+                        binder_str=peptide_seq,
                     )
-                    
-                    # Extract score
                     if isinstance(result, dict):
-                        for key in ["wt_wt_pooled", "wt_wt_unpooled"]:
+                        for key in ("wt_wt_pooled", "wt_wt_unpooled"):
                             if key in result:
                                 val = result[key]
-                                binding_scores.append(float(val[0]) if isinstance(val, (list, tuple)) else float(val))
+                                score = float(val[0] if isinstance(val, (list, tuple)) else val)
                                 break
                         else:
                             first_val = list(result.values())[0]
-                            binding_scores.append(float(first_val[0]) if isinstance(first_val, (list, tuple)) else float(first_val))
+                            score = float(first_val[0] if isinstance(first_val, (list, tuple)) else first_val)
                     else:
-                        binding_scores.append(0.0)
-                
-                except Exception as e:
-                    binding_scores.append(0.0)
-            
-            # Compute weighted average
-            binding_scores = torch.tensor(binding_scores, dtype=torch.float32, device=self.device)
-            weighted = (binding_scores * self.weights).sum().item()
-            weighted_scores.append(weighted)
-        
-        return torch.tensor(weighted_scores, dtype=torch.float32, device=self.device)
+                        score = float(result)
+                except Exception:
+                    score = 0.0
+
+                scores.append(score)
+                weights.append(float(variant.probability))
+
+            if scores:
+                weights_np = np.asarray(weights, dtype=float)
+                scores_np = np.asarray(scores, dtype=float)
+                denom = float(weights_np.sum())
+                weighted = float(np.dot(scores_np, weights_np) / denom) if denom > 0 else float(scores_np.mean())
+            else:
+                weighted = 0.0
+
+            batch_scores.append(weighted)
+
+        return torch.tensor(batch_scores, dtype=torch.float32, device=x_tokens.device)
 
 
 def main():
@@ -180,8 +273,9 @@ def main():
     try:
         predictor = PeptiVersePredictor(
             manifest_path=str(PEPTIVERSE_PATH / "best_models.txt"),
-            classifier_weight_root=str(PEPTIVERSE_PATH / "training_classifiers"),
+            classifier_weight_root=str(PEPTIVERSE_PATH),
             device=args.device,
+            only_properties=["binding_affinity"]
         )
         print("✓ PeptiVerse loaded\n")
     except Exception as e:
@@ -324,4 +418,4 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()

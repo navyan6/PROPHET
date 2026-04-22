@@ -49,19 +49,20 @@ class BindingScore:
 
 class VariantBindingPredictor:
     """Compute binding affinity for peptides across HIV variants."""
-    
-    def __init__(
-        self,
-        variants: List[VariantWithProbability],
-        device: str = "cpu"
-    ):
-        """
-        Initialize predictor.
-        
-        Args:
-            variants: List of variants with sequences and probabilities
-            device: "cpu" or "cuda:0" etc.
-        """
+        try:
+            self.predictor = PeptiVersePredictor(
+                manifest_path=str(PEPTIVERSE_PATH / "best_models.txt"),
+                classifier_weight_root=str(PEPTIVERSE_PATH / "training_classifiers"),
+                device=device,
+                only_properties=["binding_affinity"]
+            )
+            print(f"\u2713 PeptiVerse loaded (binding_affinity only)")
+        except Exception as e:
+            raise RuntimeError(
+                f"Failed to initialize PeptiVerse: {e}\n"
+                "Make sure PeptiVerse is cloned: "
+                "git clone https://huggingface.co/ChatterjeeLab/PeptiVerse"
+            )
         self.variants = variants
         self.device = device
         

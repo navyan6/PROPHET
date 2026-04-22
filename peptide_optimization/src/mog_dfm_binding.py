@@ -11,6 +11,7 @@ MOG-DFM is already a generative model - we just plug in the binding objective.
 
 import sys
 import json
+import csv
 import argparse
 from pathlib import Path
 from dataclasses import dataclass
@@ -112,15 +113,11 @@ def main():
         weights = []
         for v in train_variants:
             result = predictor.predict_binding_affinity(
-                mode="wt",
+                col="wt",
                 target_seq=v.sequence,
                 binder_str=peptide_seq
             )
-            if isinstance(result, dict) and "wt_wt_pooled" in result:
-                val = result["wt_wt_pooled"]
-                score = float(val[0]) if isinstance(val, (list, tuple)) else float(val)
-            else:
-                score = 0.0
+            score = float(result.get("affinity", 0.0)) if isinstance(result, dict) else 0.0
             scores.append(score)
             weights.append(v.probability)
         scores = np.array(scores)
@@ -146,15 +143,11 @@ def main():
         test_scores = []
         for v in test_variants:
             result = predictor.predict_binding_affinity(
-                mode="wt",
+                col="wt",
                 target_seq=v.sequence,
                 binder_str=peptide
             )
-            if isinstance(result, dict) and "wt_wt_pooled" in result:
-                val = result["wt_wt_pooled"]
-                score = float(val[0]) if isinstance(val, (list, tuple)) else float(val)
-            else:
-                score = 0.0
+            score = float(result.get("affinity", 0.0)) if isinstance(result, dict) else 0.0
             test_scores.append(score)
         mean_test = np.mean(test_scores) if test_scores else 0.0
         print(f"Peptide: {peptide} | Mean test binding: {mean_test:.4f}")
@@ -197,22 +190,16 @@ class TreeWeightedBindingModel(nn.Module):
             for variant in self.variants:
                 try:
                     result = self.predictor.predict_binding_affinity(
-                        mode="wt",
+                        col="wt",
                         target_seq=variant.sequence,
                         binder_str=peptide_seq,
                     )
                     if isinstance(result, dict):
-                        for key in ("wt_wt_pooled", "wt_wt_unpooled"):
-                            if key in result:
-                                val = result[key]
-                                score = float(val[0] if isinstance(val, (list, tuple)) else val)
-                                break
-                        else:
-                            first_val = list(result.values())[0]
-                            score = float(first_val[0] if isinstance(first_val, (list, tuple)) else first_val)
+                        score = float(result.get("affinity", 0.0))
                     else:
                         score = float(result)
-                except Exception:
+                except Exception as e:
+                    print(f"[warn] binding prediction failed for variant={variant.name}: {e}")
                     score = 0.0
 
                 scores.append(score)
@@ -245,7 +232,7 @@ def main():
     parser.add_argument("--device", type=str, default="cuda:0",
                         help="torch device")
     parser.add_argument("--output", type=Path, default=None,
-                        help="Output JSON file")
+                        help="Output file (.json or .csv)")
     
     args = parser.parse_args()
     
@@ -349,20 +336,14 @@ def main():
             for variant in variants:
                 try:
                     result = predictor.predict_binding_affinity(
-                        mode="wt", target_seq=variant.sequence, binder_str=peptide_seq
+                        col="wt", target_seq=variant.sequence, binder_str=peptide_seq
                     )
                     if isinstance(result, dict):
-                        for key in ["wt_wt_pooled", "wt_wt_unpooled"]:
-                            if key in result:
-                                val = result[key]
-                                binding = float(val[0] if isinstance(val, (list, tuple)) else val)
-                                break
-                        else:
-                            first_val = list(result.values())[0]
-                            binding = float(first_val[0] if isinstance(first_val, (list, tuple)) else first_val)
+                        binding = float(result.get("affinity", 0.0))
                     else:
                         binding = 0.0
-                except:
+                except Exception as e:
+                    print(f"[warn] full evaluation failed for variant={variant.name}: {e}")
                     binding = 0.0
                 binding_per_variant[variant.name] = binding
                 scores.append(binding)
@@ -392,21 +373,29 @@ def main():
     if args.output:
         args.output = Path(args.output)
         args.output.parent.mkdir(parents=True, exist_ok=True)
-        
-        results_dict = [
-            {
-                "sequence": r.sequence,
-                "binding_per_variant": r.binding_per_variant,
-                "weighted_binding": r.weighted_binding,
-                "mean_binding": r.mean_binding
-            }
-            for r in results
-        ]
-        
-        with open(args.output, "w") as f:
-            json.dump(results_dict, f, indent=2)
-        
-        print(f"✓ Results saved to: {args.output}\n")
+
+        if args.output.suffix.lower() == ".csv":
+            with open(args.output, "w", newline="") as f:
+                writer = csv.writer(f)
+                writer.writerow(["rank", "sequence", "weighted_binding", "mean_binding"])
+                for i, r in enumerate(results, 1):
+                    writer.writerow([i, r.sequence, f"{r.weighted_binding:.6f}", f"{r.mean_binding:.6f}"])
+            print(f"✓ Results saved to: {args.output}\n")
+        else:
+            results_dict = [
+                {
+                    "sequence": r.sequence,
+                    "binding_per_variant": r.binding_per_variant,
+                    "weighted_binding": r.weighted_binding,
+                    "mean_binding": r.mean_binding
+                }
+                for r in results
+            ]
+
+            with open(args.output, "w") as f:
+                json.dump(results_dict, f, indent=2)
+
+            print(f"✓ Results saved to: {args.output}\n")
     else:
         print()
     

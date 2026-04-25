@@ -35,6 +35,7 @@ sys.path.insert(0, str(MOGDFM_PATH))
 
 from inference import PeptiVersePredictor  # noqa: E402
 from models.peptide_classifiers import load_solver  # noqa: E402
+from tree_utils import load_tree_probabilities, load_wildtype_sequence  # noqa: E402
 
 
 @dataclass
@@ -56,24 +57,33 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--retention-threshold", type=float, default=5.0, help="Binding threshold for retention")
     parser.add_argument("--device", type=str, default="cuda:0", help="Torch device")
     parser.add_argument("--out-dir", type=Path, default=Path("data/results/multi_tree_eval"))
+    parser.add_argument(
+        "--tree-guided-steps",
+        type=int,
+        default=8,
+        help="Number of local tree-guided mutation steps per candidate",
+    )
+    parser.add_argument(
+        "--tree-guided-tries-per-step",
+        type=int,
+        default=6,
+        help="Number of mutation proposals tried at each tree-guided step",
+    )
+    parser.add_argument(
+        "--tree-guided-variant-sample",
+        type=int,
+        default=32,
+        help="Max number of train variants used during tree-guided optimization",
+    )
     return parser.parse_args()
 
 
 def load_variants(tree_json: Path) -> tuple[str, list[Variant]]:
-    with open(tree_json, encoding="utf-8") as f:
-        data = json.load(f)
-    wt = data["x_WT"]
-    leaves = data["leaf_endpoints_pi"]
-    n = len(leaves)
-    p = 1.0 / n if n else 0.0
+    wt = load_wildtype_sequence(tree_json)
     variants = [
-        Variant(
-            name=v.get("leaf_id", f"leaf_{i}"),
-            sequence=v.get("sequence", ""),
-            probability=p,
-        )
-        for i, v in enumerate(leaves)
-        if v.get("sequence", "")
+        Variant(name=v.name, sequence=v.sequence, probability=float(v.probability))
+        for v in load_tree_probabilities(tree_json)
+        if v.sequence
     ]
     return wt, variants
 
@@ -99,6 +109,69 @@ def generate_peptide(solver, tokenizer, length: int, device: str) -> str:
     return peptide
 
 
+AA_ALPHABET = "ACDEFGHIKLMNPQRSTVWY"
+
+
+def weighted_mean_score(scores: list[float], variants: list[Variant]) -> float:
+    if not scores:
+        return 0.0
+    weights = np.array([v.probability for v in variants], dtype=float)
+    values = np.array(scores, dtype=float)
+    denom = float(weights.sum())
+    if denom <= 0.0:
+        return float(np.mean(values))
+    return float(np.dot(values, weights) / denom)
+
+
+def predict_train_weighted_score(
+    predictor: PeptiVersePredictor,
+    peptide: str,
+    train_variants: list[Variant],
+) -> float:
+    train_scores = [predict_affinity(predictor, v.sequence, peptide) for v in train_variants]
+    return weighted_mean_score(train_scores, train_variants)
+
+
+def mutate_peptide(peptide: str, rng: random.Random) -> str:
+    if not peptide:
+        return peptide
+    pos = rng.randrange(len(peptide))
+    choices = [aa for aa in AA_ALPHABET if aa != peptide[pos]]
+    if not choices:
+        return peptide
+    aa = rng.choice(choices)
+    return peptide[:pos] + aa + peptide[pos + 1 :]
+
+
+def generate_tree_guided_peptide(
+    solver,
+    tokenizer,
+    predictor: PeptiVersePredictor,
+    train_variants: list[Variant],
+    length: int,
+    device: str,
+    rng: random.Random,
+    steps: int,
+    tries_per_step: int,
+) -> str:
+    peptide = generate_peptide(solver, tokenizer, length, device)
+    best_score = predict_train_weighted_score(predictor, peptide, train_variants)
+
+    for _ in range(steps):
+        improved = False
+        for _ in range(tries_per_step):
+            proposal = mutate_peptide(peptide, rng)
+            prop_score = predict_train_weighted_score(predictor, proposal, train_variants)
+            if prop_score > best_score:
+                peptide = proposal
+                best_score = prop_score
+                improved = True
+        if not improved:
+            break
+
+    return peptide
+
+
 def evaluate_candidate(
     predictor: PeptiVersePredictor,
     peptide: str,
@@ -111,7 +184,7 @@ def evaluate_candidate(
     train_scores = [predict_affinity(predictor, v.sequence, peptide) for v in train_variants]
     holdout_scores = [predict_affinity(predictor, v.sequence, peptide) for v in holdout_variants]
 
-    train_mean = float(np.mean(train_scores)) if train_scores else 0.0
+    train_mean = weighted_mean_score(train_scores, train_variants)
     holdout_mean = float(np.mean(holdout_scores)) if holdout_scores else 0.0
     holdout_min = float(np.min(holdout_scores)) if holdout_scores else 0.0
     holdout_retention = (
@@ -150,6 +223,9 @@ def run_one_tree(
     retention_threshold: float,
     device: str,
     out_dir: Path,
+    tree_guided_steps: int,
+    tree_guided_tries_per_step: int,
+    tree_guided_variant_sample: int,
 ) -> dict[str, float]:
     wt_seq, variants = load_variants(tree_json)
     if len(variants) < 2:
@@ -163,8 +239,24 @@ def run_one_tree(
     train_variants = shuffled[n_holdout:]
 
     candidates = []
+    candidate_rng = random.Random(split_seed + len(label) * 1009)
+    guidance_variants = (
+        candidate_rng.sample(train_variants, k=tree_guided_variant_sample)
+        if tree_guided_variant_sample > 0 and len(train_variants) > tree_guided_variant_sample
+        else train_variants
+    )
     for i in range(num_candidates):
-        peptide = generate_peptide(solver, tokenizer, length, device)
+        peptide = generate_tree_guided_peptide(
+            solver=solver,
+            tokenizer=tokenizer,
+            predictor=predictor,
+            train_variants=guidance_variants,
+            length=length,
+            device=device,
+            rng=candidate_rng,
+            steps=tree_guided_steps,
+            tries_per_step=tree_guided_tries_per_step,
+        )
         metrics = evaluate_candidate(
             predictor=predictor,
             peptide=peptide,
@@ -280,6 +372,9 @@ def main() -> int:
                 retention_threshold=args.retention_threshold,
                 device=args.device,
                 out_dir=args.out_dir,
+                tree_guided_steps=args.tree_guided_steps,
+                tree_guided_tries_per_step=args.tree_guided_tries_per_step,
+                tree_guided_variant_sample=args.tree_guided_variant_sample,
             )
         )
 

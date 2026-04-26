@@ -15,6 +15,7 @@ from pathlib import Path
 from dataclasses import dataclass
 from typing import Dict, List, Optional
 
+import types
 import torch
 import torch.nn as nn
 import numpy as np
@@ -29,6 +30,16 @@ PEPTIVERSE_PATH = REPO_ROOT / "PeptiVerse"
 sys.path.insert(0, str(MOGDFM_PATH))
 sys.path.insert(0, str(PEPTIVERSE_PATH))
 
+# Stub missing optional deps that MOG-DFM imports at module level but doesn't
+# need for the CNN peptide model / solver path we actually use.
+# NOTE: only stub packages that are genuinely absent; torchdiffeq is installed.
+for _name in ("esm",):
+    if _name not in sys.modules:
+        sys.modules[_name] = types.ModuleType(_name)
+for _name in ("modules", "modules.bindevaluator_modules"):
+    if _name not in sys.modules:
+        sys.modules[_name] = types.ModuleType(_name)
+
 # Import tree utilities
 try:
     from tree_utils import load_tree_probabilities, VariantWithProbability
@@ -36,19 +47,24 @@ except ImportError as e:
     print(f"Error importing tree_utils: {e}")
     sys.exit(1)
 
-# Import PeptiVerse
+# Import PeptiVerse (lower-level API: binding affinity only, no sklearn/cuml models)
 try:
-    from inference import PeptiVersePredictor
+    from inference import WTEmbedder, load_binding_model
 except ImportError as e:
-    print(f"Error: PeptiVerse not found at {PEPTIVERSE_PATH}")
+    print(f"Error: PeptiVerse not found at {PEPTIVERSE_PATH}: {e}")
     print("Setup: git clone https://huggingface.co/ChatterjeeLab/PeptiVerse")
     sys.exit(1)
+
+BINDING_MODEL_PT = (
+    PEPTIVERSE_PATH / "training_classifiers" / "binding_affinity"
+    / "wt_wt_unpooled" / "best_model.pt"
+)
 
 # Import MOG-DFM
 try:
     from models.peptide_classifiers import load_solver
 except ImportError as e:
-    print(f"Error: MOG-DFM not found at {MOGDFM_PATH}")
+    print(f"Error: MOG-DFM not found at {MOGDFM_PATH}: {e}")
     sys.exit(1)
 
 
@@ -64,77 +80,54 @@ class BindingScore:
 class TreeWeightedBindingModel(nn.Module):
     """
     MOG-DFM objective: tree-weighted binding affinity.
-    Plugs into MOG-DFM's multi_guidance_sample.
+    Uses PeptiVerse wt_wt_unpooled model directly (no full PeptiVersePredictor).
     """
-    
+
     def __init__(
         self,
         variants: List[VariantWithProbability],
-        peptiverse_predictor: PeptiVersePredictor,
+        embedder,          # WTEmbedder instance
+        binding_model,     # loaded binding affinity nn.Module
         tokenizer,
         device: str = "cpu"
     ):
         super().__init__()
         self.variants = variants
-        self.predictor = peptiverse_predictor
+        self.embedder = embedder
+        self.binding_model = binding_model
         self.tokenizer = tokenizer
         self.device = device
-        
-        # Precompute probability weights
+
         probs = [v.probability for v in variants]
         self.weights = torch.tensor(probs, dtype=torch.float32, device=device)
-    
+
     def forward(self, x: torch.Tensor, t: Optional[torch.Tensor] = None) -> torch.Tensor:
         """
-        Evaluate tree-weighted binding affinity.
-        
         Args:
             x: Peptide token IDs (batch_size, seq_len)
-            t: Time (required for MOG-DFM compatibility, unused)
-        
+            t: Time (MOG-DFM compat, unused)
         Returns:
-            Tensor of shape (batch_size,) with tree-weighted binding scores
+            Tensor (batch_size,) of tree-weighted binding scores
         """
-        batch_size = x.shape[0]
-        
-        # Decode token IDs to sequences
         peptide_seqs = self.tokenizer.batch_decode(x)
         peptide_seqs = [seq.replace(" ", "")[5:-5] for seq in peptide_seqs]
-        
+
         weighted_scores = []
-        
         for peptide_seq in peptide_seqs:
             binding_scores = []
-            
             for variant in self.variants:
                 try:
-                    result = self.predictor.predict_binding_affinity(
-                        mode="wt",
-                        target_seq=variant.sequence,
-                        binder_str=peptide_seq
-                    )
-                    
-                    # Extract score
-                    if isinstance(result, dict):
-                        for key in ["wt_wt_pooled", "wt_wt_unpooled"]:
-                            if key in result:
-                                val = result[key]
-                                binding_scores.append(float(val[0]) if isinstance(val, (list, tuple)) else float(val))
-                                break
-                        else:
-                            first_val = list(result.values())[0]
-                            binding_scores.append(float(first_val[0]) if isinstance(first_val, (list, tuple)) else float(first_val))
-                    else:
-                        binding_scores.append(0.0)
-                
-                except Exception as e:
+                    T, Mt = self.embedder.unpooled(variant.sequence)
+                    B, Mb = self.embedder.unpooled(peptide_seq)
+                    with torch.no_grad():
+                        reg, _ = self.binding_model(T, Mt, B, Mb)
+                    binding_scores.append(float(reg.squeeze().cpu().item()))
+                except Exception:
                     binding_scores.append(0.0)
-            
-            # Compute weighted average
-            binding_scores = torch.tensor(binding_scores, dtype=torch.float32, device=self.device)
-            weighted = (binding_scores * self.weights).sum().item()
-            weighted_scores.append(weighted)
-        
+
+            bs = torch.tensor(binding_scores, dtype=torch.float32, device=self.device)
+            weighted_scores.append((bs * self.weights).sum().item())
+
         return torch.tensor(weighted_scores, dtype=torch.float32, device=self.device)
 
 
@@ -153,7 +146,9 @@ def main():
                         help="torch device")
     parser.add_argument("--output", type=Path, default=None,
                         help="Output JSON file")
-    
+    parser.add_argument("--top-k", type=int, default=None,
+                        help="Limit to top-K variants by tree probability (useful for large trees)")
+
     args = parser.parse_args()
     
     # Determine paths
@@ -168,22 +163,23 @@ def main():
     
     print(f"Loading variants from: {args.tree_json}")
     try:
-        variants = load_tree_probabilities(args.tree_json)
+        variants = load_tree_probabilities(args.tree_json, top_k=args.top_k)
     except Exception as e:
         print(f"✗ Error loading tree: {e}")
         return 1
     
     print(f"✓ Loaded {len(variants)} variants with tree probabilities\n")
     
-    # Initialize PeptiVerse
-    print("Loading PeptiVerse...")
+    # Initialize PeptiVerse (binding affinity model only)
+    print("Loading PeptiVerse binding model...")
     try:
-        predictor = PeptiVersePredictor(
-            manifest_path=str(PEPTIVERSE_PATH / "best_models.txt"),
-            classifier_weight_root=str(PEPTIVERSE_PATH / "training_classifiers"),
+        embedder = WTEmbedder(device=args.device)
+        binding_model = load_binding_model(
+            BINDING_MODEL_PT,
+            pooled_or_unpooled="unpooled",
             device=args.device,
         )
-        print("✓ PeptiVerse loaded\n")
+        print("✓ PeptiVerse binding model loaded\n")
     except Exception as e:
         print(f"✗ Failed to load PeptiVerse: {e}")
         return 1
@@ -208,7 +204,8 @@ def main():
     # Create objective
     objective = TreeWeightedBindingModel(
         variants=variants,
-        peptiverse_predictor=predictor,
+        embedder=embedder,
+        binding_model=binding_model,
         tokenizer=tokenizer,
         device=args.device,
     )
@@ -249,26 +246,17 @@ def main():
                 x_tokens = tokenizer(peptide_seq, return_tensors='pt')['input_ids'].to(args.device)
                 weighted_score = objective(x_tokens).item()
             
-            # Full evaluation
+            # Full per-variant evaluation
             binding_per_variant = {}
             scores = []
             for variant in variants:
                 try:
-                    result = predictor.predict_binding_affinity(
-                        mode="wt", target_seq=variant.sequence, binder_str=peptide_seq
-                    )
-                    if isinstance(result, dict):
-                        for key in ["wt_wt_pooled", "wt_wt_unpooled"]:
-                            if key in result:
-                                val = result[key]
-                                binding = float(val[0] if isinstance(val, (list, tuple)) else val)
-                                break
-                        else:
-                            first_val = list(result.values())[0]
-                            binding = float(first_val[0] if isinstance(first_val, (list, tuple)) else first_val)
-                    else:
-                        binding = 0.0
-                except:
+                    T, Mt = embedder.unpooled(variant.sequence)
+                    B, Mb = embedder.unpooled(peptide_seq)
+                    with torch.no_grad():
+                        reg, _ = binding_model(T, Mt, B, Mb)
+                    binding = float(reg.squeeze().cpu().item())
+                except Exception:
                     binding = 0.0
                 binding_per_variant[variant.name] = binding
                 scores.append(binding)

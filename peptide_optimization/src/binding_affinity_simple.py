@@ -27,15 +27,20 @@ sys.path.insert(0, str(PEPTIVERSE_PATH))
 # Import tree utilities
 from tree_utils import load_tree_probabilities, VariantWithProbability
 
-# Import PeptiVerse
+# Import PeptiVerse (lower-level API: binding affinity only, no sklearn/cuml models)
 try:
-    from inference import PeptiVersePredictor
+    from inference import WTEmbedder, load_binding_model
 except ImportError as e:
     raise ImportError(
         f"Failed to import PeptiVerse: {e}\n"
         f"Expected at: {PEPTIVERSE_PATH}\n"
         "Setup: git clone https://huggingface.co/ChatterjeeLab/PeptiVerse"
     )
+
+BINDING_MODEL_PT = (
+    PEPTIVERSE_PATH / "training_classifiers" / "binding_affinity"
+    / "wt_wt_unpooled" / "best_model.pt"
+)
 
 
 @dataclass
@@ -72,22 +77,25 @@ class VariantBindingPredictor:
             for v in variants:
                 v.probability /= total_prob
         
-        # Initialize PeptiVerse
-        print(f"Loading PeptiVerse (device: {device})...")
+        # Initialize PeptiVerse (binding affinity model only)
+        print(f"Loading PeptiVerse binding model (device: {device})...")
+        import torch
+        self._torch_device = torch.device(device)
         try:
-            self.predictor = PeptiVersePredictor(
-                manifest_path=str(PEPTIVERSE_PATH / "best_models.txt"),
-                classifier_weight_root=str(PEPTIVERSE_PATH / "training_classifiers"),
-                device=device
+            self.embedder = WTEmbedder(device=self._torch_device)
+            self.binding_model = load_binding_model(
+                BINDING_MODEL_PT,
+                pooled_or_unpooled="unpooled",
+                device=self._torch_device,
             )
-            print(f"✓ PeptiVerse loaded")
+            print(f"✓ PeptiVerse binding model loaded")
         except Exception as e:
             raise RuntimeError(
                 f"Failed to initialize PeptiVerse: {e}\n"
                 "Make sure PeptiVerse is cloned: "
                 "git clone https://huggingface.co/ChatterjeeLab/PeptiVerse"
             )
-        
+
         print(f"✓ Initialized with {len(variants)} variants")
         for v in variants:
             print(f"  - {v.name:20s} (p={v.probability:.3f})")
@@ -99,41 +107,14 @@ class VariantBindingPredictor:
         return "".join(random.choice(amino_acids) for _ in range(length))
     
     def compute_binding(self, peptide: str, variant: VariantWithProbability) -> float:
-        """
-        Compute binding affinity using PeptiVerse.
-        
-        Args:
-            peptide: Peptide sequence
-            variant: Target HIV variant
-        
-        Returns:
-            Binding affinity score
-        """
+        """Compute binding affinity using PeptiVerse wt_wt_unpooled model."""
+        import torch
         try:
-            result = self.predictor.predict_binding_affinity(
-                mode="wt",
-                target_seq=variant.sequence,
-                binder_str=peptide
-            )
-            
-            # Extract binding score from result dict
-            if isinstance(result, dict):
-                # Try standard key names
-                for key in ["wt_wt_pooled", "wt_wt_unpooled"]:
-                    if key in result:
-                        val = result[key]
-                        if isinstance(val, (list, tuple)):
-                            return float(val[0]) if val else 0.0
-                        return float(val)
-                
-                # Fallback: use first value
-                if result:
-                    first_val = list(result.values())[0]
-                    if isinstance(first_val, (list, tuple)):
-                        return float(first_val[0]) if first_val else 0.0
-                    return float(first_val)
-            
-            return 0.0
+            T, Mt = self.embedder.unpooled(variant.sequence)
+            B, Mb = self.embedder.unpooled(peptide)
+            with torch.no_grad():
+                reg, _ = self.binding_model(T, Mt, B, Mb)
+            return float(reg.squeeze().cpu().item())
         except Exception as e:
             print(f"Binding error for {variant.name}: {e}")
             return 0.0
@@ -238,7 +219,8 @@ def main(
     peptide_length: int = 12,
     output_file: Optional[Path] = None,
     device: str = "cpu",
-    seed: int = 42
+    seed: int = 42,
+    top_k: Optional[int] = None,
 ):
     """
     Main entry point for binding affinity evaluation.
@@ -271,7 +253,7 @@ def main(
         )
     
     print(f"\n📖 Loading variants from: {tree_json}")
-    variants = load_tree_probabilities(tree_json)
+    variants = load_tree_probabilities(tree_json, top_k=top_k)
     print(f"✓ Loaded {len(variants)} variants")
     
     # Create predictor and evaluate peptides
@@ -327,7 +309,13 @@ if __name__ == "__main__":
         default=42,
         help="Random seed for reproducibility"
     )
-    
+    parser.add_argument(
+        "--top-k",
+        type=int,
+        default=None,
+        help="Limit to top-K variants by tree probability (useful for large trees)"
+    )
+
     args = parser.parse_args()
     main(
         tree_json=args.tree_json,
@@ -335,5 +323,6 @@ if __name__ == "__main__":
         peptide_length=args.length,
         output_file=args.output,
         device=args.device,
-        seed=args.seed
+        seed=args.seed,
+        top_k=args.top_k,
     )

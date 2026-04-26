@@ -31,7 +31,6 @@ print(f"HA sequences (1500–1800 bp) : {len(ha_records)}")
 SeqIO.write(ha_records, HA_FASTA, "fasta")
 print(f"Written to                  : {HA_FASTA}")
 
-# --- Step 2: Randomly sample up to 1000 sequences ---
 if len(ha_records) > SAMPLE_N:
     sampled = random.sample(ha_records, SAMPLE_N)
 else:
@@ -40,7 +39,6 @@ else:
 SeqIO.write(sampled, SAMPLED_FASTA, "fasta")
 print(f"Sampled                     : {len(sampled)} sequences → {SAMPLED_FASTA}")
 
-# --- Step 3: Align with MAFFT ---
 print("\nRunning MAFFT alignment...")
 result = subprocess.run(
     ["mafft", "--auto", "--quiet", "--thread", "-1", SAMPLED_FASTA],
@@ -52,7 +50,7 @@ with open(ALIGNED_FASTA, "w") as f:
     f.write(result.stdout)
 print(f"Alignment complete → {ALIGNED_FASTA}")
 
-# --- Step 4: Build tree with FastTree (GTR + nucleotide) ---
+
 print("\nRunning FastTree...")
 result = subprocess.run(
     ["FastTree", "-nt", "-gtr", "-quiet", ALIGNED_FASTA],
@@ -64,7 +62,7 @@ with open(OUTPUT_TREE, "w") as f:
     f.write(result.stdout)
 print(f"Tree saved → {OUTPUT_TREE}")
 
-# --- Step 5: Visualize and save the tree ---
+
 print("\nPlotting tree...")
 tree = Phylo.read(OUTPUT_TREE, "newick")
 n_tips = len(tree.get_terminals())

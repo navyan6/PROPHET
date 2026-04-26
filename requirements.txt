@@ -3,7 +3,7 @@
 # PyTorch and deep learning (GPU support for CUDA 12.4)
 numpy<2
 torch==2.4.0
-torchvision==0.18.0
+torchvision==0.19.0
 torchaudio==2.4.0
 
 # Transformers — pinned to match PeptiVerse's tested version
@@ -28,6 +28,10 @@ huggingface_hub>=0.20.0
 
 # Lightning (new package name for pytorch-lightning >= 2.0)
 lightning>=2.1.0
+pytorch-lightning>=2.1.0
+
+# ODE solver used by MOG-DFM flow matching
+torchdiffeq
 
 # PeptiVerse SMILES tokenizer
 SmilesPE
@@ -61,7 +65,7 @@ flake8>=6.1.0
 
 # Linux GPU users (NVIDIA CUDA 12.4):
 #   conda install -c bioconda mafft fasttree
-#   pip install torch==2.4.0 torchvision==0.18.0 torchaudio==2.4.0 \
+#   pip install torch==2.4.0 torchvision==0.19.0 torchaudio==2.4.0 \
 #       --index-url https://download.pytorch.org/whl/cu124
 #   pip install -r requirements.txt
 #   Verify GPU: python -c "import torch; print(torch.cuda.is_available())"

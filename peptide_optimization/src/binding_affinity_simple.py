@@ -26,16 +26,8 @@ sys.path.insert(0, str(PEPTIVERSE_PATH))
 
 # Import tree utilities
 from tree_utils import load_tree_probabilities, VariantWithProbability
+from inference import WTEmbedder, load_binding_model
 
-# Import PeptiVerse (lower-level API: binding affinity only, no sklearn/cuml models)
-try:
-    from inference import WTEmbedder, load_binding_model
-except ImportError as e:
-    raise ImportError(
-        f"Failed to import PeptiVerse: {e}\n"
-        f"Expected at: {PEPTIVERSE_PATH}\n"
-        "Setup: git clone https://huggingface.co/ChatterjeeLab/PeptiVerse"
-    )
 
 BINDING_MODEL_PT = (
     PEPTIVERSE_PATH / "training_classifiers" / "binding_affinity"

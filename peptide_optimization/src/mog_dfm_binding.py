@@ -4,8 +4,6 @@ MOG-DFM integration for tree-weighted binding affinity.
 
 Uses MOG-DFM's multi_guidance_sample to generate peptides optimized for:
   tree-weighted binding affinity = Σ(PeptiVerse_binding(peptide, variant_i) × tree_prob_i)
-
-MOG-DFM is already a generative model - we just plug in the binding objective.
 """
 
 import sys
@@ -21,6 +19,9 @@ import torch.nn as nn
 import numpy as np
 from transformers import AutoTokenizer
 import inspect
+from tree_utils import load_tree_probabilities, VariantWithProbability
+from inference import WTEmbedder, load_binding_model
+from models.peptide_classifiers import load_solver
 
 # Setup paths
 REPO_ROOT = Path(__file__).parent.parent.parent
@@ -30,42 +31,10 @@ PEPTIVERSE_PATH = REPO_ROOT / "PeptiVerse"
 sys.path.insert(0, str(MOGDFM_PATH))
 sys.path.insert(0, str(PEPTIVERSE_PATH))
 
-# Stub missing optional deps that MOG-DFM imports at module level but doesn't
-# need for the CNN peptide model / solver path we actually use.
-# NOTE: only stub packages that are genuinely absent; torchdiffeq is installed.
-for _name in ("esm",):
-    if _name not in sys.modules:
-        sys.modules[_name] = types.ModuleType(_name)
-for _name in ("modules", "modules.bindevaluator_modules"):
-    if _name not in sys.modules:
-        sys.modules[_name] = types.ModuleType(_name)
-
-# Import tree utilities
-try:
-    from tree_utils import load_tree_probabilities, VariantWithProbability
-except ImportError as e:
-    print(f"Error importing tree_utils: {e}")
-    sys.exit(1)
-
-# Import PeptiVerse (lower-level API: binding affinity only, no sklearn/cuml models)
-try:
-    from inference import WTEmbedder, load_binding_model
-except ImportError as e:
-    print(f"Error: PeptiVerse not found at {PEPTIVERSE_PATH}: {e}")
-    print("Setup: git clone https://huggingface.co/ChatterjeeLab/PeptiVerse")
-    sys.exit(1)
-
 BINDING_MODEL_PT = (
     PEPTIVERSE_PATH / "training_classifiers" / "binding_affinity"
     / "wt_wt_unpooled" / "best_model.pt"
 )
-
-# Import MOG-DFM
-try:
-    from models.peptide_classifiers import load_solver
-except ImportError as e:
-    print(f"Error: MOG-DFM not found at {MOGDFM_PATH}: {e}")
-    sys.exit(1)
 
 
 @dataclass
@@ -83,7 +52,6 @@ class BindingScore:
 class TreeWeightedBindingModel(nn.Module):
     """
     MOG-DFM objective: tree-weighted binding affinity.
-    Uses PeptiVerse wt_wt_unpooled model directly (no full PeptiVersePredictor).
     """
 
     def __init__(
@@ -94,7 +62,7 @@ class TreeWeightedBindingModel(nn.Module):
         tokenizer,
         objective_type: str = "mean",
         cvar_alpha: float = 0.9,
-        device: str = "cpu"
+        device
     ):
         super().__init__()
         self.variants = variants

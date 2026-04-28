@@ -7,13 +7,13 @@ Two functions:
 
   compute_dca(protein_seqs, n_bootstraps) -> h (L,20), J (L,L,20,20)
       DCA parameters via pseudolikelihood maximization.
-
 """
 
 import sys
 import warnings
 import argparse
 from pathlib import Path
+import random
 
 import numpy as np
 from Bio import SeqIO, Phylo
@@ -27,6 +27,37 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 AA        = "ACDEFGHIKLMNPQRSTVWY"
 AA_TO_IDX = {aa: i for i, aa in enumerate(AA)}
 GAP       = 20   # index used for gap / ambiguous / unknown
+
+
+def resolve_user_path(path_like: str | Path, base_dir: str | Path | None = None) -> Path:
+    """
+    Resolve user-provided paths robustly after script moves.
+
+    Resolution order for relative paths:
+      1) base_dir (if provided)
+      2) REPO_ROOT
+      3) current working directory
+      4) directory containing this script
+    """
+    p = Path(path_like)
+    if p.is_absolute():
+        return p
+
+    candidates: list[Path] = []
+    if base_dir is not None:
+        candidates.append(Path(base_dir) / p)
+    candidates.extend(
+        [
+            REPO_ROOT / p,
+            Path.cwd() / p,
+            Path(__file__).resolve().parent / p,
+        ]
+    )
+    for cand in candidates:
+        if cand.exists():
+            return cand.resolve()
+    # Fall back to repo-root-relative path for deterministic output locations.
+    return (REPO_ROOT / p).resolve()
 
 
 def normalize_protein_alignment(protein_seqs: dict[str, str]) -> dict[str, str]:
@@ -114,10 +145,11 @@ def compute_lambda_and_qi(
     from a phylogenetic tree.
     """
 
-    sys.setrecursionlimit(10_000)
-
     tree = Phylo.read(str(tree_nwk), "newick")
     tree.root_at_midpoint()
+    n_terminals = len(tree.get_terminals())
+    # Fitch traversals are recursive below; scale guard with tree size.
+    sys.setrecursionlimit(max(10_000, 10 * n_terminals))
 
     L = len(next(iter(protein_seqs.values())))
 
@@ -148,6 +180,8 @@ def compute_lambda_and_qi(
         for child in clade.clades:
             parent_map[child] = clade
 
+    # NOTE: These dicts are intentionally local to this function.
+    # If tree-level parallelism is added later, keep state per task/process.
     # fitch_sets[id(node)]: bool array (L, 21)
     # True at [i, a] means amino acid a is in the parsimony set at position i
     fitch_sets: dict = {}
@@ -239,11 +273,15 @@ def compute_lambda_and_qi(
 
 
 def load_tree_list(single_tree: str, trees_file: str | None) -> list[str]:
-    trees = [single_tree]
+    trees = [str(single_tree)]
     if trees_file:
-        with open(REPO_ROOT / trees_file, encoding="utf-8") as f:
+        trees_file_path = resolve_user_path(trees_file)
+        with open(trees_file_path, encoding="utf-8") as f:
             extra = [line.strip() for line in f if line.strip() and not line.strip().startswith("#")]
-        trees.extend(extra)
+        trees.extend(
+            str(resolve_user_path(line, base_dir=trees_file_path.parent))
+            for line in extra
+        )
     # preserve order, remove duplicates
     seen = set()
     ordered = []
@@ -252,6 +290,17 @@ def load_tree_list(single_tree: str, trees_file: str | None) -> list[str]:
             seen.add(t)
             ordered.append(t)
     return ordered
+
+
+def maybe_subsample_trees(trees: list[str], j: int | None, seed: int) -> list[str]:
+    if j is None:
+        return trees
+    if j <= 0:
+        raise ValueError("--tree-subsample-j must be positive when provided.")
+    if j >= len(trees):
+        return trees
+    rng = random.Random(seed)
+    return rng.sample(trees, j)
 
 
 # DCA via pseudolikelihood maximization (PLM)
@@ -412,6 +461,7 @@ def _sample_site_conditional(
     i: int,
     x: np.ndarray,
     lambda_i: np.ndarray,
+    qi: np.ndarray,
     h: np.ndarray,
     J: np.ndarray,
     t_evo: float,
@@ -420,8 +470,12 @@ def _sample_site_conditional(
     """
     Sample x_i from p_evo(x_i | x_-i) proportional to exp(-E_i / T).
     """
-    # unary term
+    # unary term (DCA field)
     e = lambda_i[i] * h[i].astype(np.float64)
+    # incorporate tree-estimated substitution preferences Q_i(a->b)
+    current_aa = int(x[i])
+    if 0 <= current_aa < 20:
+        e += lambda_i[i] * np.log(qi[i, current_aa, :].astype(np.float64) + 1e-9)
     # pairwise term with all other sites
     for j in range(x.shape[0]):
         if j == i:
@@ -483,6 +537,7 @@ def _pll_esm2(
 def gibbs_sample_variants(
     wt_seq: str,
     lambda_i: np.ndarray,
+    qi: np.ndarray,
     h: np.ndarray,
     J: np.ndarray,
     n_samples: int,
@@ -520,7 +575,7 @@ def gibbs_sample_variants(
     L = len(wt_seq)
     for t in range(total_steps):
         for i in range(L):
-            x[i] = _sample_site_conditional(i, x, lambda_i, h, J, t_evo, rng)
+            x[i] = _sample_site_conditional(i, x, lambda_i, qi, h, J, t_evo, rng)
 
         if t >= burn_in:
             seq = "".join(AA[int(a)] for a in x)
@@ -568,6 +623,10 @@ def main():
                    help="Newick tree (default: flu HA)")
     p.add_argument("--trees-file",   default=None,
                    help="Optional file containing additional tree paths (one per line)")
+    p.add_argument("--tree-subsample-j", type=int, default=None,
+                   help="Optional J-sweep support: random subset size of trees to average over")
+    p.add_argument("--tree-subsample-seed", type=int, default=42,
+                   help="Random seed for tree subsampling when --tree-subsample-j is set")
     p.add_argument("--fasta",        default="flu_tree/ha_aligned.fasta",
                    help="Aligned FASTA (default: flu HA nucleotide MSA)")
     p.add_argument("--nucleotide",   action="store_true", default=True,
@@ -591,7 +650,7 @@ def main():
     p.add_argument("--burn-in",      type=int, default=200,
                    help="Gibbs burn-in sweeps before collecting samples")
     p.add_argument("--t-evo",        type=float, default=1.0,
-                   help="Evolutionary temperature for Gibbs sampling")
+                   help="Evolutionary temperature for Gibbs sampling (calibrate to held-out edit distances)")
     p.add_argument("--seed",         type=int, default=42,
                    help="Random seed for DCA bootstraps and Gibbs sampling")
     p.add_argument("--wt-seq-id",    default=None,
@@ -604,11 +663,12 @@ def main():
                    help="Device for ESM pLL filtering")
     args, _ = p.parse_known_args()  
 
-    fasta_path = REPO_ROOT / args.fasta
-    out_dir    = REPO_ROOT / args.out_dir
+    fasta_path = resolve_user_path(args.fasta)
+    out_dir    = resolve_user_path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     tree_list = load_tree_list(args.tree, args.trees_file)
-    tree_paths = [REPO_ROOT / t for t in tree_list]
+    tree_list = maybe_subsample_trees(tree_list, args.tree_subsample_j, args.tree_subsample_seed)
+    tree_paths = [resolve_user_path(t) for t in tree_list]
 
     print("=" * 60)
     print("PROPHET Stage 1")
@@ -616,6 +676,8 @@ def main():
         print(f"  tree : {tree_paths[0]}")
     else:
         print(f"  trees: {len(tree_paths)} (first: {tree_paths[0]})")
+    if args.tree_subsample_j is not None:
+        print(f"  tree subset J={len(tree_paths)} (seed={args.tree_subsample_seed})")
     print(f"  fasta: {fasta_path}")
     print("=" * 60)
 
@@ -700,6 +762,11 @@ def main():
                 f"\n[4/4] Gibbs sampling variants "
                 f"(M={args.sample_variants}, burn_in={args.burn_in}, T={args.t_evo})..."
             )
+            warnings.warn(
+                "t_evo should be calibrated on held-out phylogenies so sampled edit distances "
+                "match observed leaf-sequence distances; using the provided value as-is.",
+                stacklevel=2,
+            )
             if args.wt_seq_id is not None and args.wt_seq_id in protein_seqs:
                 wt_seq = protein_seqs[args.wt_seq_id]
             else:
@@ -707,6 +774,7 @@ def main():
             variants, pll_vals = gibbs_sample_variants(
                 wt_seq=wt_seq,
                 lambda_i=lambda_i,
+                qi=qi,
                 h=h,
                 J=J,
                 n_samples=args.sample_variants,

@@ -28,6 +28,43 @@ AA        = "ACDEFGHIKLMNPQRSTVWY"
 AA_TO_IDX = {aa: i for i, aa in enumerate(AA)}
 GAP       = 20   # index used for gap / ambiguous / unknown
 
+
+def normalize_protein_alignment(protein_seqs: dict[str, str]) -> dict[str, str]:
+    """
+    Ensure all sequences share one alignment length.
+
+    For mixed lengths, use modal length as target, truncate longer sequences,
+    and right-pad shorter ones with '-' gaps.
+    """
+    cleaned = {k: v.upper() for k, v in protein_seqs.items() if v}
+    if not cleaned:
+        raise ValueError("No non-empty protein sequences were provided.")
+
+    lengths = np.array([len(s) for s in cleaned.values()], dtype=int)
+    uniq, counts = np.unique(lengths, return_counts=True)
+    target_len = int(uniq[np.argmax(counts)])
+
+    truncated = 0
+    padded = 0
+    normalized: dict[str, str] = {}
+    for sid, seq in cleaned.items():
+        if len(seq) > target_len:
+            normalized[sid] = seq[:target_len]
+            truncated += 1
+        elif len(seq) < target_len:
+            normalized[sid] = seq + ("-" * (target_len - len(seq)))
+            padded += 1
+        else:
+            normalized[sid] = seq
+
+    if len(uniq) > 1:
+        print(
+            f"  [align] mixed lengths {uniq.tolist()} detected; "
+            f"target={target_len}, truncated={truncated}, padded={padded}"
+        )
+
+    return normalized
+
 def translate_alignment(fasta_path: str | Path) -> dict[str, str]:
     """
     Translate a gapped nucleotide MSA to a protein MSA.
@@ -68,9 +105,13 @@ def translate_alignment(fasta_path: str | Path) -> dict[str, str]:
     return {sid: "".join(seq[i] for i in keep) for sid, seq in raw.items()}
 
 
-def compute_lambda(tree_nwk: str | Path, protein_seqs: dict[str, str]) -> np.ndarray:
+def compute_lambda_and_qi(
+    tree_nwk: str | Path,
+    protein_seqs: dict[str, str],
+) -> tuple[np.ndarray, np.ndarray]:
     """
-    Per-site amino acid mutation rate lambda from a phylogenetic tree.
+    Per-site amino acid mutation rate lambda and substitution matrices Qi
+    from a phylogenetic tree.
     """
 
     sys.setrecursionlimit(10_000)
@@ -163,6 +204,8 @@ def compute_lambda(tree_nwk: str | Path, protein_seqs: dict[str, str]) -> np.nda
 
     _top_down(tree.root)
     sub_counts = np.zeros(L, dtype=np.float64)
+    # qi_counts[i, a, b] counts substitutions at site i from aa a -> aa b
+    qi_counts = np.zeros((L, 20, 20), dtype=np.float64)
 
     for clade in tree.find_clades():
         parent = parent_map.get(clade)
@@ -176,10 +219,39 @@ def compute_lambda(tree_nwk: str | Path, protein_seqs: dict[str, str]) -> np.nda
         cs = assigned[id(clade)]
         changed = (ps != cs) & (ps != GAP) & (cs != GAP)
         sub_counts += changed.astype(np.float64)
+        changed_idx = np.where(changed)[0]
+        for i in changed_idx:
+            a = int(ps[i])
+            b = int(cs[i])
+            if 0 <= a < 20 and 0 <= b < 20:
+                qi_counts[i, a, b] += 1.0
 
     lambda_i = sub_counts / max(total_bl, 1e-9)
+    # Row-normalized conditional substitution probabilities with smoothing
+    qi = np.zeros((L, 20, 20), dtype=np.float64)
+    alpha = 1e-6
+    for i in range(L):
+        row_sums = qi_counts[i].sum(axis=1, keepdims=True)
+        qi[i] = (qi_counts[i] + alpha) / (row_sums + 20.0 * alpha)
+
     print(f"  [lambda] variable sites (λ > 0): {(lambda_i > 0).sum()} / {L}")
-    return lambda_i
+    return lambda_i, qi
+
+
+def load_tree_list(single_tree: str, trees_file: str | None) -> list[str]:
+    trees = [single_tree]
+    if trees_file:
+        with open(REPO_ROOT / trees_file, encoding="utf-8") as f:
+            extra = [line.strip() for line in f if line.strip() and not line.strip().startswith("#")]
+        trees.extend(extra)
+    # preserve order, remove duplicates
+    seen = set()
+    ordered = []
+    for t in trees:
+        if t not in seen:
+            seen.add(t)
+            ordered.append(t)
+    return ordered
 
 
 # DCA via pseudolikelihood maximization (PLM)
@@ -218,7 +290,8 @@ def _fit_position(i: int, X: np.ndarray, weights: np.ndarray, l2_reg: float) -> 
         if j == i:
             continue
         nongap = X_v[:, j] < GAP
-        F[nongap, col + X_v[nongap, j]] = 1.0
+        aa_idx = X_v[nongap, j].astype(np.int32, copy=False)
+        F[nongap, col + aa_idx] = 1.0
         col += 20
 
     with warnings.catch_warnings():
@@ -335,6 +408,157 @@ def compute_dca(
     return h_mean, J_mean, h_std, J_std
 
 
+def _sample_site_conditional(
+    i: int,
+    x: np.ndarray,
+    lambda_i: np.ndarray,
+    h: np.ndarray,
+    J: np.ndarray,
+    t_evo: float,
+    rng: np.random.Generator,
+) -> int:
+    """
+    Sample x_i from p_evo(x_i | x_-i) proportional to exp(-E_i / T).
+    """
+    # unary term
+    e = lambda_i[i] * h[i].astype(np.float64)
+    # pairwise term with all other sites
+    for j in range(x.shape[0]):
+        if j == i:
+            continue
+        b = int(x[j])
+        if 0 <= b < 20:
+            e += J[i, j, :, b].astype(np.float64)
+    # stable softmax over -E/T
+    logits = -e / max(t_evo, 1e-8)
+    logits -= logits.max()
+    p = np.exp(logits)
+    p /= p.sum()
+    return int(rng.choice(20, p=p))
+
+
+def _pll_esm2(
+    seq: str,
+    tokenizer,
+    model,
+    device: str,
+) -> float:
+    """
+    Compute pseudo-log-likelihood by masking each position.
+    """
+    import torch
+
+    seq_len = len(seq)
+    if seq_len == 0:
+        return float("-inf")
+
+    total = 0.0
+    aa_to_tok = {aa: tokenizer.convert_tokens_to_ids(aa) for aa in AA}
+    mask_id = tokenizer.mask_token_id
+    if mask_id is None:
+        raise ValueError("Tokenizer has no mask token id.")
+
+    for i, aa in enumerate(seq):
+        tok_id = aa_to_tok.get(aa, None)
+        if tok_id is None:
+            continue
+        masked = seq[:i] + tokenizer.mask_token + seq[i + 1 :]
+        enc = tokenizer(masked, return_tensors="pt")
+        input_ids = enc["input_ids"].to(device)
+        attn = enc.get("attention_mask")
+        if attn is not None:
+            attn = attn.to(device)
+        with torch.no_grad():
+            out = model(input_ids=input_ids, attention_mask=attn)
+            logits = out.logits[0]
+        mask_pos = (input_ids[0] == mask_id).nonzero(as_tuple=True)[0]
+        if len(mask_pos) == 0:
+            continue
+        m = int(mask_pos[0].item())
+        logp = torch.log_softmax(logits[m], dim=-1)[tok_id].item()
+        total += float(logp)
+    return total
+
+
+def gibbs_sample_variants(
+    wt_seq: str,
+    lambda_i: np.ndarray,
+    h: np.ndarray,
+    J: np.ndarray,
+    n_samples: int,
+    burn_in: int,
+    t_evo: float,
+    seed: int = 42,
+    esm_filter_delta: float | None = None,
+    esm_model_name: str = "facebook/esm2_t6_8M_UR50D",
+    esm_device: str = "cpu",
+) -> tuple[list[str], list[float]]:
+    """
+    Algorithm 1 variant sampling from p_evo with optional ESM pLL filtering.
+    """
+    rng = np.random.default_rng(seed)
+    x = np.array([AA_TO_IDX.get(a, GAP) for a in wt_seq], dtype=np.int8)
+    if np.any(x >= 20):
+        raise ValueError("WT sequence contains unsupported amino acids for Gibbs sampling.")
+
+    pll_model = None
+    pll_tokenizer = None
+    wt_pll = None
+    if esm_filter_delta is not None:
+        from transformers import AutoModelForMaskedLM, AutoTokenizer
+
+        print(f"  [gibbs] loading ESM model for pLL filter: {esm_model_name}")
+        pll_tokenizer = AutoTokenizer.from_pretrained(esm_model_name)
+        pll_model = AutoModelForMaskedLM.from_pretrained(esm_model_name).to(esm_device)
+        pll_model.eval()
+        wt_pll = _pll_esm2(wt_seq, pll_tokenizer, pll_model, esm_device)
+        print(f"  [gibbs] WT pLL = {wt_pll:.3f}, delta = {esm_filter_delta}")
+
+    out_variants: list[str] = []
+    out_pll: list[float] = []
+    total_steps = burn_in + n_samples
+    L = len(wt_seq)
+    for t in range(total_steps):
+        for i in range(L):
+            x[i] = _sample_site_conditional(i, x, lambda_i, h, J, t_evo, rng)
+
+        if t >= burn_in:
+            seq = "".join(AA[int(a)] for a in x)
+            if pll_model is not None and wt_pll is not None:
+                pll = _pll_esm2(seq, pll_tokenizer, pll_model, esm_device)
+                if pll < (wt_pll - float(esm_filter_delta)):
+                    continue
+            else:
+                pll = float("nan")
+            out_variants.append(seq)
+            out_pll.append(pll)
+            if len(out_variants) >= n_samples:
+                break
+
+    return out_variants, out_pll
+
+
+def build_consensus_wt(protein_seqs: dict[str, str]) -> str:
+    """
+    Build a valid AA-only WT-like sequence from the alignment by majority vote.
+    Non-standard symbols are ignored at each site; fallback is 'A'.
+    """
+    seqs = list(protein_seqs.values())
+    L = len(seqs[0])
+    consensus = []
+    for i in range(L):
+        counts = {aa: 0 for aa in AA}
+        for s in seqs:
+            a = s[i]
+            if a in counts:
+                counts[a] += 1
+        best = max(counts, key=counts.get)
+        if counts[best] == 0:
+            best = "A"
+        consensus.append(best)
+    return "".join(consensus)
+
+
 
 def main():
     p = argparse.ArgumentParser(
@@ -342,6 +566,8 @@ def main():
     )
     p.add_argument("--tree",         default="flu_tree/ha_tree.nwk",
                    help="Newick tree (default: flu HA)")
+    p.add_argument("--trees-file",   default=None,
+                   help="Optional file containing additional tree paths (one per line)")
     p.add_argument("--fasta",        default="flu_tree/ha_aligned.fasta",
                    help="Aligned FASTA (default: flu HA nucleotide MSA)")
     p.add_argument("--nucleotide",   action="store_true", default=True,
@@ -360,16 +586,36 @@ def main():
                    help="Parallel jobs for DCA position fitting (-1 = all cores)")
     p.add_argument("--skip-dca",     action="store_true",
                    help="Only compute λᵢ, skip DCA (fast sanity check)")
+    p.add_argument("--sample-variants", type=int, default=0,
+                   help="If >0, run Gibbs sampling and save sampled variants")
+    p.add_argument("--burn-in",      type=int, default=200,
+                   help="Gibbs burn-in sweeps before collecting samples")
+    p.add_argument("--t-evo",        type=float, default=1.0,
+                   help="Evolutionary temperature for Gibbs sampling")
+    p.add_argument("--seed",         type=int, default=42,
+                   help="Random seed for DCA bootstraps and Gibbs sampling")
+    p.add_argument("--wt-seq-id",    default=None,
+                   help="Optional FASTA ID to use as WT for Gibbs initialization")
+    p.add_argument("--esm-filter-delta", type=float, default=None,
+                   help="Enable ESM pLL filter with threshold pLL(x) >= pLL(wt)-delta")
+    p.add_argument("--esm-model",    default="facebook/esm2_t6_8M_UR50D",
+                   help="ESM masked LM model name for pLL filtering")
+    p.add_argument("--esm-device",   default="cpu",
+                   help="Device for ESM pLL filtering")
     args, _ = p.parse_known_args()  
 
-    tree_path  = REPO_ROOT / args.tree
     fasta_path = REPO_ROOT / args.fasta
     out_dir    = REPO_ROOT / args.out_dir
     out_dir.mkdir(parents=True, exist_ok=True)
+    tree_list = load_tree_list(args.tree, args.trees_file)
+    tree_paths = [REPO_ROOT / t for t in tree_list]
 
     print("=" * 60)
     print("PROPHET Stage 1")
-    print(f"  tree : {tree_path}")
+    if len(tree_paths) == 1:
+        print(f"  tree : {tree_paths[0]}")
+    else:
+        print(f"  trees: {len(tree_paths)} (first: {tree_paths[0]})")
     print(f"  fasta: {fasta_path}")
     print("=" * 60)
 
@@ -385,15 +631,29 @@ def main():
         }
         print(f"  Loaded {len(protein_seqs)} sequences, length {len(next(iter(protein_seqs.values())))}")
 
+    protein_seqs = normalize_protein_alignment(protein_seqs)
+
     L = len(next(iter(protein_seqs.values())))
 
     # ── Step 2: per-site mutation rate ────────────────────────────────────────
     print(f"\n[2/3] Computing per-site mutation rates (L={L})...")
-    lambda_i = compute_lambda(tree_path, protein_seqs)
+    lambda_runs = []
+    qi_runs = []
+    for idx, tree_path in enumerate(tree_paths, start=1):
+        if len(tree_paths) > 1:
+            print(f"  [lambda] tree {idx}/{len(tree_paths)}: {tree_path}")
+        lam_i, qi_i = compute_lambda_and_qi(tree_path, protein_seqs)
+        lambda_runs.append(lam_i)
+        qi_runs.append(qi_i)
+    lambda_i = np.mean(np.stack(lambda_runs, axis=0), axis=0)
+    qi = np.mean(np.stack(qi_runs, axis=0), axis=0)
 
     lam_path = out_dir / f"{args.prefix}_lambda.npy"
     np.save(lam_path, lambda_i)
+    qi_path = out_dir / f"{args.prefix}_Qi.npz"
+    np.savez_compressed(qi_path, Qi=qi)
     print(f"  Saved → {lam_path}")
+    print(f"  Saved → {qi_path}  ({qi.shape[0]} positions × 20×20)")
     print(f"  λ range: [{lambda_i.min():.4f}, {lambda_i.max():.4f}]")
 
     top10 = np.argsort(lambda_i)[-10:][::-1]
@@ -412,6 +672,7 @@ def main():
             n_bootstraps=args.n_bootstraps,
             l2_reg=args.l2_reg,
             n_jobs=args.n_jobs,
+            seed=args.seed,
         )
 
         np.save(out_dir / f"{args.prefix}_h.npy",     h)
@@ -433,6 +694,38 @@ def main():
         for idx in flat_top:
             i, j = np.unravel_index(idx, J_frob.shape)
             print(f"    positions ({i:4d}, {j:4d}):  ||J|| = {J_frob[i,j]:.4f}")
+
+        if args.sample_variants > 0:
+            print(
+                f"\n[4/4] Gibbs sampling variants "
+                f"(M={args.sample_variants}, burn_in={args.burn_in}, T={args.t_evo})..."
+            )
+            if args.wt_seq_id is not None and args.wt_seq_id in protein_seqs:
+                wt_seq = protein_seqs[args.wt_seq_id]
+            else:
+                wt_seq = build_consensus_wt(protein_seqs)
+            variants, pll_vals = gibbs_sample_variants(
+                wt_seq=wt_seq,
+                lambda_i=lambda_i,
+                h=h,
+                J=J,
+                n_samples=args.sample_variants,
+                burn_in=args.burn_in,
+                t_evo=args.t_evo,
+                seed=args.seed,
+                esm_filter_delta=args.esm_filter_delta,
+                esm_model_name=args.esm_model,
+                esm_device=args.esm_device,
+            )
+            v_path = out_dir / f"{args.prefix}_gibbs_variants.fasta"
+            with open(v_path, "w", encoding="utf-8") as f:
+                for i, seq in enumerate(variants, start=1):
+                    pll = pll_vals[i - 1]
+                    if np.isnan(pll):
+                        f.write(f">variant_{i}\n{seq}\n")
+                    else:
+                        f.write(f">variant_{i} pll={pll:.4f}\n{seq}\n")
+            print(f"  Saved → {v_path}  ({len(variants)} accepted variants)")
 
     print("\n" + "=" * 60)
     print("Stage 1 complete.")

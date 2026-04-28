@@ -45,3 +45,5 @@ results_*.json
 # OS
 .DS_Store
 Thumbs.db
+!trees/*.nwk
+!alignments/*.fasta

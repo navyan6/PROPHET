@@ -23,8 +23,9 @@ def main() -> None:
     p.add_argument("--prefix", default="paper_run")
     p.add_argument("--out-dir", default="data/prophet")
     p.add_argument("--sample-variants", type=int, default=500)
-    p.add_argument("--n-designs", type=int, default=250)
+    p.add_argument("--n-designs", type=int, default=500)
     p.add_argument("--n-steps", type=int, default=200)
+    p.add_argument("--peptide-length", type=int, default=10)
     p.add_argument("--eta", type=float, default=0.1)
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--auto-calibrate-tevo", action="store_true")
@@ -72,6 +73,7 @@ def main() -> None:
             "--out-json", str(designs_json),
             "--n-designs", str(args.n_designs),
             "--n-steps", str(args.n_steps),
+            "--peptide-length", str(args.peptide_length),
             "--eta", str(args.eta),
             "--seed", str(args.seed),
         ],

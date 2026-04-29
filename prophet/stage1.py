@@ -699,6 +699,52 @@ def calibrate_t_evo(
     return float(best_t), metrics
 
 
+def _eval_metrics(
+    variants: list[str],
+    leaves: list[str],
+    lambda_i: np.ndarray,
+    h: np.ndarray,
+    J: np.ndarray,
+    wt_seq: str,
+) -> dict[str, float]:
+    """
+    Lightweight variant-quality summary printed after Gibbs sampling.
+
+    The fuller paper table is produced by eval scripts, but Stage 1 should not
+    crash just because optional reporting is unavailable.
+    """
+    if not variants:
+        metrics = {
+            "n_variants": 0,
+            "mean_wt_edit": float("nan"),
+            "mean_nearest_leaf_edit": float("nan"),
+            "mean_dca_energy": float("nan"),
+        }
+    else:
+        from prophet.common import dca_energy, hamming_distance, nearest_leaf_edit_distance
+
+        wt_dist = np.array([hamming_distance(v, wt_seq) for v in variants], dtype=np.float64)
+        leaf_dist = np.array([nearest_leaf_edit_distance(v, leaves) for v in variants], dtype=np.float64)
+        energies = np.array([dca_energy(v, lambda_i, h, J) for v in variants], dtype=np.float64)
+        metrics = {
+            "n_variants": float(len(variants)),
+            "mean_wt_edit": float(np.mean(wt_dist)),
+            "median_wt_edit": float(np.median(wt_dist)),
+            "mean_nearest_leaf_edit": float(np.mean(leaf_dist)),
+            "median_nearest_leaf_edit": float(np.median(leaf_dist)),
+            "mean_dca_energy": float(np.mean(energies)),
+            "median_dca_energy": float(np.median(energies)),
+        }
+
+    print("  Variant quality summary:")
+    for key, val in metrics.items():
+        if isinstance(val, float):
+            print(f"    {key}: {val:.4f}")
+        else:
+            print(f"    {key}: {val}")
+    return metrics
+
+
 
 def main():
     p = argparse.ArgumentParser(

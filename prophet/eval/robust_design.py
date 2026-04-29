@@ -1,8 +1,13 @@
 from __future__ import annotations
 
+import argparse
+import json
 from collections.abc import Callable
+from pathlib import Path
+import sys
 
 import numpy as np
+from Bio import SeqIO
 
 
 def evaluate_peptide_robustness(
@@ -45,3 +50,80 @@ def evaluate_peptide_robustness(
         },
     }
 
+
+def _load_peptides(path: Path) -> list[str]:
+    with open(path, "r", encoding="utf-8") as f:
+        rows = json.load(f)
+    peptides = []
+    for row in rows:
+        pep = row.get("peptide") or row.get("sequence")
+        if pep:
+            peptides.append(str(pep).strip().upper())
+    return peptides
+
+
+def _load_fasta(path: Path) -> list[str]:
+    return [
+        str(rec.seq).strip().upper().replace("-", "")
+        for rec in SeqIO.parse(str(path), "fasta")
+        if str(rec.seq).strip()
+    ]
+
+
+def main() -> None:
+    p = argparse.ArgumentParser(
+        description="Evaluate Stage 2 designs on held-out escape variants"
+    )
+    p.add_argument("--designs-json", required=True)
+    p.add_argument("--wt-seq", required=True)
+    p.add_argument("--escape-fasta", required=True)
+    p.add_argument("--out-json", default=None)
+    p.add_argument("--tau-bind", type=float, default=0.5)
+    p.add_argument("--affinity-mode", choices=["surrogate", "peptiverse"], default="peptiverse")
+    p.add_argument("--device", default="cpu")
+    p.add_argument("--peptiverse-normalization", choices=["minmax", "raw"], default="minmax")
+    p.add_argument("--peptiverse-min", type=float, default=7.0)
+    p.add_argument("--peptiverse-max", type=float, default=9.0)
+    args = p.parse_args()
+
+    repo_root = Path(__file__).resolve().parents[2]
+    sys.path.insert(0, str(repo_root))
+    from prophet.stage2 import AffinityScorer
+
+    peptides = _load_peptides(Path(args.designs_json))
+    escape_variants = _load_fasta(Path(args.escape_fasta))
+    scorer = AffinityScorer(
+        mode=args.affinity_mode,
+        device=args.device,
+        peptiverse_normalization=args.peptiverse_normalization,
+        peptiverse_min=args.peptiverse_min,
+        peptiverse_max=args.peptiverse_max,
+    )
+    results = evaluate_peptide_robustness(
+        peptides=peptides,
+        wt_target=args.wt_seq.strip().upper().replace("-", ""),
+        escape_variants=escape_variants,
+        aff_fn=scorer,
+        tau_bind=args.tau_bind,
+    )
+    results["inputs"] = {
+        "designs_json": str(Path(args.designs_json)),
+        "escape_fasta": str(Path(args.escape_fasta)),
+        "n_peptides": len(peptides),
+        "n_escape_variants": len(escape_variants),
+        "affinity_mode": args.affinity_mode,
+        "peptiverse_normalization": args.peptiverse_normalization,
+        "peptiverse_min": args.peptiverse_min,
+        "peptiverse_max": args.peptiverse_max,
+    }
+    print(json.dumps(results, indent=2))
+    if args.out_json:
+        out_path = Path(args.out_json)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(out_path, "w", encoding="utf-8") as f:
+            json.dump(results, f, indent=2)
+        print(f"Saved robustness metrics -> {out_path}")
+
+
+if __name__ == "__main__":
+    main()

@@ -16,11 +16,10 @@ import argparse
 import json
 import math
 from types import SimpleNamespace
-import warnings
 from dataclasses import asdict, dataclass
 import torch
 from pathlib import Path
-from typing import Callable
+from typing import Callable, Literal
 
 import numpy as np
 from Bio import SeqIO
@@ -48,6 +47,7 @@ def _tokens_to_peptide(tokens: list[int] | np.ndarray) -> str:
 
 @dataclass
 class DesignResult:
+    method: str
     peptide: str
     wt_score: float
     robust_score: float
@@ -70,15 +70,45 @@ def cvar_robust_score(scores: np.ndarray, eta: float) -> float:
 
 class AffinityScorer:
     """
-    Callable wrapper: Aff(peptide, target) -> float in [0, 1].
+    Callable wrapper: Aff(peptide, target) -> float.
+
+    Surrogate scores are always in [0, 1]. PeptiVerse scores are mapped to
+    [0, 1] by default using the binding-affinity class thresholds: raw 7.0 is
+    0.0, raw 9.0 is 1.0. Use peptiverse_normalization="raw" only for
+    diagnostics/calibration, because downstream tau_bind and CVaR tables assume
+    normalized scores.
     """
 
-    def __init__(self, mode: str = "surrogate", device: str = "cpu"):
+    def __init__(
+        self,
+        mode: str = "surrogate",
+        device: str = "cpu",
+        peptiverse_normalization: Literal["minmax", "raw"] = "minmax",
+        peptiverse_min: float = 7.0,
+        peptiverse_max: float = 9.0,
+    ):
         self.mode = mode
         self.device = device
+        self.peptiverse_normalization = peptiverse_normalization
+        self.peptiverse_min = float(peptiverse_min)
+        self.peptiverse_max = float(peptiverse_max)
+        if self.peptiverse_max <= self.peptiverse_min:
+            raise ValueError("--peptiverse-max must be greater than --peptiverse-min")
         self._predict: Callable[[str, str], float] = self._surrogate
         if mode == "peptiverse":
             self._try_load_peptiverse()
+
+    def _normalize_peptiverse_score(self, raw_score: float) -> float:
+        if self.peptiverse_normalization == "raw":
+            return raw_score
+        if self.peptiverse_normalization != "minmax":
+            raise ValueError(
+                f"Unknown PeptiVerse normalization: {self.peptiverse_normalization}"
+            )
+        score = (raw_score - self.peptiverse_min) / (
+            self.peptiverse_max - self.peptiverse_min
+        )
+        return float(np.clip(score, 0.0, 1.0))
 
     def _try_load_peptiverse(self) -> None:
         try:
@@ -99,23 +129,38 @@ class AffinityScorer:
             model = load_binding_model(
                 model_pt, pooled_or_unpooled="unpooled", device=self.device
             )
+            embedding_cache: dict[str, tuple[torch.Tensor, torch.Tensor]] = {}
+
+            def _embed(seq: str) -> tuple[torch.Tensor, torch.Tensor]:
+                cached = embedding_cache.get(seq)
+                if cached is None:
+                    cached = embedder.unpooled(seq)
+                    embedding_cache[seq] = cached
+                return cached
 
             def _peptiverse(peptide: str, target: str) -> float:
                 import torch
-                T, Mt = embedder.unpooled(target)
-                B, Mb = embedder.unpooled(peptide)
+                T, Mt = _embed(target)
+                B, Mb = _embed(peptide)
                 with torch.no_grad():
                     reg, _ = model(T, Mt, B, Mb)
-                return float(reg.squeeze().cpu().item())
+                raw_score = float(reg.squeeze().cpu().item())
+                return self._normalize_peptiverse_score(raw_score)
 
             self._predict = _peptiverse
-            print("  [scorer] PeptiVerse loaded.")
-        except Exception as exc:
-            warnings.warn(
-                f"PeptiVerse unavailable ({exc}); falling back to surrogate scorer.",
-                stacklevel=2,
+            print(
+                "  [scorer] PeptiVerse loaded "
+                f"(normalization={self.peptiverse_normalization}, "
+                f"min={self.peptiverse_min:g}, max={self.peptiverse_max:g})."
+                f" Embeddings will be cached per unique sequence.",
+                flush=True,
             )
-            self._predict = self._surrogate
+        except Exception as exc:
+            raise RuntimeError(
+                "PeptiVerse scoring was requested but could not be loaded. "
+                "Install/fix PeptiVerse dependencies and checkpoint paths, or "
+                "explicitly choose --affinity-mode surrogate for debug-only runs."
+            ) from exc
 
     @staticmethod
     def _surrogate(peptide: str, target: str) -> float:
@@ -187,13 +232,33 @@ class RobustnessScoreModel:
             scores.append(cvar_robust_score(var_scores, self.eta))
         return torch.tensor(scores, dtype=torch.float32, device=device)
 
+
+class WTScoreModel:
+    def __init__(self, aff_fn, wt_seq):
+        self.aff_fn = aff_fn
+        self.wt_seq = wt_seq
+
+    def __call__(self, x, t=None):
+        device = x.device if isinstance(x, torch.Tensor) else torch.device("cpu")
+        if isinstance(x, torch.Tensor):
+            x = x.cpu().numpy()
+        seqs = [_tokens_to_peptide(row) for row in x]
+        return torch.tensor(
+            [self.aff_fn(seq, self.wt_seq) for seq in seqs],
+            dtype=torch.float32,
+            device=device,
+        )
+
+
 def mog_dfm_guided_design(
     wt_seq: str,
-    variants: list[str],
+    eval_variants: list[str],
     aff_fn: AffinityScorer,
     peptide_length: int,
     n_designs: int,
     eta: float,
+    design_mode: str = "prophet",
+    guidance_variants: list[str] | None = None,
     dfm_model=None,
     dfm_tokenizer=None,
     dfm_device="cpu",
@@ -231,13 +296,23 @@ def mog_dfm_guided_design(
         is_peptide=True,
     )
 
+    if guidance_variants is None:
+        guidance_variants = eval_variants
+
     # Omega sweep for Pareto front
-    n_grid = 10
+    n_grid = int(kwargs.get("omega_samples") or 10)
+    n_grid = max(1, n_grid)
     weight_grid = [[float(w), 1.0 - float(w)] for w in np.linspace(0, 1, n_grid)]
     all_results = []
-    for omega in weight_grid:
+    produced = 0
+    for grid_idx, omega in enumerate(weight_grid):
         # Prepare initial batch for each omega
-        n_samples = n_designs // n_grid if n_grid > 0 else n_designs
+        remaining = n_designs - produced
+        if remaining <= 0:
+            break
+        slots_left = n_grid - grid_idx
+        n_samples = max(1, math.ceil(remaining / slots_left))
+        produced += n_samples
         x_init = torch.tensor(
             np.random.choice(valid_aa_tokens, size=(n_samples, peptide_length)),
             dtype=torch.long, device=dfm_device
@@ -246,34 +321,27 @@ def mog_dfm_guided_design(
         twos = torch.full((n_samples, 1), 2, dtype=x_init.dtype, device=dfm_device)
         x_init = torch.cat([zeros, x_init, twos], dim=1)
 
-        # Score models: WT affinity and CVaR robustness
-        score_models = []
-        class WTScoreModel:
-            def __init__(self, aff_fn, wt_seq):
-                self.aff_fn = aff_fn
-                self.wt_seq = wt_seq
-            def __call__(self, x, t=None):
-                device = x.device if isinstance(x, torch.Tensor) else torch.device("cpu")
-                if isinstance(x, torch.Tensor):
-                    x = x.cpu().numpy()
-                seqs = [_tokens_to_peptide(row) for row in x]
-                return torch.tensor(
-                    [self.aff_fn(seq, self.wt_seq) for seq in seqs],
-                    dtype=torch.float32,
-                    device=device,
-                )
-        score_models.append(WTScoreModel(aff_fn, wt_seq))
-        score_models.append(RobustnessScoreModel(variants, eta, aff_fn, wt_seq))
+        if design_mode == "wt_only":
+            score_models = [WTScoreModel(aff_fn, wt_seq)]
+            importance = [1.0]
+            result_omega = [1.0, 0.0]
+        else:
+            score_models = [
+                WTScoreModel(aff_fn, wt_seq),
+                RobustnessScoreModel(guidance_variants, eta, aff_fn, wt_seq),
+            ]
+            importance = omega
+            result_omega = omega
 
         # Run DFM sampling for this omega
         x_samples = dfm_model.multi_guidance_sample(
             args=guidance_args,
             x_init=x_init,
-            step_size=1/200,
-            verbose=True,
+            step_size=(1.0 - 1e-3) / (max(int(kwargs.get("n_steps", 200)), 1) + 1e-6),
+            verbose=bool(kwargs.get("verbose", False)),
             time_grid=torch.tensor([0.0, 1.0-1e-3], device=dfm_device),
             score_models=score_models,
-            importance=omega,
+            importance=importance,
         )
 
         # Decode and score
@@ -287,15 +355,16 @@ def mog_dfm_guided_design(
                 d = _tokens_to_peptide(seq)
             decoded.append(d)
         for seq in decoded:
-            wt_score, var_scores = score_peptide_against_variants(seq, variants, wt_seq, aff_fn)
+            wt_score, var_scores = score_peptide_against_variants(seq, eval_variants, wt_seq, aff_fn)
             robust = cvar_robust_score(var_scores, eta)
             all_results.append(DesignResult(
+                method=design_mode,
                 peptide=seq,
                 wt_score=wt_score,
                 robust_score=robust,
                 mean_score=float(np.mean(var_scores)),
                 min_score=float(np.min(var_scores)),
-                omega=omega,
+                omega=result_omega,
                 per_variant=var_scores.tolist(),
             ))
     all_results.sort(key=lambda r: (r.robust_score, r.wt_score), reverse=True)
@@ -327,6 +396,31 @@ def _load_variants_fasta(
         rng = np.random.default_rng(seed)
         idxs = rng.choice(len(out), size=limit, replace=False)
         return [out[i] for i in sorted(idxs)]
+    return out
+
+
+def _hamming(a: str, b: str) -> int:
+    n = min(len(a), len(b))
+    return sum(x != y for x, y in zip(a[:n], b[:n])) + abs(len(a) - len(b))
+
+
+def _random_variants_matched_to_edit_distance(
+    wt_seq: str,
+    reference_variants: list[str],
+    seed: int,
+) -> list[str]:
+    rng = np.random.default_rng(seed)
+    wt_arr = np.array(list(wt_seq))
+    out: list[str] = []
+    for ref in reference_variants:
+        k = min(_hamming(wt_seq, ref), len(wt_seq))
+        arr = wt_arr.copy()
+        if k > 0:
+            positions = rng.choice(len(wt_seq), size=k, replace=False)
+            for pos in positions:
+                choices = [aa for aa in AA if aa != arr[pos]]
+                arr[pos] = rng.choice(choices)
+        out.append("".join(arr.tolist()))
     return out
 
 
@@ -364,12 +458,30 @@ def main() -> None:
                    help="If set, sweep omega over this many evenly-spaced grid points")
     p.add_argument("--variant-limit",  type=int,   default=None,
                    help="Randomly subsample this many variants (None = use all)")
+    p.add_argument("--guidance-variants-fasta", default=None,
+                   help="Optional FASTA for guidance variants; defaults to --variants-fasta")
+    p.add_argument("--design-mode", choices=["prophet", "wt_only", "uniform_leaves", "random_variants"],
+                   default="prophet",
+                   help="Design objective to run. uniform_leaves uses guidance variants as a leaf baseline.")
     p.add_argument("--affinity-mode",  choices=["surrogate", "peptiverse"],
                    default="surrogate")
+    p.add_argument("--peptiverse-normalization", choices=["minmax", "raw"],
+                   default="minmax",
+                   help=(
+                       "PeptiVerse score normalization. minmax maps raw regression "
+                       "scores to [0,1] using --peptiverse-min/--peptiverse-max; "
+                       "raw is for diagnostics only."
+                   ))
+    p.add_argument("--peptiverse-min", type=float, default=7.0,
+                   help="Raw PeptiVerse score mapped to 0.0 when using minmax normalization.")
+    p.add_argument("--peptiverse-max", type=float, default=9.0,
+                   help="Raw PeptiVerse score mapped to 1.0 when using minmax normalization.")
     p.add_argument("--device",         default="cpu")
     p.add_argument("--seed",           type=int,   default=42)
     p.add_argument("--dfm-ckpt", type=str, default=None, help="Path to DFM model checkpoint (MOG-DFM)")
     p.add_argument("--dfm-device", type=str, default=None, help="Device for DFM model (default: same as --device)")
+    p.add_argument("--verbose-sampling", action="store_true",
+                   help="Enable tqdm progress inside MOG-DFM sampling")
     args = p.parse_args()
 
     variants_path = _resolve_user_path(args.variants_fasta)
@@ -378,12 +490,34 @@ def main() -> None:
         raise ValueError(f"No variants loaded from {variants_path}.")
     print(f"Loaded {len(variants)} variants from {variants_path}")
 
+    guidance_variants = variants
+    if args.guidance_variants_fasta:
+        guidance_path = _resolve_user_path(args.guidance_variants_fasta)
+        guidance_variants = _load_variants_fasta(guidance_path, args.variant_limit, args.seed)
+        print(f"Loaded {len(guidance_variants)} guidance variants from {guidance_path}")
+
     wt_seq = args.wt_seq.strip().upper().replace("-", "")
     if not wt_seq:
         raise ValueError("--wt-seq is empty after stripping gaps.")
     print(f"WT sequence: {wt_seq[:30]}{'...' if len(wt_seq) > 30 else ''} (len={len(wt_seq)})")
 
-    scorer = AffinityScorer(mode=args.affinity_mode, device=args.device)
+    if args.design_mode == "random_variants":
+        guidance_variants = _random_variants_matched_to_edit_distance(
+            wt_seq, guidance_variants, seed=args.seed + 17
+        )
+        print("Using random variants matched to guidance edit-distance distribution.")
+    elif args.design_mode == "wt_only":
+        print("Using WT-only guidance; variants are retained for post-hoc scoring.")
+    elif args.design_mode == "uniform_leaves":
+        print("Using supplied guidance variants as uniformly weighted leaves.")
+
+    scorer = AffinityScorer(
+        mode=args.affinity_mode,
+        device=args.device,
+        peptiverse_normalization=args.peptiverse_normalization,
+        peptiverse_min=args.peptiverse_min,
+        peptiverse_max=args.peptiverse_max,
+    )
     hypercone_rad = math.radians(args.hypercone_angle)
 
     # Load DFM model if requested
@@ -391,10 +525,17 @@ def main() -> None:
     dfm_tokenizer = None
     dfm_device = args.dfm_device if args.dfm_device else args.device
     if not args.dfm_ckpt:
-        raise ValueError(
-            "--dfm-ckpt is required for MOG-DFM sampling. "
-            "Pass a valid checkpoint path."
+        default_ckpt = (
+            REPO_ROOT / "MOG-DFM" / "ckpt" / "peptide"
+            / "cnn_epoch200_lr0.0001_embed512_hidden256_loss3.1051.ckpt"
         )
+        if default_ckpt.exists():
+            args.dfm_ckpt = str(default_ckpt)
+        else:
+            raise ValueError(
+                "--dfm-ckpt is required for MOG-DFM sampling. "
+                "Pass a valid checkpoint path."
+            )
 
     print(f"Loading DFM model from {args.dfm_ckpt} on device {dfm_device}...")
     try:
@@ -409,14 +550,17 @@ def main() -> None:
 
     print(
         f"\nRunning MOG-DFM guided design: "
+        f"mode={args.design_mode}, "
         f"n_designs={args.n_designs}, n_steps={args.n_steps}, "
         f"eta={args.eta}, beta={args.beta}"
     )
     designs = mog_dfm_guided_design(
         wt_seq=wt_seq,
-        variants=variants,
+        eval_variants=variants,
+        guidance_variants=guidance_variants,
         aff_fn=scorer,
         peptide_length=args.peptide_length,
+        design_mode=args.design_mode,
         n_steps=args.n_steps,
         n_designs=args.n_designs,
         eta=args.eta,
@@ -425,6 +569,7 @@ def main() -> None:
         hypercone_angle=hypercone_rad,
         omega_samples=args.omega_grid,
         seed=args.seed,
+        verbose=args.verbose_sampling,
         dfm_model=dfm_model,
         dfm_tokenizer=dfm_tokenizer,
         dfm_device=dfm_device,
@@ -457,4 +602,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

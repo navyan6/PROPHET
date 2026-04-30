@@ -17,6 +17,11 @@ CSV="${OUT_DIR}/hiv_train_peptune_unconditional.csv"
 
 mkdir -p "${OUT_DIR}" "${STAGE2_OUT}"
 
+export TORCH_HOME="${TORCH_HOME:-/scratch/pranamlab/kimberly/model_cache/torch}"
+export HF_HOME="${HF_HOME:-/scratch/pranamlab/kimberly/model_cache/hf}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-/scratch/pranamlab/kimberly/model_cache}"
+mkdir -p "${TORCH_HOME}" "${HF_HOME}" "${XDG_CACHE_HOME}"
+
 if [[ ! -s "${CKPT}" ]]; then
   echo "[error] Missing PepTune checkpoint: ${CKPT}" >&2
   echo "Download peptune-pretrained.ckpt into PepTune/checkpoints/ before running this baseline." >&2

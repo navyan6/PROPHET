@@ -4,7 +4,7 @@ set -euo pipefail
 cd /scratch/pranamlab/kimberly/PROPHET
 
 PYTHON=/scratch/pranamlab/kimberly/PROPHET/venv/bin/python
-OUT_DIR=results/hiv_stage2
+OUT_DIR="${OUT_DIR:-results/hiv_stage2}"
 
 required=(
   "${OUT_DIR}/hiv_train_prophet_robust_design.json"

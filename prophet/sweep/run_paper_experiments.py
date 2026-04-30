@@ -30,10 +30,22 @@ def main() -> None:
     p.add_argument("--n-steps", type=int, default=200)
     p.add_argument("--peptide-length", type=int, default=10)
     p.add_argument("--eta", type=float, default=0.1)
+    p.add_argument("--t-evo", type=float, default=1.0,
+                   help="Fixed Stage 1 Gibbs evolutionary temperature")
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--auto-calibrate-tevo", action="store_true")
+    p.add_argument("--calibration-ts", default=None,
+                   help="Comma-separated t_evo candidates when --auto-calibrate-tevo is set")
+    p.add_argument("--calibration-samples", type=int, default=None,
+                   help="Samples per t_evo candidate when --auto-calibrate-tevo is set")
     p.add_argument("--energy-mode", choices=["paper_dca", "dca_plus_qi"], default="dca_plus_qi",
                    help="Stage 1 Gibbs energy mode; paper bundle defaults to lambda + DCA + Qi")
+    p.add_argument("--esm-filter-delta", type=float, default=None,
+                   help="Optional Stage 1 ESM pLL filter threshold")
+    p.add_argument("--esm-model", default=None,
+                   help="Optional Stage 1 ESM model name for pLL filtering")
+    p.add_argument("--esm-device", default=None,
+                   help="Optional Stage 1 ESM device for pLL filtering")
     p.add_argument("--protein", action="store_true", help="Input FASTA is already protein aligned")
     p.add_argument("--dfm-ckpt", default=None, help="MOG-DFM peptide checkpoint")
     p.add_argument("--device", default="cuda:0")
@@ -88,6 +100,7 @@ def main() -> None:
         "--out-dir", str(out_dir),
         "--sample-variants", str(args.sample_variants),
         "--seed", str(args.seed),
+        "--t-evo", str(args.t_evo),
         "--energy-mode", args.energy_mode,
     ]
     if args.trees_file:
@@ -98,6 +111,16 @@ def main() -> None:
         stage1_cmd.append("--protein")
     if args.auto_calibrate_tevo:
         stage1_cmd.extend(["--auto-calibrate-tevo", "--calibration-json", str(calib_json)])
+        if args.calibration_ts:
+            stage1_cmd.extend(["--calibration-ts", args.calibration_ts])
+        if args.calibration_samples is not None:
+            stage1_cmd.extend(["--calibration-samples", str(args.calibration_samples)])
+    if args.esm_filter_delta is not None:
+        stage1_cmd.extend(["--esm-filter-delta", str(args.esm_filter_delta)])
+    if args.esm_model:
+        stage1_cmd.extend(["--esm-model", args.esm_model])
+    if args.esm_device:
+        stage1_cmd.extend(["--esm-device", args.esm_device])
     _run(stage1_cmd, cwd=repo_root)
 
     modes = [m.strip() for m in str(args.design_modes).split(",") if m.strip()]

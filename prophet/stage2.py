@@ -69,21 +69,11 @@ def cvar_robust_score(scores: np.ndarray, eta: float) -> float:
 
 
 class AffinityScorer:
-    """
-    Callable wrapper: Aff(peptide, target) -> float.
-
-    Surrogate scores are always in [0, 1]. PeptiVerse scores are mapped to
-    [0, 1] by default using the binding-affinity class thresholds: raw 7.0 is
-    0.0, raw 9.0 is 1.0. Use peptiverse_normalization="raw" only for
-    diagnostics/calibration, because downstream tau_bind and CVaR tables assume
-    normalized scores.
-    """
-
     def __init__(
         self,
         mode: str = "surrogate",
         device: str = "cpu",
-        peptiverse_normalization: Literal["minmax", "raw"] = "minmax",
+        peptiverse_normalization: Literal["minmax", "raw"] = "raw",
         peptiverse_min: float = 7.0,
         peptiverse_max: float = 9.0,
     ):
@@ -466,11 +456,11 @@ def main() -> None:
     p.add_argument("--affinity-mode",  choices=["surrogate", "peptiverse"],
                    default="surrogate")
     p.add_argument("--peptiverse-normalization", choices=["minmax", "raw"],
-                   default="minmax",
+                   default="raw",
                    help=(
                        "PeptiVerse score normalization. minmax maps raw regression "
                        "scores to [0,1] using --peptiverse-min/--peptiverse-max; "
-                       "raw is for diagnostics only."
+                       "raw uses the regression score directly."
                    ))
     p.add_argument("--peptiverse-min", type=float, default=7.0,
                    help="Raw PeptiVerse score mapped to 0.0 when using minmax normalization.")

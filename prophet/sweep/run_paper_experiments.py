@@ -39,7 +39,7 @@ def main() -> None:
     p.add_argument("--device", default="cuda:0")
     p.add_argument("--dfm-device", default=None)
     p.add_argument("--affinity-mode", choices=["surrogate", "peptiverse"], default="peptiverse")
-    p.add_argument("--peptiverse-normalization", choices=["minmax", "raw"], default="minmax")
+    p.add_argument("--peptiverse-normalization", choices=["minmax", "raw"], default="raw")
     p.add_argument("--peptiverse-min", type=float, default=7.0)
     p.add_argument("--peptiverse-max", type=float, default=9.0)
     p.add_argument(
@@ -49,8 +49,14 @@ def main() -> None:
     )
     p.add_argument("--guidance-variants-fasta", default=None)
     p.add_argument("--escape-fasta", default=None, help="Held-out escape variants for Table 2-style evaluation")
-    p.add_argument("--tau-bind", type=float, default=0.5)
+    p.add_argument("--tau-bind", type=float, default=None)
     args = p.parse_args()
+    if args.tau_bind is None:
+        args.tau_bind = (
+            8.0
+            if args.affinity_mode == "peptiverse" and args.peptiverse_normalization == "raw"
+            else 0.5
+        )
 
     repo_root = Path(args.repo_root).resolve()
     prophet_dir = repo_root / "prophet"

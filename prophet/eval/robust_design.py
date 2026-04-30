@@ -51,6 +51,12 @@ def evaluate_peptide_robustness(
     }
 
 
+def _default_tau_bind(affinity_mode: str, peptiverse_normalization: str) -> float:
+    if affinity_mode == "peptiverse" and peptiverse_normalization == "raw":
+        return 8.0
+    return 0.5
+
+
 def _load_peptides(path: Path) -> list[str]:
     with open(path, "r", encoding="utf-8") as f:
         rows = json.load(f)
@@ -78,10 +84,10 @@ def main() -> None:
     p.add_argument("--wt-seq", required=True)
     p.add_argument("--escape-fasta", required=True)
     p.add_argument("--out-json", default=None)
-    p.add_argument("--tau-bind", type=float, default=0.5)
+    p.add_argument("--tau-bind", type=float, default=None)
     p.add_argument("--affinity-mode", choices=["surrogate", "peptiverse"], default="peptiverse")
     p.add_argument("--device", default="cpu")
-    p.add_argument("--peptiverse-normalization", choices=["minmax", "raw"], default="minmax")
+    p.add_argument("--peptiverse-normalization", choices=["minmax", "raw"], default="raw")
     p.add_argument("--peptiverse-min", type=float, default=7.0)
     p.add_argument("--peptiverse-max", type=float, default=9.0)
     args = p.parse_args()
@@ -92,6 +98,11 @@ def main() -> None:
 
     peptides = _load_peptides(Path(args.designs_json))
     escape_variants = _load_fasta(Path(args.escape_fasta))
+    tau_bind = (
+        args.tau_bind
+        if args.tau_bind is not None
+        else _default_tau_bind(args.affinity_mode, args.peptiverse_normalization)
+    )
     scorer = AffinityScorer(
         mode=args.affinity_mode,
         device=args.device,
@@ -104,7 +115,7 @@ def main() -> None:
         wt_target=args.wt_seq.strip().upper().replace("-", ""),
         escape_variants=escape_variants,
         aff_fn=scorer,
-        tau_bind=args.tau_bind,
+        tau_bind=tau_bind,
     )
     results["inputs"] = {
         "designs_json": str(Path(args.designs_json)),
@@ -115,6 +126,7 @@ def main() -> None:
         "peptiverse_normalization": args.peptiverse_normalization,
         "peptiverse_min": args.peptiverse_min,
         "peptiverse_max": args.peptiverse_max,
+        "tau_bind": tau_bind,
     }
     print(json.dumps(results, indent=2))
     if args.out_json:

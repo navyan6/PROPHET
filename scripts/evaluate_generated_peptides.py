@@ -106,7 +106,7 @@ def main() -> None:
     p.add_argument("--out-json", required=True)
     p.add_argument("--eta", type=float, default=0.1)
     p.add_argument("--tau-bind", type=float, default=None)
-    p.add_argument("--device", default="cpu")
+    p.add_argument("--device", default="cuda:0")
     p.add_argument("--peptiverse-normalization", choices=["minmax", "raw"], default="raw")
     p.add_argument("--peptiverse-min", type=float, default=7.0)
     p.add_argument("--peptiverse-max", type=float, default=9.0)

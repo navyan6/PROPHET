@@ -40,6 +40,12 @@ def main() -> None:
                    help="Samples per t_evo candidate when --auto-calibrate-tevo is set")
     p.add_argument("--energy-mode", choices=["paper_dca", "dca_plus_qi"], default="dca_plus_qi",
                    help="Stage 1 Gibbs energy mode; paper bundle defaults to lambda + DCA + Qi")
+    p.add_argument(
+        "--stage1-ablation",
+        choices=["full", "minus_dca", "minus_lambda", "minus_dca_minus_lambda"],
+        default="full",
+        help="Stage 1 ablation to apply before Gibbs sampling",
+    )
     p.add_argument("--esm-filter-delta", type=float, default=None,
                    help="Optional Stage 1 ESM pLL filter threshold")
     p.add_argument("--esm-model", default=None,
@@ -109,6 +115,10 @@ def main() -> None:
         stage1_cmd.extend(["--tree-subsample-j", str(args.tree_subsample_j)])
     if args.protein:
         stage1_cmd.append("--protein")
+    if args.stage1_ablation in {"minus_dca", "minus_dca_minus_lambda"}:
+        stage1_cmd.append("--ablate-zero-dca-couplings")
+    if args.stage1_ablation in {"minus_lambda", "minus_dca_minus_lambda"}:
+        stage1_cmd.append("--ablate-flatten-lambda")
     if args.auto_calibrate_tevo:
         stage1_cmd.extend(["--auto-calibrate-tevo", "--calibration-json", str(calib_json)])
         if args.calibration_ts:

@@ -22,8 +22,12 @@ def run_ablations(
 
     configs: dict[str, dict] = {
         "full": base_config,
-        "minus_dca": {**copy.deepcopy(base_config), "ablation": {"zero_J": True}},
-        "minus_lambda": {**copy.deepcopy(base_config), "ablation": {"unit_lambda": True}},
+        "minus_dca": {**copy.deepcopy(base_config), "ablation": {"zero_dca_couplings": True}},
+        "minus_lambda": {**copy.deepcopy(base_config), "ablation": {"flatten_lambda": True}},
+        "minus_dca_minus_lambda": {
+            **copy.deepcopy(base_config),
+            "ablation": {"zero_dca_couplings": True, "flatten_lambda": True},
+        },
         "minus_esm_filter": {**copy.deepcopy(base_config), "esm_filter_delta": None},
         "leaves_only": {**copy.deepcopy(base_config), "ablation": {"use_leaf_variants": True}},
     }
@@ -63,4 +67,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

@@ -1,14 +1,9 @@
 #!/usr/bin/env python3
 """
-PROPHET Stage 2: escape-robust peptide design via multi-objective guided sampling.
+Standalone MOG-DFM baselines for PROPHET Stage 2 inputs.
 
-Implements Algorithm 2 from the paper as a surrogate-guided discrete sampler with:
-  - Two-objective structure: s1 = Aff(y, x_WT), s2 = CVaR robustness over variants
-  - Pareto weight vector omega blending s1 and s2
-  - Rank-normalised ΔS guidance signal (Eq. 2 approximation)
-  - Hypercone filtering on the Pareto improvement direction
-  - MOG-DFM-style guided transition rates (plug-in: replace _base_logits with a
-    real pre-trained flow model's position logits when available)
+This file intentionally lives next to, but separate from, stage1.py/stage2.py so
+baseline experiments can be changed without touching the main PROPHET scripts.
 """
 from __future__ import annotations
 
@@ -212,6 +207,29 @@ class RobustnessScoreModel:
         return torch.tensor(scores, dtype=torch.float32, device=device)
 
 
+class MeanVariantScoreModel:
+    def __init__(self, variants, aff_fn, weights=None, tokenizer=None):
+        self.variants = variants
+        self.aff_fn = aff_fn
+        self.tokenizer = tokenizer
+        if weights is None:
+            self.weights = np.full(len(variants), 1.0 / max(len(variants), 1), dtype=np.float64)
+        else:
+            self.weights = np.asarray(weights, dtype=np.float64)
+            self.weights = self.weights / max(float(self.weights.sum()), 1e-12)
+
+    def __call__(self, x, t=None):
+        device = x.device if isinstance(x, torch.Tensor) else torch.device("cpu")
+        if isinstance(x, torch.Tensor):
+            x = x.cpu().numpy()
+        seqs = [_decode_tokens_to_peptide(row, self.tokenizer) for row in x]
+        scores = []
+        for seq in seqs:
+            var_scores = np.array([self.aff_fn(seq, v) for v in self.variants], dtype=np.float64)
+            scores.append(float(np.dot(self.weights, var_scores)))
+        return torch.tensor(scores, dtype=torch.float32, device=device)
+
+
 class WTScoreModel:
     def __init__(self, aff_fn, wt_seq, tokenizer=None):
         self.aff_fn = aff_fn
@@ -239,6 +257,7 @@ def mog_dfm_guided_design(
     eta: float,
     design_mode: str = "prophet",
     guidance_variants: list[str] | None = None,
+    guidance_weights: np.ndarray | None = None,
     dfm_model=None,
     dfm_tokenizer=None,
     dfm_device="cuda:0",
@@ -322,6 +341,27 @@ def mog_dfm_guided_design(
             importance = [1.0]
             result_omega = [1.0, 0.0]
             guidance_weight = [1.0]
+        elif design_mode in {"uniform_leaves", "random_variants", "esm_only_variants"}:
+            score_models = [
+                WTScoreModel(aff_fn, wt_seq, tokenizer=dfm_tokenizer),
+                MeanVariantScoreModel(guidance_variants, aff_fn, tokenizer=dfm_tokenizer),
+            ]
+            importance = omega
+            result_omega = omega
+            guidance_weight = omega
+        elif design_mode == "prob_weighted_variants":
+            score_models = [
+                WTScoreModel(aff_fn, wt_seq, tokenizer=dfm_tokenizer),
+                MeanVariantScoreModel(
+                    guidance_variants,
+                    aff_fn,
+                    weights=guidance_weights,
+                    tokenizer=dfm_tokenizer,
+                ),
+            ]
+            importance = omega
+            result_omega = omega
+            guidance_weight = omega
         else:
             score_models = [
                 WTScoreModel(aff_fn, wt_seq, tokenizer=dfm_tokenizer),
@@ -368,7 +408,12 @@ def mog_dfm_guided_design(
             decoded.append(d)
         for seq in decoded:
             wt_score, var_scores = score_peptide_against_variants(seq, eval_variants, wt_seq, aff_fn)
-            robust = cvar_robust_score(var_scores, eta)
+            if design_mode == "prob_weighted_variants" and guidance_weights is not None:
+                robust = float(np.dot(guidance_weights, var_scores))
+            elif design_mode in {"uniform_leaves", "random_variants", "esm_only_variants"}:
+                robust = float(np.mean(var_scores))
+            else:
+                robust = cvar_robust_score(var_scores, eta)
             all_results.append(DesignResult(
                 method=design_mode,
                 peptide=seq,
@@ -417,6 +462,78 @@ def _load_variants_fasta(
         idxs = rng.choice(len(out), size=limit, replace=False)
         return [out[i] for i in sorted(idxs)]
     return out
+
+
+def _load_npz_array(path: str | Path, key: str) -> np.ndarray:
+    data = np.load(str(_resolve_user_path(path)))
+    if key not in data:
+        raise KeyError(f"{path} does not contain key {key!r}; available={list(data.files)}")
+    return data[key]
+
+
+def _sequence_energy(
+    seq: str,
+    lambda_i: np.ndarray,
+    qi: np.ndarray,
+    h: np.ndarray,
+    J: np.ndarray,
+    wt_seq: str,
+    t_evo: float,
+    energy_mode: str,
+) -> float:
+    x = np.array([AA_TO_IDX.get(a, len(AA)) for a in seq], dtype=np.int16)
+    wt = np.array([AA_TO_IDX.get(a, len(AA)) for a in wt_seq], dtype=np.int16)
+    if np.any(x >= len(AA)) or x.shape[0] != lambda_i.shape[0]:
+        return float("inf")
+
+    e = 0.0
+    for i, a in enumerate(x):
+        aa = int(a)
+        e += float(lambda_i[i] * h[i, aa])
+        if energy_mode == "dca_plus_qi":
+            wt_aa = int(wt[i]) if i < wt.shape[0] and wt[i] < len(AA) else aa
+            e -= float(lambda_i[i] * np.log(qi[i, wt_aa, aa] + 1e-9))
+        elif energy_mode != "paper_dca":
+            raise ValueError(f"Unsupported energy mode for probability weights: {energy_mode}")
+        for j in range(i + 1, x.shape[0]):
+            b = int(x[j])
+            e += float(lambda_i[i] * J[i, j, aa, b])
+    return e / max(float(t_evo), 1e-8)
+
+
+def _probability_weights_from_stage1(
+    variants: list[str],
+    wt_seq: str,
+    lambda_path: str | Path,
+    qi_path: str | Path,
+    h_path: str | Path,
+    j_path: str | Path,
+    t_evo: float,
+    energy_mode: str,
+) -> np.ndarray:
+    lambda_i = np.load(str(_resolve_user_path(lambda_path)))
+    qi = _load_npz_array(qi_path, "Qi")
+    h = np.load(str(_resolve_user_path(h_path)))
+    J = _load_npz_array(j_path, "J")
+    energies = np.array(
+        [_sequence_energy(v, lambda_i, qi, h, J, wt_seq, t_evo, energy_mode) for v in variants],
+        dtype=np.float64,
+    )
+    finite = np.isfinite(energies)
+    if not finite.any():
+        raise ValueError("Could not compute finite probability weights for any variant.")
+    logits = -energies
+    logits[~finite] = float("-inf")
+    logits -= np.max(logits[finite])
+    weights = np.exp(logits)
+    weights /= max(float(weights.sum()), 1e-12)
+    entropy = -float(np.sum(weights * np.log(weights + 1e-12)))
+    print(
+        "Loaded probability weights from Stage 1 energy files: "
+        f"min={weights.min():.6g}, max={weights.max():.6g}, entropy={entropy:.3f}",
+        flush=True,
+    )
+    return weights
 
 
 def _hamming(a: str, b: str) -> int:
@@ -513,7 +630,7 @@ def main() -> None:
     from models.peptide_classifiers import load_solver
     from transformers import AutoTokenizer
     p = argparse.ArgumentParser(
-        description="PROPHET Stage 2 — escape-robust peptide design with CVaR guidance"
+        description="Standalone MOG-DFM baselines for PROPHET Stage 2 variant sets"
     )
     p.add_argument(
         "--variants-fasta", required=True,
@@ -547,9 +664,18 @@ def main() -> None:
                    help="FASTA whose WT edit-distance distribution is used by matched random/ESM baselines")
     p.add_argument("--guidance-out-fasta", default=None,
                    help="Optional path to save the final guidance variants used by the run")
-    p.add_argument("--design-mode", choices=["prophet", "wt_only", "uniform_leaves", "random_variants", "esm_only_variants"],
-                   default="prophet",
-                   help="Design objective to run. uniform_leaves uses guidance variants as a leaf baseline.")
+    p.add_argument(
+        "--design-mode",
+        choices=[
+            "wt_only",
+            "uniform_leaves",
+            "random_variants",
+            "esm_only_variants",
+            "prob_weighted_variants",
+        ],
+        default="uniform_leaves",
+        help="MOG-DFM baseline objective to run."
+    )
     p.add_argument("--esm-variant-model", default="facebook/esm2_t6_8M_UR50D",
                    help="Masked-LM model used to make ESM-only matched guidance variants")
     p.add_argument("--esm-variant-device", default=None,
@@ -572,6 +698,12 @@ def main() -> None:
     p.add_argument("--seed",           type=int,   default=42)
     p.add_argument("--dfm-ckpt", type=str, default=None, help="Path to DFM model checkpoint (MOG-DFM)")
     p.add_argument("--dfm-device", type=str, default=None, help="Device for DFM model (default: same as --device)")
+    p.add_argument("--lambda-path", default=None, help="Stage 1 lambda.npy for probability-weighted variants")
+    p.add_argument("--qi-path", default=None, help="Stage 1 Qi.npz for probability-weighted variants")
+    p.add_argument("--h-path", default=None, help="Stage 1 h.npy for probability-weighted variants")
+    p.add_argument("--j-path", default=None, help="Stage 1 J.npz for probability-weighted variants")
+    p.add_argument("--t-evo", type=float, default=1.0, help="Stage 1 Gibbs temperature for probability weights")
+    p.add_argument("--energy-mode", choices=["paper_dca", "dca_plus_qi"], default="dca_plus_qi")
     p.add_argument("--verbose-sampling", action="store_true",
                    help="Enable tqdm progress inside MOG-DFM sampling")
     args = p.parse_args()
@@ -623,6 +755,35 @@ def main() -> None:
         print("Using WT-only guidance; variants are retained for post-hoc scoring.")
     elif args.design_mode == "uniform_leaves":
         print("Using supplied guidance variants as uniformly weighted leaves.")
+    elif args.design_mode == "prob_weighted_variants":
+        print("Using supplied guidance variants weighted by Stage 1 probability.")
+
+    guidance_weights = None
+    if args.design_mode == "prob_weighted_variants":
+        missing = [
+            name for name, value in [
+                ("--lambda-path", args.lambda_path),
+                ("--qi-path", args.qi_path),
+                ("--h-path", args.h_path),
+                ("--j-path", args.j_path),
+            ]
+            if value is None
+        ]
+        if missing:
+            raise ValueError(
+                "prob_weighted_variants requires Stage 1 energy files: "
+                + ", ".join(missing)
+            )
+        guidance_weights = _probability_weights_from_stage1(
+            guidance_variants,
+            wt_seq=wt_seq,
+            lambda_path=args.lambda_path,
+            qi_path=args.qi_path,
+            h_path=args.h_path,
+            j_path=args.j_path,
+            t_evo=args.t_evo,
+            energy_mode=args.energy_mode,
+        )
 
     if args.guidance_out_fasta:
         guidance_out = _resolve_user_path(args.guidance_out_fasta)
@@ -675,6 +836,7 @@ def main() -> None:
         wt_seq=wt_seq,
         eval_variants=variants,
         guidance_variants=guidance_variants,
+        guidance_weights=guidance_weights,
         aff_fn=scorer,
         peptide_length=args.peptide_length,
         design_mode=args.design_mode,
@@ -700,10 +862,11 @@ def main() -> None:
 
     if designs:
         top = designs[0]
-        print("Top design (by robust score):")
+        objective_name = "weighted/mean variant score" if args.design_mode != "wt_only" else "WT score"
+        print(f"Top design (by {objective_name}):")
         print(f"  Peptide : {top.peptide}")
         print(f"  WT aff  : {top.wt_score:.4f}")
-        print(f"  Robust  : {top.robust_score:.4f}  (CVaR eta={args.eta})")
+        print(f"  Obj     : {top.robust_score:.4f}")
         print(f"  Mean    : {top.mean_score:.4f}")
         print(f"  Min     : {top.min_score:.4f}")
         print(f"  omega   : ({top.omega[0]:.2f}, {top.omega[1]:.2f})")

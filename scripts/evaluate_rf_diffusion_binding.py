@@ -272,7 +272,7 @@ def main() -> None:
         default=None,
         help="Evaluate only the first N loaded rows; useful for quick PeptiVerse tests.",
     )
-    parser.add_argument("--device", default="cpu")
+    parser.add_argument("--device", default="cuda:0")
     parser.add_argument(
         "--escape-fasta",
         default=None,

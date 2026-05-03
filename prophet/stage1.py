@@ -300,8 +300,12 @@ def maybe_subsample_trees(trees: list[str], j: int | None, seed: int) -> list[st
         raise ValueError("--tree-subsample-j must be positive when provided.")
     if j >= len(trees):
         return trees
+    if not trees:
+        return trees
+    if j == 1:
+        return [trees[0]]
     rng = random.Random(seed)
-    return rng.sample(trees, j)
+    return [trees[0], *rng.sample(trees[1:], j - 1)]
 
 
 # DCA via pseudolikelihood maximization (PLM)
@@ -554,6 +558,7 @@ def gibbs_sample_variants(
     esm_filter_delta: float | None = None,
     esm_model_name: str = "facebook/esm2_t6_8M_UR50D",
     esm_device: str = "cpu",
+    esm_filter_max_attempts: int | None = None,
 ) -> tuple[list[str], list[float]]:
     """
     Algorithm 1 variant sampling from p_evo with optional ESM pLL filtering.
@@ -582,26 +587,41 @@ def gibbs_sample_variants(
 
     out_variants: list[str] = []
     out_pll: list[float] = []
-    total_steps = burn_in + n_samples
+    if pll_model is None:
+        max_post_burn_attempts = n_samples
+    elif esm_filter_max_attempts is not None:
+        max_post_burn_attempts = max(n_samples, int(esm_filter_max_attempts))
+    else:
+        max_post_burn_attempts = max(n_samples, n_samples * 100)
     L = len(wt_seq)
-    for t in range(total_steps):
+    post_burn_attempts = 0
+    t = 0
+    while post_burn_attempts < max_post_burn_attempts and len(out_variants) < n_samples:
         for i in rng.permutation(L):  # random scan Gibbs
             x[i] = _sample_site_conditional(
                 i, x, lambda_i, qi, h, J, t_evo, energy_mode, rng
             )
 
         if t >= burn_in:
+            post_burn_attempts += 1
             seq = "".join(AA[int(a)] for a in x)
             if pll_model is not None and wt_pll is not None:
                 pll = _pll_esm2(seq, pll_tokenizer, pll_model, esm_device)
                 if pll < (wt_pll - float(esm_filter_delta)):
+                    t += 1
                     continue
             else:
                 pll = float("nan")
             out_variants.append(seq)
             out_pll.append(pll)
-            if len(out_variants) >= n_samples:
-                break
+        t += 1
+
+    if len(out_variants) < n_samples:
+        print(
+            "  [gibbs] WARNING: accepted "
+            f"{len(out_variants)}/{n_samples} variants after "
+            f"{post_burn_attempts} post-burn attempts."
+        )
 
     return out_variants, out_pll
 
@@ -784,13 +804,20 @@ def main():
                    help="Evolutionary temperature for Gibbs sampling (calibrate to held-out edit distances)")
     p.add_argument("--energy-mode",  choices=["paper_dca", "dca_plus_qi"], default="paper_dca",
                    help="Energy model for Gibbs sampling: paper DCA only or DCA+Qi extension (default: paper_dca)")
-    # ...existing code...
+    p.add_argument("--ablate-zero-dca-couplings", "--ablate-zero-j",
+                   dest="ablate_zero_dca_couplings", action="store_true",
+                   help="Ablation: zero DCA pairwise couplings J before sampling/evaluation")
+    p.add_argument("--ablate-flatten-lambda", "--ablate-unit-lambda",
+                   dest="ablate_flatten_lambda", action="store_true",
+                   help="Ablation: flatten phylogenetic lambda weights to their learned mean before sampling/evaluation")
     p.add_argument("--seed",         type=int, default=42,
                    help="Random seed for DCA bootstraps and Gibbs sampling")
     p.add_argument("--wt-seq-id",    default=None,
                    help="Optional FASTA ID to use as WT for Gibbs initialization")
     p.add_argument("--esm-filter-delta", type=float, default=None,
                    help="Enable ESM pLL filter with threshold pLL(x) >= pLL(wt)-delta")
+    p.add_argument("--esm-filter-max-attempts", type=int, default=None,
+                   help="Maximum post-burn Gibbs attempts when ESM filtering rejects samples (default: 100x requested samples)")
     p.add_argument("--esm-model",    default="facebook/esm2_t6_8M_UR50D",
                    help="ESM masked LM model name for pLL filtering")
     p.add_argument("--esm-device",   default="cpu",
@@ -844,14 +871,29 @@ def main():
     print(f"\n[2/3] Computing per-site mutation rates (L={L})...")
     lambda_runs = []
     qi_runs = []
+    skipped_trees = []
     for idx, tree_path in enumerate(tree_paths, start=1):
         if len(tree_paths) > 1:
             print(f"  [lambda] tree {idx}/{len(tree_paths)}: {tree_path}")
-        lam_i, qi_i = compute_lambda_and_qi(tree_path, protein_seqs)
+        try:
+            lam_i, qi_i = compute_lambda_and_qi(tree_path, protein_seqs)
+        except Exception as exc:
+            skipped_trees.append((tree_path, exc))
+            print(f"  [lambda] WARNING: skipping tree {tree_path}: {exc}")
+            continue
         lambda_runs.append(lam_i)
         qi_runs.append(qi_i)
+    if not lambda_runs:
+        skipped = "; ".join(f"{path} ({exc})" for path, exc in skipped_trees[:5])
+        raise RuntimeError(f"No valid trees remained for lambda/Qi estimation. Skipped: {skipped}")
+    if skipped_trees:
+        print(f"  [lambda] skipped {len(skipped_trees)} / {len(tree_paths)} trees")
     lambda_i = np.mean(np.stack(lambda_runs, axis=0), axis=0)
     qi = np.mean(np.stack(qi_runs, axis=0), axis=0)
+    if args.ablate_flatten_lambda:
+        flat_lambda = float(np.mean(lambda_i)) if lambda_i.size else 0.0
+        print(f"  [ablation] flattening lambda_i to learned mean {flat_lambda:.6f}")
+        lambda_i = np.full_like(lambda_i, flat_lambda)
 
     lam_path = out_dir / f"{args.prefix}_lambda.npy"
     np.save(lam_path, lambda_i)
@@ -879,6 +921,10 @@ def main():
             n_jobs=args.n_jobs,
             seed=args.seed,
         )
+        if args.ablate_zero_dca_couplings:
+            print("  [ablation] zeroing DCA pairwise couplings J")
+            J = np.zeros_like(J)
+            J_std = np.zeros_like(J_std)
 
         np.save(out_dir / f"{args.prefix}_h.npy",     h)
         np.save(out_dir / f"{args.prefix}_h_std.npy", h_std)
@@ -972,6 +1018,7 @@ def main():
                 esm_filter_delta=args.esm_filter_delta,
                 esm_model_name=args.esm_model,
                 esm_device=args.esm_device,
+                esm_filter_max_attempts=args.esm_filter_max_attempts,
             )
             v_path = out_dir / f"{args.prefix}_gibbs_variants.fasta"
             with open(v_path, "w", encoding="utf-8") as f:

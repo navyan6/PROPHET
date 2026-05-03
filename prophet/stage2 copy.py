@@ -15,7 +15,6 @@ from __future__ import annotations
 import argparse
 import json
 import math
-import time
 from types import SimpleNamespace
 from dataclasses import asdict, dataclass
 import torch
@@ -287,9 +286,6 @@ def mog_dfm_guided_design(
     weight_grid = [[float(w), 1.0 - float(w)] for w in np.linspace(0, 1, n_grid)]
     all_results = []
     produced = 0
-    total_started = 0
-    run_start = time.time()
-    verbose = bool(kwargs.get("verbose", False))
     for grid_idx, omega in enumerate(weight_grid):
         # Prepare initial batch for each omega
         remaining = n_designs - produced
@@ -298,17 +294,6 @@ def mog_dfm_guided_design(
         slots_left = n_grid - grid_idx
         n_samples = max(1, math.ceil(remaining / slots_left))
         produced += n_samples
-        total_started += n_samples
-        omega_start = time.time()
-        print(
-            "[progress] "
-            f"omega {grid_idx + 1}/{n_grid} "
-            f"weights=({omega[0]:.3f},{omega[1]:.3f}) "
-            f"batch={n_samples} "
-            f"started={min(total_started, n_designs)}/{n_designs} "
-            f"elapsed={time.time() - run_start:.1f}s",
-            flush=True,
-        )
         x_init = torch.tensor(
             rng.choice(valid_aa_tokens, size=(n_samples, peptide_length)),
             dtype=torch.long, device=dfm_device
@@ -332,28 +317,15 @@ def mog_dfm_guided_design(
             guidance_weight = omega
 
         # Run DFM sampling for this omega
-        print(
-            "[progress] "
-            f"sampling omega {grid_idx + 1}/{n_grid} "
-            f"steps={int(kwargs.get('n_steps', 200))} "
-            f"device={dfm_device}",
-            flush=True,
-        )
         x_samples = dfm_model.multi_guidance_sample(
             args=guidance_args,
             x_init=x_init,
             step_size=(1.0 - 1e-3) / (max(int(kwargs.get("n_steps", 200)), 1) + 1e-6),
-            verbose=verbose,
+            verbose=bool(kwargs.get("verbose", False)),
             time_grid=torch.tensor([0.0, 1.0-1e-3], device=dfm_device),
             score_models=score_models,
             importance=importance,
             guidance_weight=guidance_weight,
-        )
-        print(
-            "[progress] "
-            f"scoring omega {grid_idx + 1}/{n_grid} "
-            f"sampled={len(x_samples)}",
-            flush=True,
         )
 
         # Decode and score
@@ -379,14 +351,6 @@ def mog_dfm_guided_design(
                 omega=result_omega,
                 per_variant=var_scores.tolist(),
             ))
-        print(
-            "[progress] "
-            f"finished omega {grid_idx + 1}/{n_grid} "
-            f"total_scored={len(all_results)}/{n_designs} "
-            f"omega_elapsed={time.time() - omega_start:.1f}s "
-            f"total_elapsed={time.time() - run_start:.1f}s",
-            flush=True,
-        )
     all_results.sort(key=lambda r: (r.robust_score, r.wt_score), reverse=True)
     return all_results
 

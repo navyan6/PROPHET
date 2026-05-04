@@ -16,7 +16,6 @@ from dataclasses import asdict, dataclass
 import torch
 from pathlib import Path
 from typing import Callable, Literal
-import pdb
 
 import numpy as np
 from Bio import SeqIO

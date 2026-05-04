@@ -26,6 +26,7 @@ PEPTIDE_LENGTH="${PEPTIDE_LENGTH:-10}"
 ETA="${ETA:-0.1}"
 SEED="${SEED:-42}"
 TAU_BIND="${TAU_BIND:-8.0}"
+GUIDANCE_VAR_LIMIT="${GUIDANCE_VAR_LIMIT:-50}"
 ESM_VARIANT_MODEL="${ESM_VARIANT_MODEL:-facebook/esm2_t6_8M_UR50D}"
 ESM_VARIANT_TEMPERATURE="${ESM_VARIANT_TEMPERATURE:-1.0}"
 
@@ -57,6 +58,8 @@ run_mode() {
     --design-mode "${mode}" \
     --affinity-mode peptiverse \
     --peptiverse-normalization raw \
+    --tau-bind "${TAU_BIND}" \
+    --guidance-var-limit "${GUIDANCE_VAR_LIMIT}" \
     --device cuda:0 \
     --dfm-device cuda:0 \
     --dfm-ckpt "${DFM_CKPT}" \

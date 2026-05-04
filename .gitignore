@@ -47,3 +47,4 @@ results_*.json
 Thumbs.db
 !trees/*.nwk
 !alignments/*.fasta
+*.pdf

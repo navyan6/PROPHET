@@ -66,6 +66,7 @@ class DesignResult:
     min_score: float
     omega: list[float]
     per_variant: list[float]
+    retention_score: float = float("nan")
 
 
 def cvar_robust_score(scores: np.ndarray, eta: float) -> float:
@@ -88,11 +89,15 @@ class AffinityScorer:
         peptiverse_normalization: Literal["minmax", "raw"] = "raw",
         peptiverse_min: float = 7.0,
         peptiverse_max: float = 9.0,
+        embed_batch_size: int = 64,
+        score_batch_size: int = 256,
     ):
         self.device = device
         self.peptiverse_normalization = peptiverse_normalization
         self.peptiverse_min = float(peptiverse_min)
         self.peptiverse_max = float(peptiverse_max)
+        self.embed_batch_size = int(embed_batch_size)
+        self.score_batch_size = int(score_batch_size)
         if self.peptiverse_max <= self.peptiverse_min:
             raise ValueError("--peptiverse-max must be greater than --peptiverse-min")
         self._try_load_peptiverse()
@@ -105,7 +110,7 @@ class AffinityScorer:
                 f"Unknown PeptiVerse normalization: {self.peptiverse_normalization}"
             )
         score = (raw_score - self.peptiverse_min) / (
-            self.peptiverse_max - self.peptiverse_minca
+            self.peptiverse_max - self.peptiverse_min
         )
         return float(np.clip(score, 0.0, 1.0))
 
@@ -129,6 +134,9 @@ class AffinityScorer:
                 model_pt, pooled_or_unpooled="unpooled", device=self.device
             )
             embedding_cache: dict[str, tuple[torch.Tensor, torch.Tensor]] = {}
+            self._embedder = embedder
+            self._binding_model = model
+            self._embedding_cache = embedding_cache
 
             def _embed(seq: str) -> tuple[torch.Tensor, torch.Tensor]:
                 cached = embedding_cache.get(seq)
@@ -151,7 +159,8 @@ class AffinityScorer:
                 "  [scorer] PeptiVerse loaded "
                 f"(normalization={self.peptiverse_normalization}, "
                 f"min={self.peptiverse_min:g}, max={self.peptiverse_max:g})."
-                f" Embeddings will be cached per unique sequence.",
+                f" Embeddings will be cached per unique sequence "
+                f"(embed_batch={self.embed_batch_size}, score_batch={self.score_batch_size}).",
                 flush=True,
             )
         except Exception as exc:
@@ -163,6 +172,84 @@ class AffinityScorer:
     def __call__(self, peptide: str, target: str) -> float:
         return self._predict(peptide, target)
 
+    def _embed_many_unpooled(self, seqs: list[str]) -> list[tuple[torch.Tensor, torch.Tensor]]:
+        cleaned = [s.strip() for s in seqs]
+        missing = list(dict.fromkeys(s for s in cleaned if s not in self._embedding_cache))
+        for start in range(0, len(missing), self.embed_batch_size):
+            batch = missing[start : start + self.embed_batch_size]
+            tok = self._embedder._tokenize(batch)
+            with torch.no_grad():
+                h = self._embedder.model(**tok).last_hidden_state
+            valid = self._embedder._valid_mask(tok["input_ids"], tok["attention_mask"])
+            for idx, seq in enumerate(batch):
+                X = h[idx : idx + 1, valid[idx], :]
+                M = torch.ones((1, X.shape[1]), dtype=torch.bool, device=self.device)
+                self._embedding_cache[seq] = (X, M)
+        return [self._embedding_cache[s] for s in cleaned]
+
+    def _stack_unpooled(
+        self,
+        embs: list[tuple[torch.Tensor, torch.Tensor]],
+    ) -> tuple[torch.Tensor, torch.Tensor]:
+        max_len = max(int(x.shape[1]) for x, _ in embs)
+        hidden = int(embs[0][0].shape[-1])
+        X_out = torch.zeros((len(embs), max_len, hidden), dtype=embs[0][0].dtype, device=self.device)
+        M_out = torch.zeros((len(embs), max_len), dtype=torch.bool, device=self.device)
+        for idx, (X, M) in enumerate(embs):
+            length = int(X.shape[1])
+            X_out[idx, :length, :] = X[0, :length, :]
+            M_out[idx, :length] = M[0, :length]
+        return X_out, M_out
+
+    def predict_many(self, peptides: list[str], targets: list[str]) -> np.ndarray:
+        if len(peptides) != len(targets):
+            raise ValueError("predict_many requires equal-length peptide and target lists")
+        if not peptides:
+            return np.array([], dtype=np.float64)
+
+        # Batch ESM embedding generation for all new unique sequences first.
+        self._embed_many_unpooled(list(dict.fromkeys(peptides + targets)))
+
+        preds: list[np.ndarray] = []
+        with torch.no_grad():
+            for start in range(0, len(peptides), self.score_batch_size):
+                pep_batch = [p.strip() for p in peptides[start : start + self.score_batch_size]]
+                tgt_batch = [t.strip() for t in targets[start : start + self.score_batch_size]]
+                T, Mt = self._stack_unpooled([self._embedding_cache[t] for t in tgt_batch])
+                B, Mb = self._stack_unpooled([self._embedding_cache[p] for p in pep_batch])
+                reg, _ = self._binding_model(T, Mt, B, Mb)
+                raw = reg.detach().float().cpu().numpy().reshape(-1)
+                if self.peptiverse_normalization == "minmax":
+                    raw = np.clip(
+                        (raw - self.peptiverse_min) / (self.peptiverse_max - self.peptiverse_min),
+                        0.0,
+                        1.0,
+                    )
+                preds.append(raw.astype(np.float64))
+        return np.concatenate(preds, axis=0)
+
+    def predict_matrix(self, peptides: list[str], targets: list[str]) -> np.ndarray:
+        if not peptides or not targets:
+            return np.empty((len(peptides), len(targets)), dtype=np.float64)
+        total = len(peptides) * len(targets)
+        out = np.empty(total, dtype=np.float64)
+        flat_peptides: list[str] = []
+        flat_targets: list[str] = []
+        flat_indices: list[int] = []
+        for i, pep in enumerate(peptides):
+            for j, tgt in enumerate(targets):
+                flat_peptides.append(pep)
+                flat_targets.append(tgt)
+                flat_indices.append(i * len(targets) + j)
+                if len(flat_peptides) >= self.score_batch_size:
+                    out[np.array(flat_indices, dtype=np.int64)] = self.predict_many(flat_peptides, flat_targets)
+                    flat_peptides.clear()
+                    flat_targets.clear()
+                    flat_indices.clear()
+        if flat_peptides:
+            out[np.array(flat_indices, dtype=np.int64)] = self.predict_many(flat_peptides, flat_targets)
+        return out.reshape(len(peptides), len(targets))
+
 
 def score_peptide_against_variants(
     peptide: str,
@@ -170,8 +257,8 @@ def score_peptide_against_variants(
     wt_seq: str,
     aff_fn: AffinityScorer,
 ) -> tuple[float, np.ndarray]:
-    wt_score = aff_fn(peptide, wt_seq)
-    var_scores = np.array([aff_fn(peptide, v) for v in variants], dtype=np.float64)
+    wt_score = float(aff_fn.predict_many([peptide], [wt_seq])[0])
+    var_scores = aff_fn.predict_matrix([peptide], variants)[0]
     return wt_score, var_scores
 
 
@@ -187,12 +274,30 @@ def _rank_normalise(values: np.ndarray) -> np.ndarray:
 
 # New: Modular score model for CVaR robustness
 class RobustnessScoreModel:
-    def __init__(self, variants, eta, aff_fn, wt_seq, tokenizer=None):
+    def __init__(
+        self,
+        variants,
+        eta,
+        aff_fn,
+        wt_seq,
+        tokenizer=None,
+        guidance_var_limit: int | None = None,
+        seed: int = 42,
+    ):
         self.variants = variants
         self.eta = eta
         self.aff_fn = aff_fn
         self.wt_seq = wt_seq
         self.tokenizer = tokenizer
+        self.guidance_var_limit = guidance_var_limit
+        self._rng = np.random.default_rng(seed)
+
+    def _guidance_subset(self) -> list[str]:
+        if self.guidance_var_limit is None or self.guidance_var_limit >= len(self.variants):
+            return self.variants
+        idxs = self._rng.choice(len(self.variants), size=self.guidance_var_limit, replace=False)
+        return [self.variants[i] for i in sorted(idxs)]
+
     def __call__(self, x, t=None):
         # x: (batch, seq_len) integer tokens
         # Decode to string, score against variants
@@ -200,33 +305,51 @@ class RobustnessScoreModel:
         if isinstance(x, torch.Tensor):
             x = x.cpu().numpy()
         seqs = [_decode_tokens_to_peptide(row, self.tokenizer) for row in x]
-        scores = []
-        for seq in seqs:
-            var_scores = np.array([self.aff_fn(seq, v) for v in self.variants], dtype=np.float64)
-            scores.append(cvar_robust_score(var_scores, self.eta))
+        score_matrix = self.aff_fn.predict_matrix(seqs, self._guidance_subset())
+        scores = [cvar_robust_score(row, self.eta) for row in score_matrix]
         return torch.tensor(scores, dtype=torch.float32, device=device)
 
 
 class MeanVariantScoreModel:
-    def __init__(self, variants, aff_fn, weights=None, tokenizer=None):
+    def __init__(
+        self,
+        variants,
+        aff_fn,
+        weights=None,
+        tokenizer=None,
+        guidance_var_limit: int | None = None,
+        seed: int = 42,
+    ):
         self.variants = variants
         self.aff_fn = aff_fn
         self.tokenizer = tokenizer
+        self.guidance_var_limit = guidance_var_limit
+        self._rng = np.random.default_rng(seed)
         if weights is None:
             self.weights = np.full(len(variants), 1.0 / max(len(variants), 1), dtype=np.float64)
         else:
             self.weights = np.asarray(weights, dtype=np.float64)
             self.weights = self.weights / max(float(self.weights.sum()), 1e-12)
 
+    def _guidance_subset(self) -> tuple[list[str], np.ndarray]:
+        if self.guidance_var_limit is None or self.guidance_var_limit >= len(self.variants):
+            return self.variants, self.weights
+        idxs = np.sort(
+            self._rng.choice(len(self.variants), size=self.guidance_var_limit, replace=False)
+        )
+        variants = [self.variants[int(i)] for i in idxs]
+        weights = self.weights[idxs]
+        weights = weights / max(float(weights.sum()), 1e-12)
+        return variants, weights
+
     def __call__(self, x, t=None):
         device = x.device if isinstance(x, torch.Tensor) else torch.device("cpu")
         if isinstance(x, torch.Tensor):
             x = x.cpu().numpy()
         seqs = [_decode_tokens_to_peptide(row, self.tokenizer) for row in x]
-        scores = []
-        for seq in seqs:
-            var_scores = np.array([self.aff_fn(seq, v) for v in self.variants], dtype=np.float64)
-            scores.append(float(np.dot(self.weights, var_scores)))
+        variants, weights = self._guidance_subset()
+        score_matrix = self.aff_fn.predict_matrix(seqs, variants)
+        scores = score_matrix @ weights
         return torch.tensor(scores, dtype=torch.float32, device=device)
 
 
@@ -241,11 +364,8 @@ class WTScoreModel:
         if isinstance(x, torch.Tensor):
             x = x.cpu().numpy()
         seqs = [_decode_tokens_to_peptide(row, self.tokenizer) for row in x]
-        return torch.tensor(
-            [self.aff_fn(seq, self.wt_seq) for seq in seqs],
-            dtype=torch.float32,
-            device=device,
-        )
+        scores = self.aff_fn.predict_many(seqs, [self.wt_seq] * len(seqs))
+        return torch.tensor(scores, dtype=torch.float32, device=device)
 
 
 def mog_dfm_guided_design(
@@ -299,6 +419,9 @@ def mog_dfm_guided_design(
 
     if guidance_variants is None:
         guidance_variants = eval_variants
+    guidance_var_limit = kwargs.get("guidance_var_limit")
+    if guidance_var_limit is not None:
+        guidance_var_limit = int(guidance_var_limit)
 
     # Omega sweep for Pareto front
     n_grid = int(kwargs.get("omega_samples") or 10)
@@ -344,7 +467,13 @@ def mog_dfm_guided_design(
         elif design_mode in {"uniform_leaves", "random_variants", "esm_only_variants"}:
             score_models = [
                 WTScoreModel(aff_fn, wt_seq, tokenizer=dfm_tokenizer),
-                MeanVariantScoreModel(guidance_variants, aff_fn, tokenizer=dfm_tokenizer),
+                MeanVariantScoreModel(
+                    guidance_variants,
+                    aff_fn,
+                    tokenizer=dfm_tokenizer,
+                    guidance_var_limit=guidance_var_limit,
+                    seed=int(seed or 42) + grid_idx,
+                ),
             ]
             importance = omega
             result_omega = omega
@@ -357,6 +486,8 @@ def mog_dfm_guided_design(
                     aff_fn,
                     weights=guidance_weights,
                     tokenizer=dfm_tokenizer,
+                    guidance_var_limit=guidance_var_limit,
+                    seed=int(seed or 42) + grid_idx,
                 ),
             ]
             importance = omega
@@ -365,7 +496,15 @@ def mog_dfm_guided_design(
         else:
             score_models = [
                 WTScoreModel(aff_fn, wt_seq, tokenizer=dfm_tokenizer),
-                RobustnessScoreModel(guidance_variants, eta, aff_fn, wt_seq, tokenizer=dfm_tokenizer),
+                RobustnessScoreModel(
+                    guidance_variants,
+                    eta,
+                    aff_fn,
+                    wt_seq,
+                    tokenizer=dfm_tokenizer,
+                    guidance_var_limit=guidance_var_limit,
+                    seed=int(seed or 42) + grid_idx,
+                ),
             ]
             importance = omega
             result_omega = omega
@@ -414,6 +553,10 @@ def mog_dfm_guided_design(
                 robust = float(np.mean(var_scores))
             else:
                 robust = cvar_robust_score(var_scores, eta)
+            tau_bind = kwargs.get("tau_bind")
+            ret = float("nan")
+            if tau_bind is not None and var_scores.size > 0:
+                ret = float(np.mean(var_scores >= float(tau_bind)))
             all_results.append(DesignResult(
                 method=design_mode,
                 peptide=seq,
@@ -423,6 +566,7 @@ def mog_dfm_guided_design(
                 min_score=float(np.min(var_scores)),
                 omega=result_omega,
                 per_variant=var_scores.tolist(),
+                retention_score=ret,
             ))
         print(
             "[progress] "
@@ -706,6 +850,12 @@ def main() -> None:
     p.add_argument("--energy-mode", choices=["paper_dca", "dca_plus_qi"], default="dca_plus_qi")
     p.add_argument("--verbose-sampling", action="store_true",
                    help="Enable tqdm progress inside MOG-DFM sampling")
+    p.add_argument("--tau-bind", type=float, default=None,
+                   help="Binding score threshold for retention metric. "
+                        "If not set, retention_score=nan.")
+    p.add_argument("--guidance-var-limit", type=int, default=None,
+                   help="Subsample this many variants during DFM guidance scoring. "
+                        "Final DesignResult scores still use all variants.")
     args = p.parse_args()
     _set_global_seed(args.seed)
 
@@ -852,6 +1002,8 @@ def main() -> None:
         dfm_model=dfm_model,
         dfm_tokenizer=dfm_tokenizer,
         dfm_device=dfm_device,
+        tau_bind=args.tau_bind,
+        guidance_var_limit=args.guidance_var_limit,
     )
 
     out_path = _resolve_user_path(args.out_json)
@@ -870,6 +1022,8 @@ def main() -> None:
         print(f"  Mean    : {top.mean_score:.4f}")
         print(f"  Min     : {top.min_score:.4f}")
         print(f"  omega   : ({top.omega[0]:.2f}, {top.omega[1]:.2f})")
+        if not math.isnan(top.retention_score):
+            print(f"  Ret.    : {top.retention_score:.4f}  (tau_bind={args.tau_bind})")
 
         pareto_wt = [d.wt_score for d in designs]
         pareto_rb = [d.robust_score for d in designs]

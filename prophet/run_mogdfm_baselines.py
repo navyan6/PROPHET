@@ -18,18 +18,13 @@ VARIANTS_FASTA = REPO_ROOT / "results" / "all_trees_stage1_train_only" / "hiv_tr
 WT_SEQ = "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF"
 DFM_CKPT = REPO_ROOT / "MOG-DFM" / "ckpt" / "peptide" / "cnn_epoch200_lr0.0001_embed512_hidden256_loss3.1051.ckpt"
 
-LAMBDA_PATH = REPO_ROOT / "results" / "all_trees_stage1_train_only" / "hiv_train_lambda.npy"
-QI_PATH = REPO_ROOT / "results" / "all_trees_stage1_train_only" / "hiv_train_Qi.npz"
-H_PATH = REPO_ROOT / "results" / "all_trees_stage1_train_only" / "hiv_train_h.npy"
-J_PATH = REPO_ROOT / "results" / "all_trees_stage1_train_only" / "hiv_train_J.npz"
-
 N_DESIGNS = 500
 N_STEPS = 200
 PEPTIDE_LENGTH = 10
 BETA = 5.0
 SEED = 42
-T_EVO = 1.0
-ENERGY_MODE = "dca_plus_qi"
+TAU_BIND = 8.0
+GUIDANCE_VAR_LIMIT = 50
 GPUS = [4, 5, 6, 7]
 MOG_DFM_STEP_LOG_EVERY = "10"
 
@@ -38,7 +33,6 @@ MODES = [
     "uniform_leaves",
     "random_variants",
     "esm_only_variants",
-    "prob_weighted_variants",
 ]
 
 
@@ -70,21 +64,11 @@ def main() -> None:
             "--device", "cuda:0",
             "--dfm-device", "cuda:0",
             "--peptiverse-normalization", "raw",
+            "--tau-bind", str(TAU_BIND),
+            "--guidance-var-limit", str(GUIDANCE_VAR_LIMIT),
             "--guidance-out-fasta", str(guidance_fasta),
             "--verbose-sampling",
         ]
-        if mode == "prob_weighted_variants":
-            cmd.extend(
-                [
-                    "--lambda-path", str(LAMBDA_PATH),
-                    "--qi-path", str(QI_PATH),
-                    "--h-path", str(H_PATH),
-                    "--j-path", str(J_PATH),
-                    "--t-evo", str(T_EVO),
-                    "--energy-mode", ENERGY_MODE,
-                ]
-            )
-
         env = os.environ.copy()
         env["CUDA_VISIBLE_DEVICES"] = str(gpu)
         env["PYTHONUNBUFFERED"] = "1"

@@ -21,7 +21,6 @@ from dataclasses import asdict, dataclass
 import torch
 from pathlib import Path
 from typing import Callable, Literal
-import pdb
 
 import numpy as np
 from Bio import SeqIO
@@ -33,6 +32,60 @@ except ImportError:
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 AA_TO_IDX = {aa: i for i, aa in enumerate(AA)}
+
+
+def diagnose_scoring_speed(
+    scorer: "AffinityScorer",
+    wt_seq: str,
+    variants: list[str],
+    n_probe: int = 5,
+) -> None:
+    """Print a timing breakdown for the PeptiVerse scorer.
+
+    Run this before the main sampling loop to understand where time goes.
+    Pass --guidance-var-limit K to use only K variants during DFM guidance.
+    """
+    import time as _time
+
+    probe_peptide = "ACDEFGHIKL"[:10]  # dummy 10-AA peptide
+
+    # 1. Single-pair call (baseline)
+    t0 = _time.perf_counter()
+    for _ in range(n_probe):
+        scorer(probe_peptide, wt_seq)
+    t_single = (_time.perf_counter() - t0) / n_probe
+
+    # 2. Sequential variant loop (old path)
+    t0 = _time.perf_counter()
+    for _ in range(n_probe):
+        _ = [scorer(probe_peptide, v) for v in variants[:50]]
+    t_seq_50 = (_time.perf_counter() - t0) / n_probe
+
+    # 3. Batched variant scoring (new path)
+    if hasattr(scorer, "score_variants_batched"):
+        t0 = _time.perf_counter()
+        for _ in range(n_probe):
+            scorer.score_variants_batched(probe_peptide, variants[:50])
+        t_batch_50 = (_time.perf_counter() - t0) / n_probe
+    else:
+        t_batch_50 = float("nan")
+
+    V = len(variants)
+    steps = 200
+    seqs_per_step = 24  # B * (vocab_size-1) + B ≈ 24 for B=1
+    print(
+        f"\n[timing] PeptiVerse scoring diagnosis"
+        f"\n  single call              : {t_single*1000:.2f} ms"
+        f"\n  sequential 50 variants   : {t_seq_50*1000:.1f} ms"
+        f"\n  batched    50 variants   : {t_batch_50*1000:.1f} ms"
+        f"\n  speedup (seq→batch)      : {t_seq_50/t_batch_50:.1f}x"
+        f"\n"
+        f"\n  Projected total (no opts): {t_single*steps*seqs_per_step*V/60:.0f} min  "
+        f"({steps} steps × {seqs_per_step} seqs/step × {V} variants)"
+        f"\n  With batching only       : {t_batch_50/50*V*steps*seqs_per_step/60:.0f} min"
+        f"\n  With batch + 50-var limit: {t_batch_50*steps*seqs_per_step/60:.0f} min",
+        flush=True,
+    )
 
 
 def _tokens_to_peptide(tokens: list[int] | np.ndarray) -> str:
@@ -71,6 +124,7 @@ class DesignResult:
     min_score: float
     omega: list[float]
     per_variant: list[float]
+    retention_score: float = float("nan")
 
 
 def cvar_robust_score(scores: np.ndarray, eta: float) -> float:
@@ -93,13 +147,18 @@ class AffinityScorer:
         peptiverse_normalization: Literal["minmax", "raw"] = "raw",
         peptiverse_min: float = 7.0,
         peptiverse_max: float = 9.0,
+        eval_batch_size: int = 64,
     ):
         self.device = device
         self.peptiverse_normalization = peptiverse_normalization
         self.peptiverse_min = float(peptiverse_min)
         self.peptiverse_max = float(peptiverse_max)
+        self.eval_batch_size = eval_batch_size
         if self.peptiverse_max <= self.peptiverse_min:
             raise ValueError("--peptiverse-max must be greater than --peptiverse-min")
+        # Set by _try_load_peptiverse for batched scoring
+        self._raw_model = None
+        self._embed_fn = None
         self._try_load_peptiverse()
 
     def _normalize_peptiverse_score(self, raw_score: float) -> float:
@@ -110,9 +169,17 @@ class AffinityScorer:
                 f"Unknown PeptiVerse normalization: {self.peptiverse_normalization}"
             )
         score = (raw_score - self.peptiverse_min) / (
-            self.peptiverse_max - self.peptiverse_minca
+            self.peptiverse_max - self.peptiverse_min
         )
         return float(np.clip(score, 0.0, 1.0))
+
+    def _normalize_array(self, scores: np.ndarray) -> np.ndarray:
+        if self.peptiverse_normalization == "raw":
+            return scores
+        return np.clip(
+            (scores - self.peptiverse_min) / (self.peptiverse_max - self.peptiverse_min),
+            0.0, 1.0,
+        )
 
     def _try_load_peptiverse(self) -> None:
         try:
@@ -143,15 +210,16 @@ class AffinityScorer:
                 return cached
 
             def _peptiverse(peptide: str, target: str) -> float:
-                import torch
                 T, Mt = _embed(target)
-                B, Mb = _embed(peptide)
+                B_emb, Mb = _embed(peptide)
                 with torch.no_grad():
-                    reg, _ = model(T, Mt, B, Mb)
+                    reg, _ = model(T, Mt, B_emb, Mb)
                 raw_score = float(reg.squeeze().cpu().item())
                 return self._normalize_peptiverse_score(raw_score)
 
             self._predict = _peptiverse
+            self._raw_model = model
+            self._embed_fn = _embed
             print(
                 "  [scorer] PeptiVerse loaded "
                 f"(normalization={self.peptiverse_normalization}, "
@@ -165,6 +233,46 @@ class AffinityScorer:
                 "Install/fix PeptiVerse dependencies and checkpoint paths."
             ) from exc
 
+    def score_variants_batched(self, peptide: str, variants: list[str]) -> np.ndarray:
+        """Score one peptide against all variants in batched forward passes.
+
+        Embeds the peptide once, then groups variants into chunks of
+        eval_batch_size and runs one model(T_batch, Mt_batch, B_exp, Mb_exp)
+        call per chunk instead of one call per variant.  Falls back to the
+        sequential path if the model can't handle batched input (e.g. mixed
+        sequence lengths that would require padding the embeddings).
+        """
+        if self._raw_model is None or self._embed_fn is None:
+            return np.array([self._predict(peptide, v) for v in variants], dtype=np.float64)
+
+        B_emb, Mb_emb = self._embed_fn(peptide)
+        all_scores: list[np.ndarray] = []
+
+        for start in range(0, len(variants), self.eval_batch_size):
+            chunk = variants[start : start + self.eval_batch_size]
+            try:
+                var_embeds = [self._embed_fn(v) for v in chunk]
+                # Stack variant embeddings: (chunk_size, L_t, d) and (chunk_size, L_t)
+                T_batch  = torch.cat([e[0] for e in var_embeds], dim=0)
+                Mt_batch = torch.cat([e[1] for e in var_embeds], dim=0)
+                V = T_batch.shape[0]
+                # Expand peptide embedding to match chunk size
+                B_exp  = B_emb.expand(V, *B_emb.shape[1:])   if B_emb.dim()  >= 2 else B_emb.unsqueeze(0).expand(V, -1)
+                Mb_exp = Mb_emb.expand(V, *Mb_emb.shape[1:]) if Mb_emb.dim() >= 2 else Mb_emb.unsqueeze(0).expand(V, -1)
+                with torch.no_grad():
+                    reg, _ = self._raw_model(T_batch, Mt_batch, B_exp, Mb_exp)
+                chunk_scores = reg.squeeze(-1).cpu().float().numpy()
+            except Exception:
+                # Fallback for variable-length variants or unexpected model API
+                chunk_scores = np.array(
+                    [self._predict(peptide, v) for v in chunk], dtype=np.float64
+                )
+                all_scores.append(chunk_scores)
+                continue
+            all_scores.append(self._normalize_array(chunk_scores))
+
+        return np.concatenate(all_scores) if all_scores else np.array([], dtype=np.float64)
+
     def __call__(self, peptide: str, target: str) -> float:
         return self._predict(peptide, target)
 
@@ -175,8 +283,12 @@ def score_peptide_against_variants(
     wt_seq: str,
     aff_fn: AffinityScorer,
 ) -> tuple[float, np.ndarray]:
-    wt_score = aff_fn(peptide, wt_seq)
-    var_scores = np.array([aff_fn(peptide, v) for v in variants], dtype=np.float64)
+    if hasattr(aff_fn, "score_variants_batched"):
+        wt_score = float(aff_fn.score_variants_batched(peptide, [wt_seq])[0])
+        var_scores = aff_fn.score_variants_batched(peptide, variants)
+    else:
+        wt_score = aff_fn(peptide, wt_seq)
+        var_scores = np.array([aff_fn(peptide, v) for v in variants], dtype=np.float64)
     return wt_score, var_scores
 
 
@@ -192,23 +304,42 @@ def _rank_normalise(values: np.ndarray) -> np.ndarray:
 
 # New: Modular score model for CVaR robustness
 class RobustnessScoreModel:
-    def __init__(self, variants, eta, aff_fn, wt_seq, tokenizer=None):
+    def __init__(
+        self,
+        variants,
+        eta,
+        aff_fn,
+        wt_seq,
+        tokenizer=None,
+        guidance_var_limit: int | None = None,
+        seed: int = 42,
+    ):
         self.variants = variants
         self.eta = eta
         self.aff_fn = aff_fn
         self.wt_seq = wt_seq
         self.tokenizer = tokenizer
+        self.guidance_var_limit = guidance_var_limit
+        self._rng = np.random.default_rng(seed)
+
+    def _score_seq(self, seq: str, variants: list[str]) -> float:
+        if hasattr(self.aff_fn, "score_variants_batched"):
+            var_scores = self.aff_fn.score_variants_batched(seq, variants)
+        else:
+            var_scores = np.array([self.aff_fn(seq, v) for v in variants], dtype=np.float64)
+        return cvar_robust_score(var_scores, self.eta)
+
     def __call__(self, x, t=None):
-        # x: (batch, seq_len) integer tokens
-        # Decode to string, score against variants
         device = x.device if isinstance(x, torch.Tensor) else torch.device("cpu")
         if isinstance(x, torch.Tensor):
             x = x.cpu().numpy()
         seqs = [_decode_tokens_to_peptide(row, self.tokenizer) for row in x]
-        scores = []
-        for seq in seqs:
-            var_scores = np.array([self.aff_fn(seq, v) for v in self.variants], dtype=np.float64)
-            scores.append(cvar_robust_score(var_scores, self.eta))
+        # Subsample variants for cheaper guidance scoring (if configured)
+        variants = self.variants
+        if self.guidance_var_limit is not None and self.guidance_var_limit < len(variants):
+            idxs = self._rng.choice(len(variants), size=self.guidance_var_limit, replace=False)
+            variants = [variants[i] for i in sorted(idxs)]
+        scores = [self._score_seq(seq, variants) for seq in seqs]
         return torch.tensor(scores, dtype=torch.float32, device=device)
 
 
@@ -223,11 +354,12 @@ class WTScoreModel:
         if isinstance(x, torch.Tensor):
             x = x.cpu().numpy()
         seqs = [_decode_tokens_to_peptide(row, self.tokenizer) for row in x]
-        return torch.tensor(
-            [self.aff_fn(seq, self.wt_seq) for seq in seqs],
-            dtype=torch.float32,
-            device=device,
-        )
+        # Batch score all seqs against wt_seq in one call when possible
+        if hasattr(self.aff_fn, "score_variants_batched"):
+            scores = [float(self.aff_fn.score_variants_batched(seq, [self.wt_seq])[0]) for seq in seqs]
+        else:
+            scores = [self.aff_fn(seq, self.wt_seq) for seq in seqs]
+        return torch.tensor(scores, dtype=torch.float32, device=device)
 
 
 def mog_dfm_guided_design(
@@ -242,6 +374,8 @@ def mog_dfm_guided_design(
     dfm_model=None,
     dfm_tokenizer=None,
     dfm_device="cuda:0",
+    tau_bind: float | None = None,
+    guidance_var_limit: int | None = None,
     **kwargs
 ) -> list[DesignResult]:
     if dfm_model is None:
@@ -325,7 +459,12 @@ def mog_dfm_guided_design(
         else:
             score_models = [
                 WTScoreModel(aff_fn, wt_seq, tokenizer=dfm_tokenizer),
-                RobustnessScoreModel(guidance_variants, eta, aff_fn, wt_seq, tokenizer=dfm_tokenizer),
+                RobustnessScoreModel(
+                    guidance_variants, eta, aff_fn, wt_seq,
+                    tokenizer=dfm_tokenizer,
+                    guidance_var_limit=guidance_var_limit,
+                    seed=kwargs.get("seed") or 42,
+                ),
             ]
             importance = omega
             result_omega = omega
@@ -369,6 +508,10 @@ def mog_dfm_guided_design(
         for seq in decoded:
             wt_score, var_scores = score_peptide_against_variants(seq, eval_variants, wt_seq, aff_fn)
             robust = cvar_robust_score(var_scores, eta)
+            if tau_bind is not None and var_scores.size > 0:
+                ret = float(np.mean(var_scores >= tau_bind))
+            else:
+                ret = float("nan")
             all_results.append(DesignResult(
                 method=design_mode,
                 peptide=seq,
@@ -378,6 +521,7 @@ def mog_dfm_guided_design(
                 min_score=float(np.min(var_scores)),
                 omega=result_omega,
                 per_variant=var_scores.tolist(),
+                retention_score=ret,
             ))
         print(
             "[progress] "
@@ -574,6 +718,15 @@ def main() -> None:
     p.add_argument("--dfm-device", type=str, default=None, help="Device for DFM model (default: same as --device)")
     p.add_argument("--verbose-sampling", action="store_true",
                    help="Enable tqdm progress inside MOG-DFM sampling")
+    p.add_argument("--tau-bind", type=float, default=None,
+                   help="Binding score threshold for retention metric (fraction of variants >= tau). "
+                        "Used for Tables 2/4/5/6/7 'Ret.' column. If not set, retention_score=nan.")
+    p.add_argument("--diagnose-speed", action="store_true",
+                   help="Print a PeptiVerse timing breakdown before sampling and exit.")
+    p.add_argument("--guidance-var-limit", type=int, default=None,
+                   help="Subsample this many variants during DFM guidance scoring (not final eval). "
+                        "Dramatically speeds up sampling, e.g. --guidance-var-limit 50. "
+                        "Final DesignResult scores always use all variants.")
     args = p.parse_args()
     _set_global_seed(args.seed)
 
@@ -635,6 +788,9 @@ def main() -> None:
         peptiverse_min=args.peptiverse_min,
         peptiverse_max=args.peptiverse_max,
     )
+    if getattr(args, "diagnose_speed", False):
+        diagnose_scoring_speed(scorer, wt_seq, variants)
+        import sys as _sys; _sys.exit(0)
     hypercone_rad = math.radians(args.hypercone_angle)
 
     # Load DFM model if requested
@@ -690,6 +846,8 @@ def main() -> None:
         dfm_model=dfm_model,
         dfm_tokenizer=dfm_tokenizer,
         dfm_device=dfm_device,
+        tau_bind=args.tau_bind,
+        guidance_var_limit=args.guidance_var_limit,
     )
 
     out_path = _resolve_user_path(args.out_json)
@@ -707,6 +865,8 @@ def main() -> None:
         print(f"  Mean    : {top.mean_score:.4f}")
         print(f"  Min     : {top.min_score:.4f}")
         print(f"  omega   : ({top.omega[0]:.2f}, {top.omega[1]:.2f})")
+        if not math.isnan(top.retention_score):
+            print(f"  Ret.    : {top.retention_score:.4f}  (tau_bind={args.tau_bind})")
 
         pareto_wt = [d.wt_score for d in designs]
         pareto_rb = [d.robust_score for d in designs]

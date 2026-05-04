@@ -311,19 +311,18 @@ def maybe_subsample_trees(trees: list[str], j: int | None, seed: int) -> list[st
 # DCA via pseudolikelihood maximization (PLM)
 
 def _sequence_weights(X: np.ndarray, threshold: float = 0.9) -> np.ndarray:
-
     N, L = X.shape
-    valid = (X < GAP).astype(np.float32)
-    weights = np.ones(N)
-
-    for n in range(N):
-        both     = valid[n] * valid                                  # (N, L)
-        n_both   = both.sum(axis=1)                                  # (N,)
-        n_match  = ((X[n] == X).astype(np.float32) * both).sum(axis=1)
-        identity = np.divide(n_match, n_both, out=np.zeros(N), where=n_both > 0)
-        weights[n] = 1.0 / max((identity >= threshold).sum(), 1)
-
-    return weights
+    valid = (X < GAP).astype(np.float32)          # (N, L)
+    n_both = valid @ valid.T                        # (N, N) — non-gap position counts
+    # n_match[i,j] = positions where both seqs have the same non-gap AA.
+    # Build it as sum_a (ind_a @ ind_a.T) where ind_a[n,l] = 1 iff X[n,l]==a and valid.
+    n_match = np.zeros((N, N), dtype=np.float32)
+    for a in range(GAP):
+        ind = ((X == a) & (valid.astype(bool))).astype(np.float32)
+        n_match += ind @ ind.T
+    identity = np.divide(n_match, n_both, out=np.zeros((N, N), dtype=np.float32), where=n_both > 0)
+    neighbours = (identity >= threshold).sum(axis=1).astype(np.float64)
+    return 1.0 / np.maximum(neighbours, 1.0)
 
 
 def _fit_position(i: int, X: np.ndarray, weights: np.ndarray, l2_reg: float) -> tuple:
@@ -338,15 +337,15 @@ def _fit_position(i: int, X: np.ndarray, weights: np.ndarray, l2_reg: float) -> 
     w_v = weights[valid_rows]
     X_v = X[valid_rows]
 
-    F = np.zeros((valid_rows.sum(), (L - 1) * 20), dtype=np.float32)
-    col = 0
-    for j in range(L):
-        if j == i:
-            continue
-        nongap = X_v[:, j] < GAP
-        aa_idx = X_v[nongap, j].astype(np.int32, copy=False)
-        F[nongap, col + aa_idx] = 1.0
-        col += 20
+    n_valid = int(valid_rows.sum())
+    F = np.zeros((n_valid, (L - 1) * 20), dtype=np.float32)
+    other_cols = np.delete(np.arange(L), i)          # positions j != i
+    X_other = X_v[:, other_cols]                      # (n_valid, L-1)
+    nongap_mask = X_other < GAP                       # (n_valid, L-1)
+    col_offsets = np.arange(L - 1, dtype=np.int32) * 20  # (L-1,)
+    row_idx, j_idx = np.where(nongap_mask)
+    aa_vals = X_other[row_idx, j_idx].astype(np.int32)
+    F[row_idx, col_offsets[j_idx] + aa_vals] = 1.0
 
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
@@ -370,13 +369,9 @@ def _fit_position(i: int, X: np.ndarray, weights: np.ndarray, l2_reg: float) -> 
         if cls_a >= 20:
             return
         h_i[cls_a] = clf.intercept_[k]
-        col = 0
-        for j in range(L):
-            if j == i:
-                continue
-            for b in range(20):
-                J_row[j, cls_a, b] = clf.coef_[k, col + b]
-            col += 20
+        other_cols = np.delete(np.arange(L), i)      # (L-1,)
+        coef_block = clf.coef_[k].reshape(L - 1, 20) # (L-1, 20)
+        J_row[other_cols, cls_a, :] = coef_block
 
     if n_rows == 1:
         # Binary: the single row encodes P(classes_[1]) vs P(classes_[0])
@@ -486,13 +481,15 @@ def _sample_site_conditional(
             e += lambda_i[i] * np.log(qi[i, current_aa, :].astype(np.float64) + 1e-9)
     elif energy_mode != "paper_dca":
         raise ValueError(f"Unsupported energy_mode: {energy_mode}")
-    # pairwise term with all other sites (scale J by lambda_i)
-    for j in range(x.shape[0]):
-        if j == i:
-            continue
-        b = int(x[j])
-        if 0 <= b < 20:
-            e += lambda_i[i] * J[i, j, :, b].astype(np.float64)
+    # pairwise term with all other sites (vectorized over j)
+    x_int = x.astype(np.int32)
+    valid_j = (x_int < 20)
+    valid_j[i] = False
+    j_idx = np.where(valid_j)[0]
+    if j_idx.size > 0:
+        b_idx = x_int[j_idx]
+        # J[i, j_idx, :, b_idx] has shape (len(j_idx), 20) via advanced indexing
+        e += lambda_i[i] * J[i][j_idx, :, b_idx].sum(axis=0).astype(np.float64)
     # stable softmax over -E/T
     logits = -e / max(t_evo, 1e-8)
     logits -= logits.max()
@@ -506,9 +503,13 @@ def _pll_esm2(
     tokenizer,
     model,
     device: str,
+    batch_size: int = 128,
 ) -> float:
     """
     Compute pseudo-log-likelihood by masking each position.
+
+    Batches all L masked sequences into a single (or a few) forward pass(es)
+    instead of running L separate passes — ~L× faster than the naive loop.
     """
     import torch
 
@@ -516,31 +517,35 @@ def _pll_esm2(
     if seq_len == 0:
         return float("-inf")
 
-    total = 0.0
-    aa_to_tok = {aa: tokenizer.convert_tokens_to_ids(aa) for aa in AA}
     mask_id = tokenizer.mask_token_id
     if mask_id is None:
         raise ValueError("Tokenizer has no mask token id.")
 
-    for i, aa in enumerate(seq):
-        tok_id = aa_to_tok.get(aa, None)
-        if tok_id is None:
-            continue
-        masked = seq[:i] + tokenizer.mask_token + seq[i + 1 :]
-        enc = tokenizer(masked, return_tensors="pt")
+    aa_tok_ids = [tokenizer.convert_tokens_to_ids(aa) for aa in seq]
+
+    # Build all L masked sequences up front
+    masked_seqs = [seq[:i] + tokenizer.mask_token + seq[i + 1:] for i in range(seq_len)]
+
+    total = 0.0
+    for start in range(0, seq_len, batch_size):
+        end = min(start + batch_size, seq_len)
+        batch_seqs = masked_seqs[start:end]
+        enc = tokenizer(batch_seqs, return_tensors="pt", padding=True)
         input_ids = enc["input_ids"].to(device)
         attn = enc.get("attention_mask")
         if attn is not None:
             attn = attn.to(device)
         with torch.no_grad():
-            out = model(input_ids=input_ids, attention_mask=attn)
-            logits = out.logits[0]
-        mask_pos = (input_ids[0] == mask_id).nonzero(as_tuple=True)[0]
-        if len(mask_pos) == 0:
-            continue
-        m = int(mask_pos[0].item())
-        logp = torch.log_softmax(logits[m], dim=-1)[tok_id].item()
-        total += float(logp)
+            logits = model(input_ids=input_ids, attention_mask=attn).logits  # (B, T, V)
+        for b_idx, abs_i in enumerate(range(start, end)):
+            tok_id = aa_tok_ids[abs_i]
+            if tok_id is None or (isinstance(tok_id, int) and tok_id < 0):
+                continue
+            # CLS token is at position 0 → masked residue is at abs_i + 1
+            mask_pos = abs_i + 1
+            logp = torch.log_softmax(logits[b_idx, mask_pos], dim=-1)[tok_id].item()
+            total += float(logp)
+
     return total
 
 

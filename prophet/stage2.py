@@ -21,7 +21,6 @@ from dataclasses import asdict, dataclass
 import torch
 from pathlib import Path
 from typing import Callable, Literal
-import pdb
 
 import numpy as np
 from Bio import SeqIO
@@ -110,7 +109,7 @@ class AffinityScorer:
                 f"Unknown PeptiVerse normalization: {self.peptiverse_normalization}"
             )
         score = (raw_score - self.peptiverse_min) / (
-            self.peptiverse_max - self.peptiverse_minca
+            self.peptiverse_max - self.peptiverse_min
         )
         return float(np.clip(score, 0.0, 1.0))
 

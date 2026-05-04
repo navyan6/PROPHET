@@ -4,6 +4,8 @@ set -euo pipefail
 GPU_INDEX="${1:-0}"
 N_DESIGNS="${2:-500}"
 SEQ_LENGTH="${3:-10}"
+FIRST_WRITE_N="${FIRST_WRITE_N:-200}"
+FINAL_WRITE_N="${FINAL_WRITE_N:-${N_DESIGNS}}"
 
 ROOT=/scratch/pranamlab/kimberly/PROPHET
 PYTHON="${ROOT}/venv/bin/python"
@@ -27,27 +29,36 @@ if [[ ! -s "${CKPT}" ]]; then
   exit 1
 fi
 
+run_generate() {
+  local n_iter="$1"
+  local epoch_label="$2"
+
+  echo "[generate] PepTune n_iter=${n_iter} epoch=${epoch_label} gpu=${GPU_INDEX} $(date)"
+  pushd "${PEPTUNE_DIR}/src" >/dev/null
+  MPLBACKEND=Agg CUDA_VISIBLE_DEVICES="${GPU_INDEX}" PYTHONUNBUFFERED=1 "${PYTHON}" generate_mcts.py \
+    base_path="${PEPTUNE_DIR}" \
+    eval.checkpoint_path="${CKPT}" \
+    +prot_name1=hiv_train \
+    +prot_seq1="${WT_SEQ}" \
+    mode=2 \
+    +model_type=mcts \
+    +length="${SEQ_LENGTH}" \
+    +epoch="${epoch_label}" \
+    sampling.seq_length="${SEQ_LENGTH}" \
+    sampling.steps=50 \
+    mcts.num_iter="${n_iter}" \
+    mcts.num_children=50 \
+    hydra.run.dir=. \
+    hydra.job.chdir=False
+  popd >/dev/null
+}
+
 echo "[start] PepTune HIV train-target baseline gpu=${GPU_INDEX} $(date)"
 
-pushd "${PEPTUNE_DIR}/src" >/dev/null
-MPLBACKEND=Agg CUDA_VISIBLE_DEVICES="${GPU_INDEX}" PYTHONUNBUFFERED=1 "${PYTHON}" generate_mcts.py \
-  base_path="${PEPTUNE_DIR}" \
-  eval.checkpoint_path="${CKPT}" \
-  +prot_name1=hiv_train \
-  +prot_seq1="${WT_SEQ}" \
-  mode=2 \
-  +model_type=mcts \
-  +length="${SEQ_LENGTH}" \
-  +epoch=0 \
-  sampling.seq_length="${SEQ_LENGTH}" \
-  sampling.steps=128 \
-  mcts.num_iter="${N_DESIGNS}" \
-  mcts.num_children=50 \
-  hydra.run.dir=. \
-  hydra.job.chdir=False
-popd >/dev/null
+run_generate "${FIRST_WRITE_N}" "n${FIRST_WRITE_N}"
+run_generate "${FINAL_WRITE_N}" "n${FINAL_WRITE_N}"
 
-CSV="${PEPTUNE_DIR}/hiv_train/2_mcts_length_${SEQ_LENGTH}_epoch_0.csv"
+CSV="${PEPTUNE_DIR}/hiv_train/2_mcts_length_${SEQ_LENGTH}_epoch_n${FINAL_WRITE_N}.csv"
 DESIGNS_JSON="${STAGE2_OUT}/hiv_train_peptune_stage2_peptiverse.json"
 
 CUDA_VISIBLE_DEVICES="${GPU_INDEX}" PYTHONUNBUFFERED=1 "${PYTHON}" "${ROOT}/scripts/evaluate_generated_peptides.py" \

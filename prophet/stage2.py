@@ -261,15 +261,15 @@ class AffinityScorer:
                 Mb_exp = Mb_emb.expand(V, *Mb_emb.shape[1:]) if Mb_emb.dim() >= 2 else Mb_emb.unsqueeze(0).expand(V, -1)
                 with torch.no_grad():
                     reg, _ = self._raw_model(T_batch, Mt_batch, B_exp, Mb_exp)
-                chunk_scores = reg.squeeze(-1).cpu().float().numpy()
+                chunk_scores = np.atleast_1d(reg.squeeze(-1).cpu().float().numpy())
             except Exception:
                 # Fallback for variable-length variants or unexpected model API
-                chunk_scores = np.array(
+                chunk_scores = np.atleast_1d(np.array(
                     [self._predict(peptide, v) for v in chunk], dtype=np.float64
-                )
+                ))
                 all_scores.append(chunk_scores)
                 continue
-            all_scores.append(self._normalize_array(chunk_scores))
+            all_scores.append(np.atleast_1d(self._normalize_array(chunk_scores)))
 
         return np.concatenate(all_scores) if all_scores else np.array([], dtype=np.float64)
 

@@ -420,6 +420,7 @@ def mog_dfm_guided_design(
     fixed_omega = kwargs.get("fixed_omega")
     if fixed_omega is not None:
         weight_grid = [[float(fixed_omega[0]), float(fixed_omega[1])]]
+        n_grid = 1
     else:
         n_grid = int(kwargs.get("omega_samples") or 10)
         n_grid = max(1, n_grid)

@@ -39,7 +39,6 @@ CUDA_VISIBLE_DEVICES="${GPU_INDEX}" PYTHONUNBUFFERED=1 "${PYTHON}" prophet/stage
   --eta 0.1 \
   --seed 42 \
   --design-mode "${MODE}" \
-  --affinity-mode peptiverse \
   --peptiverse-normalization raw \
   --device cuda:0 \
   --dfm-device cuda:0 \

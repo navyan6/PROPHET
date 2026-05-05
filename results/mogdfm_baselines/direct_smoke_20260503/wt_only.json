@@ -1,0 +1,20 @@
+[
+  {
+    "method": "wt_only",
+    "peptide": "AQNCWFGEHE",
+    "wt_score": 5.451248645782471,
+    "robust_score": 4.3301520347595215,
+    "mean_score": 4.590476671854655,
+    "min_score": 4.3301520347595215,
+    "omega": [
+      1.0,
+      0.0
+    ],
+    "per_variant": [
+      4.3301520347595215,
+      4.5028581619262695,
+      4.938419818878174
+    ],
+    "retention_score": NaN
+  }
+]

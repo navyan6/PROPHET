@@ -1,0 +1,20 @@
+[
+  {
+    "method": "esm_only_variants",
+    "peptide": "AQNCSFGEHE",
+    "wt_score": 5.3768792152404785,
+    "robust_score": 4.632164478302002,
+    "mean_score": 4.632164478302002,
+    "min_score": 4.3415846824646,
+    "omega": [
+      0.0,
+      1.0
+    ],
+    "per_variant": [
+      4.3415846824646,
+      4.496891498565674,
+      5.058017253875732
+    ],
+    "retention_score": NaN
+  }
+]

@@ -1,0 +1,2626 @@
+[
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 131,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "GMATAANFSS",
+    "binding_score": 5.6403889656066895,
+    "rank": 1
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 165,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SMATAANFSS",
+    "binding_score": 5.532961368560791,
+    "rank": 2
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 462,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "RESNYADLAE",
+    "binding_score": 5.519497871398926,
+    "rank": 3
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 158,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "GMATASNFSS",
+    "binding_score": 5.512689590454102,
+    "rank": 4
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 411,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EVIAGISAEP",
+    "binding_score": 5.375199317932129,
+    "rank": 5
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 427,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EVIAGISAAP",
+    "binding_score": 5.318758487701416,
+    "rank": 6
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 182,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "GMATAANSSS",
+    "binding_score": 5.31218147277832,
+    "rank": 7
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 141,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "GMATSSNFLS",
+    "binding_score": 5.2961955070495605,
+    "rank": 8
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 174,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "GMATSSNFSS",
+    "binding_score": 5.2659382820129395,
+    "rank": 9
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 388,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EVIAGPSFEP",
+    "binding_score": 5.264151096343994,
+    "rank": 10
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 412,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EIIAGISAEP",
+    "binding_score": 5.260741710662842,
+    "rank": 11
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 179,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "GMATAANFIS",
+    "binding_score": 5.258249759674072,
+    "rank": 12
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 494,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "RESNYADLAP",
+    "binding_score": 5.247386932373047,
+    "rank": 13
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 389,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EVIAGISASP",
+    "binding_score": 5.227802753448486,
+    "rank": 14
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 167,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SRATSASFSS",
+    "binding_score": 5.220583915710449,
+    "rank": 15
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 283,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SIVTSANGIA",
+    "binding_score": 5.209325790405273,
+    "rank": 16
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 177,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "GMATSSNFIS",
+    "binding_score": 5.194228172302246,
+    "rank": 17
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 468,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "RESNFADLAP",
+    "binding_score": 5.193140029907227,
+    "rank": 18
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 473,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "RESNAASLAP",
+    "binding_score": 5.189372539520264,
+    "rank": 19
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 189,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MAATAANFSS",
+    "binding_score": 5.184281349182129,
+    "rank": 20
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 184,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "GMATSASSLS",
+    "binding_score": 5.176732540130615,
+    "rank": 21
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 142,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EPATASNFVS",
+    "binding_score": 5.172117233276367,
+    "rank": 22
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 176,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "GPATSANFSS",
+    "binding_score": 5.161211967468262,
+    "rank": 23
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 409,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EVIAGPSFLP",
+    "binding_score": 5.153419494628906,
+    "rank": 24
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 140,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SMATSSNFSS",
+    "binding_score": 5.148260116577148,
+    "rank": 25
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 475,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "RSSNAASLAP",
+    "binding_score": 5.145962715148926,
+    "rank": 26
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 509,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "ITSNAASLAP",
+    "binding_score": 5.145265102386475,
+    "rank": 27
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 421,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EIIAGPSFEP",
+    "binding_score": 5.144838333129883,
+    "rank": 28
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 404,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "KIIAGISAEP",
+    "binding_score": 5.142014503479004,
+    "rank": 29
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 192,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EMATSALSIS",
+    "binding_score": 5.135407447814941,
+    "rank": 30
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 292,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SYVTSANGIE",
+    "binding_score": 5.124878406524658,
+    "rank": 31
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 450,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "RTSNYADLAP",
+    "binding_score": 5.111866474151611,
+    "rank": 32
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 454,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "RVSNAADLAP",
+    "binding_score": 5.099605560302734,
+    "rank": 33
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 453,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "RTSNAASLAP",
+    "binding_score": 5.098667144775391,
+    "rank": 34
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 403,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EVIAGTSALP",
+    "binding_score": 5.096786975860596,
+    "rank": 35
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 166,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EMATASNYSS",
+    "binding_score": 5.094184875488281,
+    "rank": 36
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 146,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "ERATAANFLS",
+    "binding_score": 5.093516826629639,
+    "rank": 37
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 139,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "APATASNFSS",
+    "binding_score": 5.079905986785889,
+    "rank": 38
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 511,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SVSNFADLAP",
+    "binding_score": 5.07393217086792,
+    "rank": 39
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 168,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EPATAASFSE",
+    "binding_score": 5.070562839508057,
+    "rank": 40
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 138,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "GPATAANFSS",
+    "binding_score": 5.070199489593506,
+    "rank": 41
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 491,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "RISNAADLAP",
+    "binding_score": 5.057374000549316,
+    "rank": 42
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 437,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EIIAGISASP",
+    "binding_score": 5.056237697601318,
+    "rank": 43
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 496,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "RLSNAADLAP",
+    "binding_score": 5.056110382080078,
+    "rank": 44
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 285,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SIVTSANGVE",
+    "binding_score": 5.052427768707275,
+    "rank": 45
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 164,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EAATSSNFIS",
+    "binding_score": 5.0437541007995605,
+    "rank": 46
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 303,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SIVTSANGVS",
+    "binding_score": 5.041204929351807,
+    "rank": 47
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 492,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "ATSNYADLAP",
+    "binding_score": 5.039160251617432,
+    "rank": 48
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 314,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SVVTSANGIE",
+    "binding_score": 5.030419826507568,
+    "rank": 49
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 151,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EEATAANFSS",
+    "binding_score": 5.029475212097168,
+    "rank": 50
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 506,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SSSNAASLAP",
+    "binding_score": 5.023460865020752,
+    "rank": 51
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 397,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EVIAGPSAEP",
+    "binding_score": 5.022468566894531,
+    "rank": 52
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 159,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "ERATSALSSS",
+    "binding_score": 5.020380020141602,
+    "rank": 53
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 429,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EVIAGTSASP",
+    "binding_score": 5.018350124359131,
+    "rank": 54
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 393,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EVIAGPSGEP",
+    "binding_score": 5.017374038696289,
+    "rank": 55
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 257,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SIVTSANGIE",
+    "binding_score": 5.012369632720947,
+    "rank": 56
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 431,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "KVIAGISASP",
+    "binding_score": 5.0090227127075195,
+    "rank": 57
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 156,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "ERATSASFSS",
+    "binding_score": 5.008545398712158,
+    "rank": 58
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 136,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "QPATSANFSS",
+    "binding_score": 5.007874965667725,
+    "rank": 59
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 150,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EEATSANFSS",
+    "binding_score": 5.005966663360596,
+    "rank": 60
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 482,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "RDSNAATLAP",
+    "binding_score": 5.00234842300415,
+    "rank": 61
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 501,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "ISSNAATLAP",
+    "binding_score": 5.001649856567383,
+    "rank": 62
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 95,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "GSIIATTLPE",
+    "binding_score": 4.996765613555908,
+    "rank": 63
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 178,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MRATSANFSS",
+    "binding_score": 4.995855808258057,
+    "rank": 64
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 135,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SMATSSNYLS",
+    "binding_score": 4.99422025680542,
+    "rank": 65
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 469,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "RMSNAADLAP",
+    "binding_score": 4.99248743057251,
+    "rank": 66
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 148,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EPATSANFSS",
+    "binding_score": 4.990606784820557,
+    "rank": 67
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 149,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "GAATSANSSS",
+    "binding_score": 4.9896368980407715,
+    "rank": 68
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 143,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "HMATSASYSS",
+    "binding_score": 4.989136219024658,
+    "rank": 69
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 157,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EEATSSSFSS",
+    "binding_score": 4.987309455871582,
+    "rank": 70
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 380,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AGPGSIFPAE",
+    "binding_score": 4.979897975921631,
+    "rank": 71
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 235,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SILSGATFAA",
+    "binding_score": 4.978263854980469,
+    "rank": 72
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 461,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "RESNAADLAP",
+    "binding_score": 4.977255344390869,
+    "rank": 73
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 426,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EVIAGPSALP",
+    "binding_score": 4.970709323883057,
+    "rank": 74
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 293,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SVVASPNGIE",
+    "binding_score": 4.9700117111206055,
+    "rank": 75
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 258,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SIVTSANGIS",
+    "binding_score": 4.96154260635376,
+    "rank": 76
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 81,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSIIATTIAE",
+    "binding_score": 4.959444522857666,
+    "rank": 77
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 162,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MEATSANFSS",
+    "binding_score": 4.953895092010498,
+    "rank": 78
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 268,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SLVTSANGIE",
+    "binding_score": 4.947836399078369,
+    "rank": 79
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 175,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "ERATSSNSIE",
+    "binding_score": 4.944360733032227,
+    "rank": 80
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 414,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EVIAGPSDEP",
+    "binding_score": 4.94171667098999,
+    "rank": 81
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 134,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EPATASNFSS",
+    "binding_score": 4.935842037200928,
+    "rank": 82
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 130,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EPATGASFSS",
+    "binding_score": 4.93511438369751,
+    "rank": 83
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 205,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SILAGATFAA",
+    "binding_score": 4.933319091796875,
+    "rank": 84
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 350,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGAISSAG",
+    "binding_score": 4.923913478851318,
+    "rank": 85
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 299,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SVVTSANGIS",
+    "binding_score": 4.921844005584717,
+    "rank": 86
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 173,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SPATSSNFSS",
+    "binding_score": 4.919737815856934,
+    "rank": 87
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 478,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "STSNFADLAP",
+    "binding_score": 4.918248176574707,
+    "rank": 88
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 253,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SILAGPNFAV",
+    "binding_score": 4.916646480560303,
+    "rank": 89
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 193,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SISAGPNFDA",
+    "binding_score": 4.914037227630615,
+    "rank": 90
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 80,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "IPYITHTVAE",
+    "binding_score": 4.905177116394043,
+    "rank": 91
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 266,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SVVTSANGID",
+    "binding_score": 4.903872966766357,
+    "rank": 92
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 183,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EMATGSLSSS",
+    "binding_score": 4.899845600128174,
+    "rank": 93
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 498,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "RRSNAADLAP",
+    "binding_score": 4.895839214324951,
+    "rank": 94
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 204,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AILAGPNFAV",
+    "binding_score": 4.893931865692139,
+    "rank": 95
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 239,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SIKAGATFDV",
+    "binding_score": 4.8932318687438965,
+    "rank": 96
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 394,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EIIAGTSASP",
+    "binding_score": 4.8862128257751465,
+    "rank": 97
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 422,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SVIAGTTASP",
+    "binding_score": 4.8860859870910645,
+    "rank": 98
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 194,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AILAGANFAA",
+    "binding_score": 4.884383678436279,
+    "rank": 99
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 443,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SIIAGPSAEP",
+    "binding_score": 4.884161949157715,
+    "rank": 100
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 342,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGSIAPAL",
+    "binding_score": 4.8838887214660645,
+    "rank": 101
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 405,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EIIAGPSFSP",
+    "binding_score": 4.870335102081299,
+    "rank": 102
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 420,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EIIAGPSAEP",
+    "binding_score": 4.8657355308532715,
+    "rank": 103
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 198,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EILAGATFAA",
+    "binding_score": 4.863757610321045,
+    "rank": 104
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 161,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EPATAANFSS",
+    "binding_score": 4.8403449058532715,
+    "rank": 105
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 26,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "KMEVTSGNGV",
+    "binding_score": 4.8401641845703125,
+    "rank": 106
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 256,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SILAGPNFDV",
+    "binding_score": 4.83636999130249,
+    "rank": 107
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 459,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AMSNAADLAP",
+    "binding_score": 4.834883213043213,
+    "rank": 108
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 115,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSIIATSIPP",
+    "binding_score": 4.833041667938232,
+    "rank": 109
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 463,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MHSNAASLAP",
+    "binding_score": 4.830221652984619,
+    "rank": 110
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 145,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EPATSASFSS",
+    "binding_score": 4.825333118438721,
+    "rank": 111
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 200,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SILAGPNFAA",
+    "binding_score": 4.825304985046387,
+    "rank": 112
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 432,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "RVIAGPSASP",
+    "binding_score": 4.825267791748047,
+    "rank": 113
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 392,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EVIAGITAEP",
+    "binding_score": 4.821922302246094,
+    "rank": 114
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 208,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AILSGATFDA",
+    "binding_score": 4.820023536682129,
+    "rank": 115
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 446,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AVIAGPSASP",
+    "binding_score": 4.81800651550293,
+    "rank": 116
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 466,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SVSNAADLAP",
+    "binding_score": 4.814704895019531,
+    "rank": 117
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 265,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SINTSANGIE",
+    "binding_score": 4.813587188720703,
+    "rank": 118
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 370,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGSISPAA",
+    "binding_score": 4.80817174911499,
+    "rank": 119
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 132,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EPATSSNFSS",
+    "binding_score": 4.805685520172119,
+    "rank": 120
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 102,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSIIATTLPP",
+    "binding_score": 4.802781581878662,
+    "rank": 121
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 94,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSIIATVLPE",
+    "binding_score": 4.800962924957275,
+    "rank": 122
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 398,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EIIAGPSAAP",
+    "binding_score": 4.799502849578857,
+    "rank": 123
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 415,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SVIAGPSASP",
+    "binding_score": 4.798455715179443,
+    "rank": 124
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 113,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SSVLATSLPE",
+    "binding_score": 4.794964790344238,
+    "rank": 125
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 195,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "GILSGPTFAA",
+    "binding_score": 4.792443752288818,
+    "rank": 126
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 59,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EMEVTSGNGR",
+    "binding_score": 4.792080402374268,
+    "rank": 127
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 458,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "RTSNAADLAP",
+    "binding_score": 4.791125297546387,
+    "rank": 128
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 390,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EVIAGITASP",
+    "binding_score": 4.789706707000732,
+    "rank": 129
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 227,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AILAGATFDV",
+    "binding_score": 4.786782741546631,
+    "rank": 130
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 170,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SMATSSLSSS",
+    "binding_score": 4.786375045776367,
+    "rank": 131
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 144,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EPATSSNYSS",
+    "binding_score": 4.784873962402344,
+    "rank": 132
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 218,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SILAGPNFEA",
+    "binding_score": 4.780543804168701,
+    "rank": 133
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 129,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EPATGANFSS",
+    "binding_score": 4.776377201080322,
+    "rank": 134
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 290,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SINTSANGVE",
+    "binding_score": 4.775240898132324,
+    "rank": 135
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 210,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SILAGATFDA",
+    "binding_score": 4.774643421173096,
+    "rank": 136
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 153,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EPATAANSIS",
+    "binding_score": 4.7736921310424805,
+    "rank": 137
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 225,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AILAGPNFDV",
+    "binding_score": 4.773618698120117,
+    "rank": 138
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 172,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "QPATSSNFSS",
+    "binding_score": 4.768812656402588,
+    "rank": 139
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 328,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGAIFSAN",
+    "binding_score": 4.7685017585754395,
+    "rank": 140
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 163,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EPATSSTFSS",
+    "binding_score": 4.765933036804199,
+    "rank": 141
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 33,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "KMEVSSGNGK",
+    "binding_score": 4.7612223625183105,
+    "rank": 142
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 226,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AILAGPNFAA",
+    "binding_score": 4.758174896240234,
+    "rank": 143
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 223,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "DIVAGANFAA",
+    "binding_score": 4.755688667297363,
+    "rank": 144
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 449,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MHSNYADLAP",
+    "binding_score": 4.755369663238525,
+    "rank": 145
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 391,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EIIAGPSASP",
+    "binding_score": 4.75503396987915,
+    "rank": 146
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 297,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SIVTSGNGIE",
+    "binding_score": 4.754444599151611,
+    "rank": 147
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 289,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SINTSANGVS",
+    "binding_score": 4.749500751495361,
+    "rank": 148
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 460,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "RSSNAADLAP",
+    "binding_score": 4.748285293579102,
+    "rank": 149
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 410,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EVIAGPTFEP",
+    "binding_score": 4.745697498321533,
+    "rank": 150
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 310,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SINTSPNGIE",
+    "binding_score": 4.7424116134643555,
+    "rank": 151
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 215,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SILAGPNFDA",
+    "binding_score": 4.742257595062256,
+    "rank": 152
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 1,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EMDVTSGNGR",
+    "binding_score": 4.733284950256348,
+    "rank": 153
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 464,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SHSNAADLAK",
+    "binding_score": 4.732605934143066,
+    "rank": 154
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 187,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MPATSSNFSS",
+    "binding_score": 4.730428218841553,
+    "rank": 155
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 230,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MILAGPNFAA",
+    "binding_score": 4.730335712432861,
+    "rank": 156
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 202,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "DILAGATFAA",
+    "binding_score": 4.728936195373535,
+    "rank": 157
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 118,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSIITHTIAE",
+    "binding_score": 4.7288737297058105,
+    "rank": 158
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 277,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SVVTSPNGIE",
+    "binding_score": 4.7287917137146,
+    "rank": 159
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 255,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SILSGPNFDA",
+    "binding_score": 4.726591110229492,
+    "rank": 160
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 147,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EPATGSNFSS",
+    "binding_score": 4.7263712882995605,
+    "rank": 161
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 439,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "DVIAGPSASP",
+    "binding_score": 4.7245073318481445,
+    "rank": 162
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 282,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SIVTSPNGIE",
+    "binding_score": 4.724344730377197,
+    "rank": 163
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 155,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MEATSASFDS",
+    "binding_score": 4.720346927642822,
+    "rank": 164
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 301,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SINTSANGIQ",
+    "binding_score": 4.720015048980713,
+    "rank": 165
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 442,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EVIAGTTASP",
+    "binding_score": 4.716673374176025,
+    "rank": 166
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 445,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EIIAGPSDSP",
+    "binding_score": 4.70681619644165,
+    "rank": 167
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 110,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSIITTTLPP",
+    "binding_score": 4.704200267791748,
+    "rank": 168
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 96,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSIITTTLAE",
+    "binding_score": 4.702112674713135,
+    "rank": 169
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 217,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "ENLAGANFDA",
+    "binding_score": 4.7014617919921875,
+    "rank": 170
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 116,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSIIATTLPE",
+    "binding_score": 4.700713157653809,
+    "rank": 171
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 295,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SVVTSGNGIS",
+    "binding_score": 4.7004780769348145,
+    "rank": 172
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 123,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSIIAHTLPE",
+    "binding_score": 4.699253559112549,
+    "rank": 173
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 451,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MESNAADLAP",
+    "binding_score": 4.69832706451416,
+    "rank": 174
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 111,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSVISTTLAE",
+    "binding_score": 4.695773601531982,
+    "rank": 175
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 349,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGAIFDAE",
+    "binding_score": 4.693107604980469,
+    "rank": 176
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 100,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSIIATSLPE",
+    "binding_score": 4.691761493682861,
+    "rank": 177
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 82,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSIISHVLPE",
+    "binding_score": 4.691400527954102,
+    "rank": 178
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 241,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AILAGPNFDA",
+    "binding_score": 4.6873064041137695,
+    "rank": 179
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 75,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSIITTVLPE",
+    "binding_score": 4.687253952026367,
+    "rank": 180
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 343,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGAVFDAE",
+    "binding_score": 4.684854984283447,
+    "rank": 181
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 73,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSVIATNIPE",
+    "binding_score": 4.683716297149658,
+    "rank": 182
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 127,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSISATSLPP",
+    "binding_score": 4.6801438331604,
+    "rank": 183
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 66,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSIIATNLPE",
+    "binding_score": 4.675076007843018,
+    "rank": 184
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 203,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EILAGPNFAA",
+    "binding_score": 4.67466926574707,
+    "rank": 185
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 386,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EIIAGPSGSP",
+    "binding_score": 4.672523498535156,
+    "rank": 186
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 489,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "RESNGADLAP",
+    "binding_score": 4.669845104217529,
+    "rank": 187
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 12,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EMEVTSGNGE",
+    "binding_score": 4.6671319007873535,
+    "rank": 188
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 430,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "VIIAGITASP",
+    "binding_score": 4.66697359085083,
+    "rank": 189
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 22,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "KMEVTSGNGR",
+    "binding_score": 4.664702892303467,
+    "rank": 190
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 231,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SILAGPTFAA",
+    "binding_score": 4.660760402679443,
+    "rank": 191
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 247,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SIKAGATFDA",
+    "binding_score": 4.659067153930664,
+    "rank": 192
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 512,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "STANAADLAP",
+    "binding_score": 4.65630578994751,
+    "rank": 193
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 238,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SILSGPNFEK",
+    "binding_score": 4.655731201171875,
+    "rank": 194
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 71,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSIIATNIPE",
+    "binding_score": 4.647768497467041,
+    "rank": 195
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 36,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SMEVTSGNGE",
+    "binding_score": 4.647362232208252,
+    "rank": 196
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 269,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SINTSGNGIE",
+    "binding_score": 4.645333766937256,
+    "rank": 197
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 104,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSILTTTLPE",
+    "binding_score": 4.644772529602051,
+    "rank": 198
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 109,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSVITTSLPE",
+    "binding_score": 4.640619277954102,
+    "rank": 199
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 484,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MTSNAADLAP",
+    "binding_score": 4.639894962310791,
+    "rank": 200
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 160,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EMATASNSSS",
+    "binding_score": 4.635966777801514,
+    "rank": 201
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 452,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "STSNAADLAP",
+    "binding_score": 4.630187034606934,
+    "rank": 202
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 209,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EILAGPTFAV",
+    "binding_score": 4.629944801330566,
+    "rank": 203
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 7,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AMEVTSGNGK",
+    "binding_score": 4.629375457763672,
+    "rank": 204
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 61,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EMEVTSGNGK",
+    "binding_score": 4.627288818359375,
+    "rank": 205
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 72,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSIITTTLPE",
+    "binding_score": 4.623878002166748,
+    "rank": 206
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 353,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGAIFPAE",
+    "binding_score": 4.6229023933410645,
+    "rank": 207
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 485,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "RVANAADLAP",
+    "binding_score": 4.608631610870361,
+    "rank": 208
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 206,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EILAGPTFAA",
+    "binding_score": 4.608560085296631,
+    "rank": 209
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 264,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SIVTSPNGIT",
+    "binding_score": 4.606565475463867,
+    "rank": 210
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 40,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AMEVTSGNGS",
+    "binding_score": 4.597146987915039,
+    "rank": 211
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 67,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSIITTNLPE",
+    "binding_score": 4.596226215362549,
+    "rank": 212
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 249,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SILAGPTFDV",
+    "binding_score": 4.587825298309326,
+    "rank": 213
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 125,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSIITTNLPP",
+    "binding_score": 4.583602428436279,
+    "rank": 214
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 240,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SILAGPTFEA",
+    "binding_score": 4.582489490509033,
+    "rank": 215
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 137,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "GPATAANYTS",
+    "binding_score": 4.576653957366943,
+    "rank": 216
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 23,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "KMEVTSGNGS",
+    "binding_score": 4.576272487640381,
+    "rank": 217
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 456,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SHSNAADLAP",
+    "binding_score": 4.5749125480651855,
+    "rank": 218
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 65,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSIISTNLPE",
+    "binding_score": 4.574594974517822,
+    "rank": 219
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 37,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EMEVTSGNGN",
+    "binding_score": 4.567584991455078,
+    "rank": 220
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 83,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSIITHNLPE",
+    "binding_score": 4.564411163330078,
+    "rank": 221
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 222,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AILAGPTFAA",
+    "binding_score": 4.5634684562683105,
+    "rank": 222
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 101,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSIISTNLPP",
+    "binding_score": 4.5627336502075195,
+    "rank": 223
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 21,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "KMDVTSGNGR",
+    "binding_score": 4.561919212341309,
+    "rank": 224
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 433,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EIIAGTTASP",
+    "binding_score": 4.558155059814453,
+    "rank": 225
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 399,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SVIAGPTAEP",
+    "binding_score": 4.557054042816162,
+    "rank": 226
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 213,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SILAGPTFDA",
+    "binding_score": 4.555088520050049,
+    "rank": 227
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 378,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGSISPAG",
+    "binding_score": 4.552823543548584,
+    "rank": 228
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 55,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "KMEVTSGNGK",
+    "binding_score": 4.549703598022461,
+    "rank": 229
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 338,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGAIYPAE",
+    "binding_score": 4.542564392089844,
+    "rank": 230
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 74,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSIITHNIPE",
+    "binding_score": 4.54118013381958,
+    "rank": 231
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 4,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SMEVTSGNGK",
+    "binding_score": 4.537500381469727,
+    "rank": 232
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 455,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "QSSNAADLAP",
+    "binding_score": 4.536852836608887,
+    "rank": 233
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 20,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MMEVTSGNGE",
+    "binding_score": 4.532691478729248,
+    "rank": 234
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 122,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSISTTVTPE",
+    "binding_score": 4.5305914878845215,
+    "rank": 235
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 502,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "RSSNGADLAP",
+    "binding_score": 4.528580665588379,
+    "rank": 236
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 24,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "DMEVTSGNGK",
+    "binding_score": 4.526587963104248,
+    "rank": 237
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 3,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MMEVTSGNGK",
+    "binding_score": 4.522265911102295,
+    "rank": 238
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 465,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "RTSNGADLAP",
+    "binding_score": 4.521273612976074,
+    "rank": 239
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 69,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSIITTNIPE",
+    "binding_score": 4.519388675689697,
+    "rank": 240
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 361,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGSIRPAK",
+    "binding_score": 4.519011974334717,
+    "rank": 241
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 85,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MPIIATNIPE",
+    "binding_score": 4.517344951629639,
+    "rank": 242
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 97,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SSISTTNLPE",
+    "binding_score": 4.514445781707764,
+    "rank": 243
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 244,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EILAGPNFDA",
+    "binding_score": 4.508607387542725,
+    "rank": 244
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 336,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGAIFPAD",
+    "binding_score": 4.506237506866455,
+    "rank": 245
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 51,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MMEVTSGNGS",
+    "binding_score": 4.505927562713623,
+    "rank": 246
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 27,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "TMEVTSGNGK",
+    "binding_score": 4.50390625,
+    "rank": 247
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 211,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "DILAGPTFAA",
+    "binding_score": 4.500926494598389,
+    "rank": 248
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 357,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGAIAPAA",
+    "binding_score": 4.497386932373047,
+    "rank": 249
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 201,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MILAGPTFAA",
+    "binding_score": 4.496985912322998,
+    "rank": 250
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 2,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EMDVTSGNGK",
+    "binding_score": 4.494851589202881,
+    "rank": 251
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 41,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "TMEVTSGNGS",
+    "binding_score": 4.484169960021973,
+    "rank": 252
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 16,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SMDVTSGNGK",
+    "binding_score": 4.482799053192139,
+    "rank": 253
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 402,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EVIAGPTASP",
+    "binding_score": 4.481268405914307,
+    "rank": 254
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 99,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSISTTTLPE",
+    "binding_score": 4.4703049659729,
+    "rank": 255
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 407,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "DIIAGPSGSP",
+    "binding_score": 4.4664225578308105,
+    "rank": 256
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 330,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGAIFPAN",
+    "binding_score": 4.450348377227783,
+    "rank": 257
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 321,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AGPGAIFPAE",
+    "binding_score": 4.446807384490967,
+    "rank": 258
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 329,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGPIFAAE",
+    "binding_score": 4.4449872970581055,
+    "rank": 259
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 438,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SIIAGPTGSP",
+    "binding_score": 4.444004535675049,
+    "rank": 260
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 32,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "HMEVTSGNGS",
+    "binding_score": 4.4429850578308105,
+    "rank": 261
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 326,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGAVYPAE",
+    "binding_score": 4.438836574554443,
+    "rank": 262
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 335,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AGPGPIFPAE",
+    "binding_score": 4.43742036819458,
+    "rank": 263
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 17,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "HMEVTSGNGK",
+    "binding_score": 4.436807632446289,
+    "rank": 264
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 379,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "GGPGPISPAS",
+    "binding_score": 4.426509857177734,
+    "rank": 265
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 196,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EILAGPTFDA",
+    "binding_score": 4.420896053314209,
+    "rank": 266
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 435,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EIIAGPTASP",
+    "binding_score": 4.418707370758057,
+    "rank": 267
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 6,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MMDVTSGNGK",
+    "binding_score": 4.409492492675781,
+    "rank": 268
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 47,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MMDVTSGNGS",
+    "binding_score": 4.409363269805908,
+    "rank": 269
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 93,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MPIIATNLPE",
+    "binding_score": 4.409193515777588,
+    "rank": 270
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 345,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGPIAPAA",
+    "binding_score": 4.4082350730896,
+    "rank": 271
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 70,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSISTTNLPE",
+    "binding_score": 4.4069108963012695,
+    "rank": 272
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 419,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AVIAGPTAEP",
+    "binding_score": 4.405883312225342,
+    "rank": 273
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 340,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGAVRPAE",
+    "binding_score": 4.401866436004639,
+    "rank": 274
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 212,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "DILAGPNFDA",
+    "binding_score": 4.401667594909668,
+    "rank": 275
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 372,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "GGPGAIFPAE",
+    "binding_score": 4.3982343673706055,
+    "rank": 276
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 440,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "VVIAGPTASP",
+    "binding_score": 4.395245552062988,
+    "rank": 277
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 472,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MTANAADLAP",
+    "binding_score": 4.389595031738281,
+    "rank": 278
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 355,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGPIFPAL",
+    "binding_score": 4.386480808258057,
+    "rank": 279
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 9,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "KMDVTSGNGK",
+    "binding_score": 4.376607418060303,
+    "rank": 280
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 358,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGAVAPAA",
+    "binding_score": 4.372836589813232,
+    "rank": 281
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 199,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MILAGPTFDV",
+    "binding_score": 4.372649192810059,
+    "rank": 282
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 352,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGAIRPAE",
+    "binding_score": 4.370882034301758,
+    "rank": 283
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 8,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "HMDVTSGNGS",
+    "binding_score": 4.36991548538208,
+    "rank": 284
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 133,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EPATSSNSSS",
+    "binding_score": 4.369663238525391,
+    "rank": 285
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 28,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "TMDVTSGNGK",
+    "binding_score": 4.366091728210449,
+    "rank": 286
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 224,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "DIKAGPTFDA",
+    "binding_score": 4.365209579467773,
+    "rank": 287
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 229,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EILSGPTFPV",
+    "binding_score": 4.364923000335693,
+    "rank": 288
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 418,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EVIAGPTAEP",
+    "binding_score": 4.352409839630127,
+    "rank": 289
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 57,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "KMDVTSGNGE",
+    "binding_score": 4.3491530418396,
+    "rank": 290
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 152,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MPATSANSSS",
+    "binding_score": 4.349120140075684,
+    "rank": 291
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 381,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AGPGAVFPAE",
+    "binding_score": 4.348433971405029,
+    "rank": 292
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 68,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MSINSTNLPE",
+    "binding_score": 4.344247341156006,
+    "rank": 293
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 325,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGAIAPAE",
+    "binding_score": 4.339617729187012,
+    "rank": 294
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 25,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MMDVTSGNGE",
+    "binding_score": 4.328524589538574,
+    "rank": 295
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 395,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EVIAGPTAAP",
+    "binding_score": 4.325830936431885,
+    "rank": 296
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 10,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "HMDVTSGNGK",
+    "binding_score": 4.324880123138428,
+    "rank": 297
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 348,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGPIFPAE",
+    "binding_score": 4.2972493171691895,
+    "rank": 298
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 424,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EIIAGPTAEP",
+    "binding_score": 4.295713424682617,
+    "rank": 299
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 400,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EIIAGPTALP",
+    "binding_score": 4.289681434631348,
+    "rank": 300
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 334,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGAIAPAD",
+    "binding_score": 4.2860941886901855,
+    "rank": 301
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 366,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AGPGAIRPAE",
+    "binding_score": 4.284591197967529,
+    "rank": 302
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 363,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AGPGAVRPAA",
+    "binding_score": 4.2801947593688965,
+    "rank": 303
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 376,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MGPGAVFPAE",
+    "binding_score": 4.277657985687256,
+    "rank": 304
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 331,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGAIAPAN",
+    "binding_score": 4.277136325836182,
+    "rank": 305
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 428,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "KIIAGPTAEP",
+    "binding_score": 4.257661819458008,
+    "rank": 306
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 197,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "DILSGPTFDA",
+    "binding_score": 4.254787921905518,
+    "rank": 307
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 387,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EIIAGPTAAP",
+    "binding_score": 4.242249965667725,
+    "rank": 308
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 220,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "HMLAGPTFDA",
+    "binding_score": 4.235730171203613,
+    "rank": 309
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 327,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGPIYPAE",
+    "binding_score": 4.235492706298828,
+    "rank": 310
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 341,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGPIFPAD",
+    "binding_score": 4.226016044616699,
+    "rank": 311
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 344,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGPIFPAK",
+    "binding_score": 4.221593379974365,
+    "rank": 312
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 90,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "MPINTTNLPE",
+    "binding_score": 4.216073513031006,
+    "rank": 313
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 324,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGPVFPAE",
+    "binding_score": 4.208893299102783,
+    "rank": 314
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 337,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AGPGTIADAD",
+    "binding_score": 4.204107761383057,
+    "rank": 315
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 339,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGPIRPAE",
+    "binding_score": 4.193204402923584,
+    "rank": 316
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 385,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "EIIAGPTDEP",
+    "binding_score": 4.180116176605225,
+    "rank": 317
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 368,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AGPGPVFPAD",
+    "binding_score": 4.1798224449157715,
+    "rank": 318
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 332,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AGPGPIRPAE",
+    "binding_score": 4.169539928436279,
+    "rank": 319
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 417,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "TIIAGPTAEP",
+    "binding_score": 4.164015293121338,
+    "rank": 320
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 375,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGPIAPAS",
+    "binding_score": 4.153628826141357,
+    "rank": 321
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 384,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGPIAPAE",
+    "binding_score": 4.1161112785339355,
+    "rank": 322
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 322,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AGPGPVFPAK",
+    "binding_score": 4.112708568572998,
+    "rank": 323
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 362,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AGPGPIAPAE",
+    "binding_score": 4.112298011779785,
+    "rank": 324
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 356,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGPIQPAD",
+    "binding_score": 4.076170444488525,
+    "rank": 325
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 359,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGPIRPAG",
+    "binding_score": 4.063502311706543,
+    "rank": 326
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 369,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "SGPGPIRPAK",
+    "binding_score": 4.062656402587891,
+    "rank": 327
+  },
+  {
+    "source_file": "results/RFDiffusionPeptides.txt",
+    "source_line": 323,
+    "target": "PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF",
+    "peptide": "AGPGPVAPAE",
+    "binding_score": 3.9039783477783203,
+    "rank": 328
+  }
+]

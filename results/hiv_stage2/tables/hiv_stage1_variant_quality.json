@@ -1,0 +1,21 @@
+{
+  "n_variants": 500,
+  "n_heldout": 9,
+  "sequence_length": 99,
+  "lambda_nonzero_sites": 37,
+  "lambda_nonzero_fraction": 0.37373737373737376,
+  "lambda_mean": 0.7868106923639039,
+  "lambda_max": 8.113985265002759,
+  "wt_edit_distance_mean": 95.422,
+  "wt_edit_distance_median": 96.0,
+  "wt_edit_distance_min": 88.0,
+  "wt_edit_distance_max": 99.0,
+  "nearest_heldout_edit_distance_mean": 95.484,
+  "nearest_heldout_edit_distance_median": 96.0,
+  "nearest_heldout_edit_distance_min": 88.0,
+  "nearest_heldout_edit_distance_max": 99.0,
+  "dca_energy_mean": -194.51510906355432,
+  "dca_energy_median": -195.22305816594007,
+  "dca_energy_min": -196.56842169079488,
+  "dca_energy_max": -185.1536880321956
+}

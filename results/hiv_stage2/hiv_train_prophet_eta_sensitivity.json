@@ -1,0 +1,40 @@
+{
+  "designs_json": "results/hiv_stage2/hiv_train_stage2_peptiverse_gpu1.json",
+  "eta_metrics": {
+    "0.05": {
+      "n_designs": 500,
+      "mean_cvar": 0.15291305050505052,
+      "median_cvar": 0.16793939393939394,
+      "min_cvar": 0.0,
+      "max_cvar": 0.21676767676767678
+    },
+    "0.1": {
+      "n_designs": 500,
+      "mean_cvar": 0.15668951515151514,
+      "median_cvar": 0.1701313131313131,
+      "min_cvar": 0.0,
+      "max_cvar": 0.2225959595959596
+    },
+    "0.2": {
+      "n_designs": 500,
+      "mean_cvar": 0.1611416363636364,
+      "median_cvar": 0.17279292929292925,
+      "min_cvar": 0.0,
+      "max_cvar": 0.22911616161616163
+    },
+    "0.5": {
+      "n_designs": 500,
+      "mean_cvar": 0.16799784848484847,
+      "median_cvar": 0.18519191919191916,
+      "min_cvar": 0.0,
+      "max_cvar": 0.238159595959596
+    },
+    "1.0": {
+      "n_designs": 500,
+      "mean_cvar": 0.17596926666666668,
+      "median_cvar": 0.1942565656565656,
+      "min_cvar": 0.0,
+      "max_cvar": 0.24848080808080805
+    }
+  }
+}

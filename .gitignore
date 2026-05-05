@@ -18,7 +18,6 @@ venv/
 # Data files (can be very large)
 *.fasta
 *.nwk
-*.json
 data/
 
 # Output files

@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import argparse
 import contextlib
+import io
 import json
 import math
 import os
@@ -48,7 +49,8 @@ if str(_PEPTUNE_SRC) not in sys.path:
 # ─── PROPHET imports ──────────────────────────────────────────────────────────
 _PROPHET_DIR = Path(__file__).parent
 if str(_PROPHET_DIR) not in sys.path:
-    sys.path.insert(0, str(_PROPHET_DIR))
+    # Insert at 1 (not 0) so PepTune's own `utils` package isn't shadowed
+    sys.path.insert(1, str(_PROPHET_DIR))
 
 from stage2 import (  # noqa: E402
     AffinityScorer,
@@ -176,6 +178,23 @@ PROPHET_OBJECTIVES = {
 }
 
 
+def _prefer_peptune_imports() -> None:
+    """
+    Ensure PepTune package names win over similarly named PROPHET modules.
+    Call this before any `from utils.xxx import ...` inside PepTune code paths.
+    """
+    peptune_src = str(_PEPTUNE_SRC)
+    if peptune_src in sys.path:
+        sys.path.remove(peptune_src)
+    sys.path.insert(0, peptune_src)
+
+    # Evict a stale `utils` module that may have been loaded from the wrong place
+    mod = sys.modules.get("utils")
+    mod_file = getattr(mod, "__file__", "") if mod is not None else ""
+    if mod is not None and str(_PEPTUNE_SRC) not in str(mod_file):
+        sys.modules.pop("utils", None)
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Scoring proxy (replaces PepTune's ScoringFunctions inside MCTS)
 # ─────────────────────────────────────────────────────────────────────────────
@@ -187,7 +206,7 @@ class _ProphetScoringProxy:
 
     Supported score_func_names:
       "prophet_robust"  – CVaR robustness over Gibbs variants
-      "prophet_wt"      – WT binding score
+      "prophet_wt"      – WT binding score via AffinityScorer
     """
 
     def __init__(
@@ -202,7 +221,11 @@ class _ProphetScoringProxy:
         eta: float,
         guidance_var_limit: Optional[int],
         rng: np.random.Generator,
+        peptune_base_path: str,
     ):
+        _prefer_peptune_imports()
+        os.environ.setdefault("PEPTUNE_BASE_PATH", peptune_base_path)
+
         from utils.app import PeptideAnalyzer  # noqa: PLC0415
 
         for name in score_func_names:
@@ -280,6 +303,7 @@ class _ProphetScoringProxy:
 
 def load_mdlm(ckpt_path: Path, config: SimpleNamespace, device: str):
     """Load PepTune's pretrained Diffusion model from checkpoint."""
+    _prefer_peptune_imports()
     os.environ.setdefault("PEPTUNE_BASE_PATH", str(_REPO_ROOT / "PepTune"))
     from diffusion import Diffusion  # noqa: PLC0415
     from tokenizer.my_tokenizers import SMILES_SPE_Tokenizer  # noqa: PLC0415
@@ -292,7 +316,9 @@ def load_mdlm(ckpt_path: Path, config: SimpleNamespace, device: str):
         str(ckpt_path),
         config=config,
         tokenizer=tokenizer,
+        strict=False,
         map_location=device,
+        weights_only=False,
     )
     mdlm = mdlm.to(device).eval()
     return mdlm
@@ -373,6 +399,7 @@ def peptune_guided_design(
         eta=eta,
         guidance_var_limit=guidance_var_limit,
         rng=rng,
+        peptune_base_path=str(_REPO_ROOT / "PepTune"),
         device=device,
     )
 
@@ -382,20 +409,24 @@ def peptune_guided_design(
 
     try:
         from pareto_mcts import Node, MCTS  # noqa: PLC0415
+        from utils.generate_utils import mask_for_de_novo  # noqa: PLC0415
 
-        # Initialise root node with a fully masked sequence
-        root_tokens = mdlm.sample_prior(1, seq_length).to(device)
+        # Match PepTune's generate_mcts.py initialization path exactly.
+        # mask_for_de_novo avoids the all-mask root bug that caused empty tensor slices.
+        masked_array = mask_for_de_novo(config, seq_length)
+        root_tokens = mdlm.tokenizer.encode(masked_array)
+        root_tokens = {key: value.to(device) for key, value in root_tokens.items()}
         root_node = Node(
             config=config,
-            tokens={"input_ids": root_tokens, "attention_mask": torch.ones_like(root_tokens)},
+            tokens=root_tokens,
             parentNode=None,
             childNodes=[],
             timestep=0,
         )
-        root_node.root = root_node  # required by calcSelectScore
 
         mcts = MCTS(
             config=config,
+            max_sequence_length=seq_length,
             mdlm=mdlm,
             score_func_names=score_func_names,
             prot_seqs=[wt_seq],
@@ -420,6 +451,7 @@ def peptune_guided_design(
         _pm.ScoringFunctions = _original_sf  # restore
 
     # ── Post-process Pareto front ──────────────────────────────────────────────
+    _prefer_peptune_imports()
     from utils.app import PeptideAnalyzer  # noqa: PLC0415
     analyzer = PeptideAnalyzer()
     results: list[DesignResult] = []
@@ -450,7 +482,7 @@ def peptune_guided_design(
             else float("nan")
         )
 
-        # omega: use binding_affinity1 MCTS score as a proxy weight
+        # omega comes from the Pareto-front score vector (index 0 = binding/robust weight)
         score_vec = np.array(info["scores"], dtype=float)
         binding_weight = float(score_vec[0]) if score_vec.size else float("nan")
 
@@ -463,6 +495,7 @@ def peptune_guided_design(
             min_score=min_score,
             omega=[binding_weight],
             per_variant=var_scores.tolist(),
+            retention_score=retention,
         ))
 
     results.sort(key=lambda r: (r.robust_score, r.wt_score), reverse=True)
@@ -476,6 +509,7 @@ def _make_proxy_cls(
     eta: float,
     guidance_var_limit: Optional[int],
     rng: np.random.Generator,
+    peptune_base_path: str,
     device: str,
 ):
     """Return a class (not instance) whose __init__ matches ScoringFunctions."""
@@ -492,6 +526,7 @@ def _make_proxy_cls(
                 eta=eta,
                 guidance_var_limit=guidance_var_limit,
                 rng=rng,
+                peptune_base_path=peptune_base_path,
             )
 
     return _Proxy

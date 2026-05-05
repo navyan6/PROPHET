@@ -1,0 +1,7 @@
+{
+  "accepted_fasta": "results/all_trees_stage1_train_only/hiv_train_gibbs_variants.fasta",
+  "requested_samples": 500,
+  "accepted_samples": 500,
+  "rejected_samples": 0,
+  "rejection_rate": 0.0
+}

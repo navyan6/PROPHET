@@ -1,0 +1,40 @@
+{
+  "designs_json": "results/hiv_stage2_raw_20260429_112329/hiv_train_wt_only_stage2_peptiverse.json",
+  "eta_metrics": {
+    "0.05": {
+      "n_designs": 500,
+      "mean_cvar": 4.380180838165282,
+      "median_cvar": 4.302111587524414,
+      "min_cvar": 3.7869295501708984,
+      "max_cvar": 7.811307830810547
+    },
+    "0.1": {
+      "n_designs": 500,
+      "mean_cvar": 4.422785202579498,
+      "median_cvar": 4.3386578941345215,
+      "min_cvar": 3.80019082069397,
+      "max_cvar": 7.945425891876221
+    },
+    "0.2": {
+      "n_designs": 500,
+      "mean_cvar": 4.483332186965942,
+      "median_cvar": 4.388331508636474,
+      "min_cvar": 3.822684998512268,
+      "max_cvar": 8.08684383392334
+    },
+    "0.5": {
+      "n_designs": 500,
+      "mean_cvar": 4.5983267378158565,
+      "median_cvar": 4.486341321945191,
+      "min_cvar": 3.8625648708343507,
+      "max_cvar": 8.287383979797363
+    },
+    "1.0": {
+      "n_designs": 500,
+      "mean_cvar": 4.809318898485184,
+      "median_cvar": 4.684858983516693,
+      "min_cvar": 3.931976632118225,
+      "max_cvar": 8.52565307044983
+    }
+  }
+}

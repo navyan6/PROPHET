@@ -1,0 +1,40 @@
+{
+  "designs_json": "/scratch/pranamlab/kimberly/PROPHET/results/hiv_stage2_raw_20260429_112329/hiv_train_peptune_stage2_peptiverse.json",
+  "eta_metrics": {
+    "0.05": {
+      "n_designs": 5,
+      "mean_cvar": 5.422465515136719,
+      "median_cvar": 5.50170373916626,
+      "min_cvar": 4.571275234222412,
+      "max_cvar": 6.129875183105469
+    },
+    "0.1": {
+      "n_designs": 5,
+      "mean_cvar": 5.422465515136719,
+      "median_cvar": 5.50170373916626,
+      "min_cvar": 4.571275234222412,
+      "max_cvar": 6.129875183105469
+    },
+    "0.2": {
+      "n_designs": 5,
+      "mean_cvar": 5.4386919975280765,
+      "median_cvar": 5.5315611362457275,
+      "min_cvar": 4.571815490722656,
+      "max_cvar": 6.162410497665405
+    },
+    "0.5": {
+      "n_designs": 5,
+      "mean_cvar": 5.457380561828613,
+      "median_cvar": 5.552862930297851,
+      "min_cvar": 4.573157215118409,
+      "max_cvar": 6.209014511108398
+    },
+    "1.0": {
+      "n_designs": 5,
+      "mean_cvar": 5.482275422414143,
+      "median_cvar": 5.580141597323948,
+      "min_cvar": 4.5749442842271595,
+      "max_cvar": 6.265407986111111
+    }
+  }
+}

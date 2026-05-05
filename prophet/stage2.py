@@ -269,7 +269,7 @@ class AffinityScorer:
                 ))
                 all_scores.append(chunk_scores)
                 continue
-            all_scores.append(self._normalize_array(chunk_scores))
+            all_scores.append(np.atleast_1d(self._normalize_array(chunk_scores)))
 
         return np.concatenate(all_scores) if all_scores else np.array([], dtype=np.float64)
 

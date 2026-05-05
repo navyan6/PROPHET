@@ -422,17 +422,19 @@ def mog_dfm_guided_design(
     if guidance_var_limit is not None:
         guidance_var_limit = int(guidance_var_limit)
 
-    # Omega sweep for Pareto front
-    n_grid = int(kwargs.get("omega_samples") or 10)
-    n_grid = max(1, n_grid)
-    weight_grid = [[float(w), 1.0 - float(w)] for w in np.linspace(0, 1, n_grid)]
+    # Use one balanced objective vector per run. Older versions swept omega across
+    # a grid, which multiplied runtime and produced poorly resolved batches.
+    binding_weight = float(kwargs.get("omega_binding_weight", 0.5))
+    binding_weight = min(max(binding_weight, 0.0), 1.0)
+    weight_grid = [[binding_weight, 1.0 - binding_weight]]
+    n_grid = len(weight_grid)
     all_results = []
     produced = 0
     total_started = 0
     run_start = time.time()
     verbose = bool(kwargs.get("verbose", False))
     for grid_idx, omega in enumerate(weight_grid):
-        # Prepare initial batch for each omega
+        # Prepare the initial batch for this objective vector.
         remaining = n_designs - produced
         if remaining <= 0:
             break
@@ -440,10 +442,10 @@ def mog_dfm_guided_design(
         n_samples = max(1, math.ceil(remaining / slots_left))
         produced += n_samples
         total_started += n_samples
-        omega_start = time.time()
+        objective_start = time.time()
         print(
             "[progress] "
-            f"omega {grid_idx + 1}/{n_grid} "
+            f"objective {grid_idx + 1}/{n_grid} "
             f"weights=({omega[0]:.3f},{omega[1]:.3f}) "
             f"batch={n_samples} "
             f"started={min(total_started, n_designs)}/{n_designs} "
@@ -509,10 +511,10 @@ def mog_dfm_guided_design(
             result_omega = omega
             guidance_weight = omega
 
-        # Run DFM sampling for this omega
+        # Run DFM sampling for this objective vector.
         print(
             "[progress] "
-            f"sampling omega {grid_idx + 1}/{n_grid} "
+            f"sampling objective {grid_idx + 1}/{n_grid} "
             f"steps={int(kwargs.get('n_steps', 200))} "
             f"device={dfm_device}",
             flush=True,
@@ -529,7 +531,7 @@ def mog_dfm_guided_design(
         )
         print(
             "[progress] "
-            f"scoring omega {grid_idx + 1}/{n_grid} "
+            f"scoring objective {grid_idx + 1}/{n_grid} "
             f"sampled={len(x_samples)}",
             flush=True,
         )
@@ -578,9 +580,9 @@ def mog_dfm_guided_design(
             ))
         print(
             "[progress] "
-            f"finished omega {grid_idx + 1}/{n_grid} "
+            f"finished objective {grid_idx + 1}/{n_grid} "
             f"total_scored={len(all_results)}/{n_designs} "
-            f"omega_elapsed={time.time() - omega_start:.1f}s "
+            f"objective_elapsed={time.time() - objective_start:.1f}s "
             f"total_elapsed={time.time() - run_start:.1f}s",
             flush=True,
         )
@@ -807,7 +809,9 @@ def main() -> None:
     p.add_argument("--hypercone-angle",type=float, default=45.0,
                    help="Half-angle of Pareto hypercone filter (degrees)")
     p.add_argument("--omega-grid",     type=int,   default=None,
-                   help="If set, sweep omega over this many evenly-spaced grid points")
+                   help="Deprecated; omega sweeps are disabled")
+    p.add_argument("--omega-binding-weight", type=float, default=0.5,
+                   help="Single binding objective weight to use instead of an omega sweep")
     p.add_argument("--variant-limit",  type=int,   default=None,
                    help="Randomly subsample this many variants (None = use all)")
     p.add_argument("--guidance-variants-fasta", default=None,
@@ -866,6 +870,12 @@ def main() -> None:
                         "Final DesignResult scores still use all variants.")
     args = p.parse_args()
     _set_global_seed(args.seed)
+    if args.omega_grid is not None:
+        print(
+            "[warn] --omega-grid is deprecated and ignored; "
+            "using one objective vector from --omega-binding-weight.",
+            flush=True,
+        )
 
     variants_path = _resolve_user_path(args.variants_fasta)
     variants = _load_variants_fasta(variants_path, args.variant_limit, args.seed)
@@ -1005,6 +1015,7 @@ def main() -> None:
         delta_alpha=args.delta_alpha,
         hypercone_angle=hypercone_rad,
         omega_samples=args.omega_grid,
+        omega_binding_weight=args.omega_binding_weight,
         seed=args.seed,
         verbose=args.verbose_sampling,
         dfm_model=dfm_model,

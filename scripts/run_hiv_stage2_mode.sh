@@ -17,6 +17,8 @@ VARIANTS_FASTA=results/all_trees_stage1_train_only/hiv_train_gibbs_variants.fast
 ESCAPE_FASTA=data/pre_stage1_split/alignments/test/hiv_test_aligned.fasta
 WT_SEQ=PQVTLWQKPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNF
 DFM_CKPT=MOG-DFM/ckpt/peptide/cnn_epoch200_lr0.0001_embed512_hidden256_loss3.1051.ckpt
+N_DESIGNS="${N_DESIGNS:-500}"
+N_STEPS="${N_STEPS:-50}"
 
 mkdir -p "${OUT_DIR}"
 
@@ -31,8 +33,8 @@ CUDA_VISIBLE_DEVICES="${GPU_INDEX}" PYTHONUNBUFFERED=1 "${PYTHON}" prophet/stage
   --variants-fasta "${VARIANTS_FASTA}" \
   --wt-seq "${WT_SEQ}" \
   --out-json "${DESIGNS_JSON}" \
-  --n-designs 500 \
-  --n-steps 200 \
+  --n-designs "${N_DESIGNS}" \
+  --n-steps "${N_STEPS}" \
   --peptide-length 10 \
   --eta 0.1 \
   --seed 42 \

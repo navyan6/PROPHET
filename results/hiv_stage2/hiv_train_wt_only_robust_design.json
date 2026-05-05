@@ -1,0 +1,3520 @@
+{
+  "per_peptide": [
+    {
+      "peptide": "ANEAQKFHTK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "VCGFNKVLMQ",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "GGGRMAVYHA",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MCSHHNWGFH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DDMHKQWCWI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "LNGDFWSQKW",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PIFLIIGMQY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FITNMCTHTW",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "EYLFWCAFEY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DSIWPHRGLR",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TFVHVIGDNY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "ECRHQLKRLN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YTQHRSGPRH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IQSHYQELAI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "QAWSQGMGCT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MNMCIVIIPI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IYLKAWSHWS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "QIAVPVRITC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PTYTWECKEI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "AGQQGKQYDP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "EDVQEWCIYQ",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DNTSCMYCIH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FSTWQCEMQT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "EYPLIVLKNQ",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "VNDGQVIHVS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CIYCKRHCHF",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "QSIRHTEYDC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MERTRRPEWC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RDCGVDGVRE",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MVYCLHHEDK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CCWCWFHCQD",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TANTENAWNM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DANWMQMLTW",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "WYKEAQEYGD",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DERAHCSFEC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YAFKVQIHGC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RDAEQAVAGI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "ETQMFVRSLS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MSLAKNGPCD",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "QTEWIAVMWW",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PRLRIIRLML",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PDQWACQDGV",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "AFVWIKICPK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "ASLQIGFRRN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DHHAWPAWFI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "VYFNLLLWTL",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "SHCVRKTIRC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "THPHWMRTKG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "GGCLYMQYKG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "ASAWRDHKVT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "AREAWQVPKF",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DHTAREMKAQ",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RFCRWHMYEV",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CYFEMHYHTR",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "VLRPRSIAPG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DQWQYGMYCT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TSWQDNDCWT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "GHHQAVEKEK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FFYIQEMQIG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TTEYTRIMTN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "VLQCHGDAQT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "GSPSDHEWFY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MEQARQGTHK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "VINCECMWCT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RRRAYGRHLC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YDDPPHFTPQ",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FNWSRGFCAT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FDYHQGLEMG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DQHLSLMEQV",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "WGECYASYWS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "WRPYEFEVRV",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YTDGFYQRWE",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "NCWWPVGYMS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "ENDCHTRAPH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "WHLYCVNFCQ",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RTVYHKIGLR",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "WWFACWKIHD",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "LYFFDENPCR",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "VNGDAPMEGA",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "KDDMMENFDP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "LALSDDYRYD",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TQPVSAYFFP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "LKCSWVLQWI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "LQTGTWIVGV",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MFHWFNRAEY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "GTGAWWMGMI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RRDRHKNETM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DETKEDMPPQ",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TADINWEHEQ",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PHVPLLPQNN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PGPHSCELRR",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "SGCPPPYFSR",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RAYPLMTLAI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "GHLKRCVVVI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "KWYENCEWNG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RWPWEGPKWL",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "ARQDSIYERG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "SSDEMTWQNP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "LNWWMLQALM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MVNIWRAMKY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RSDGMLWYYH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "SQHLFNATIS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "LWKIARLFYY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YVLQQDMHVY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "AQCMCGVPWF",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "ECLIFMGRSN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FFFNVKASPY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MLQQPIYKWT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MIEGHEWYTC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "SKFMFRWDSK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "QRIQPCGAKG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HRYHRIDGWE",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "NSKATNSCLA",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HFYYWFLPCF",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IHDKPQFPWR",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DVEEMPQAER",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MTCMFETFDT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "KALNDYDRMD",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PLAYPLFAFI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "KCTMNHPQPL",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "NIAMFKTASN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FVEHPASYKT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MMQMWPLWKD",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RHWFCWPLPY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "QVHSPYKWEK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "LPHLPYMYNK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "ATHRIFTMEH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CMTWMKLCVL",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "GNTCQFFFVP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FCVWLVLHGG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "EYKGVAQMAK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "NDWQFNGGVR",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RSERIWKWLV",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IMCCVILGLR",
+      "wt_score": 0.0,
+      "mean_escape": 0.0010067886776394313,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "LVYSMIRGTG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "WARMMSLPRQ",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "LDDWFHNKNW",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "EFTLRAFYVA",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YQLMKSQGEL",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TKSCQMPLYY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FNNGHQQDVK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "NIGDIMQAHC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TGYMPTIVLS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RAACKAELIN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IFGHTINWDF",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RLHCVGFAYS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TYCYAMDKCV",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YCVVGEPMLN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DDPHTIPLFG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HGVNVSHFWM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RASLTGSHKM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "KTWQWCSHMI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "GFVYCECSFS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HYCVAWRFSG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HDPGWEMTYQ",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HRRRYCDSFA",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MGNVRLDAYS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YVYYIDLPEH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PHRHKRWWER",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "ANISCVQYHE",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PTTAQFFLMM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "WRHEVDNSFL",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YSNLNQHHNM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "QMFTGTWWPY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "AVCRGVGYLR",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HSDHRNKRVY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "LKIFVQIKWH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "QEHTMSPWYV",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YHAEFNLRHP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YLLDEKIEGI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HANVENGRTS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DCDMKRLENH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PLQGCHGSFP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TNYYVIYWFG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "KDYDGYHQFN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "WDHQTPSMAA",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RCSIMCCTTM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "AWSFWDPCEN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RSSWGYPPEE",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MVYCHIHWQQ",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HLDTPCLNTM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "QYNPEPTACM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MTEKHGSWLR",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "NFPPKMTITC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "AWDRNTTKHC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "SWAEMESYHN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HRPSVIATGK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "WENFHQHWPI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PLFENVSCFQ",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IHHCSQDCIS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "KVYVLILKPL",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MTCDDFPAPA",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "VRETMIMVMF",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PLFEQYHFWL",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "KYSPCCLVLT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CYKLVSMNEH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PLDLRERVVR",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IPTRWDCQFN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "QPWRPYVRND",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PCDLLIIQTC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DQHGKSPCAY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YSDYRGPGVL",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "ERMTDLENCN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "VPVHDTWPMT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PNTREKHEET",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IWEGENCCDK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DHFTCLIPLK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "QYVRHPREWK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "WEDPWHMPKE",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YCVSSHKNDS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "ISPHRQVMAL",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FEHHEVGTTW",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "VPFVPNHRGR",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "NYHQEITHGI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "WHRHHAHLIC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HFLCGCAFGM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CRFGKCMNHI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IQDMSNFMDS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "AFQIYLAWVI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DWEHDHKGQK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "GWLLTFAGPR",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "WCMVQHMHVG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YRPVWWWNWT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "VKIFMTHNLV",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CHQKSHLAEY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IYCHWNPSEA",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HISCEHWERE",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "VIKVKWSRMG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "NWPADDLPFM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "GVICDHWTLM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FQAPTPTFFN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FQRKWWYGDM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DSPHEDICPH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "SNPMDRDPQS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HKDKPVKFNM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "QNMGACTFLM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "SSWYAATYHE",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "WDRNDWCLEK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "SELQMDANPM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FFRANLVKYK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "WYDNWGPSFE",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CMQGKQMQYF",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HQRMIEIINF",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HLDEIDCAIW",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TPYHHITSPP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "NNFYGFKDFP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YIAFDHAWWR",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "KVQDSGRLVV",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YGRASPGDAS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YVLKKDRHVN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IEHQAGACEQ",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "ARPLSRSQRA",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "LLEYQWEWIG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "AEEQVARWDE",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CANKTCHTEY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "KPINTAASAV",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FVYVLMNFDA",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CNRPPGSWMY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "SWGIVADEFG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RNAVHCKHVH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HQKHHTFYFR",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MMYFGDMYEF",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HRALTKEGTL",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HPFFTICHNM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DDNLYEISYV",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MPFVQDQPDL",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CNWFHRVPGY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RPMVPYGDFF",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CWKPDHMHLG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HCTHQRDRIG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "SYKPFIMPGP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "KEVKPRDGLD",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "NGSKPQACNM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "GNFMLWRGPS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HSKMEMQNNH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "LTQATPYPRN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "WRHMVKWFPH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RWNAPSPRVN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FAMSKKSWVL",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FTPPIGCGDY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IHRKCFTYFS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PTADGVSEYY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "EQLIFQFVCP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "KGFAHHANVT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YKLDVRFRNK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CEGQGPMICK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "WFYRPAADLL",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "QYMKTQANDT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "EESWASDEQH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YQCDAKSLDF",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TYQDAPQPDE",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "VRPRIWISIT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RFQVDGTQVE",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "VLDVINLQAD",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TLWTCERVED",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "GFAKKGYRMY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "EASCPEKMTL",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CMMIMFTMAI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "ETMWQEHGFI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HDPMCYADVK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CIPAFPGINW",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IYRNMARWGM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CENRMCQYVQ",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YVWMAKMCDH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CIEIHEGIWC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YWHYHENLQM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DQPHRQTIFP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TSLFCGLCMC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DAWLNRDQWH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CKKSEILLGT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "LSSTVGNKLH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "KYFLWVPDQC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IHSIDRYKAP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "SNLPQNADWT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "KQYALEFLEC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TACVMKSLLY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "AVDRTIYWSC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PQCCWMRICR",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "NNWLNISQKR",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "KNDLKLWRWY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RLGQQDYVYG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RSVYEHKFEM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "VTSGTDENRV",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "QEIMTWIVMW",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "SGCMGANDGC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "ARRPYTGCKH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CRDDGGTYHT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "THPKKKMRVD",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "KYLQKDVPVN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "QKDCCSVSNQ",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HCNFCWINKS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "ELFNLLKRMK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FWTFPSPAIH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HQQTATMGWT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "KIKAPDCARK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "QDSRMGLMQL",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FRLTAYPMDK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "QNKHLFTADS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "SGHGNAWRMH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PVSHEYNSWS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CNGWDESMDD",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DQPLLNCQGH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "WLIGRDSKEL",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MDEGNRTHAV",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "SYRYKLPLLP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RPDHLADWLF",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MKPPPMAGAP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "VAYGTVQCIR",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PRTNTEWHCE",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "AKLNNPSNNV",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YQMYIQKLKY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RNSNRIHIQK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "SKIQDIRNDC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FKCQANDMTH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "ACDPRIHVLN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "EGNGMSMSGQ",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "WNFECTLTMI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RPHQDRLGIW",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "SMKDQQTPLI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "SGMWEVDMYM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IDRDLPDDHK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FFIWTVEYVP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YDQVKIHGNF",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FKSHQYWLNC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RRPLVHCCLL",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PEWAHHADRD",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YVPLKWRCQE",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DMKHAWECMI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "QGANEQTMAT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PKNAANLNTP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "KTWRCQKGRD",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "SKTFPCCYWF",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RPDHASLELI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TEHAFLVYTN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IMQCEWAADN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CDGTRGMYQI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IGISFRWPQT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MHLGLCIDMN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "GYGGQQCDAQ",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "GEILECKLWM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CWKRAHLDEA",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PVWNNNTEHQ",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RRYVRYENQR",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YYHFSMRRGY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "KMFPVMQRDY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HTNVSISKVT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DREHFFGEAP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "QGMWKMKDPL",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CYMIVEAGRA",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "ALDWKMMFML",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "KKCHDVYEWE",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "SRWKVYYKHA",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RSSFPTFSIV",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "GVTEVCHGFT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "KMEHDDYPRM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "NGDLSRYQLI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DDIMVFAMHV",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RHQRAWEDLT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "QEHCWFTIET",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "VLWFLMTVYE",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MVTTCTQGHG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TYRMGCPSYA",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "NVNFIGVKRD",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IIRYHPWGFC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "QKATTNVVEP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TPEEYRDPIG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "KRFVCSNEDQ",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "ASQNFFWDDT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RCCPNPHMPE",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IKKRGDDIPG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PQFLKPISSG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IPYTGLTIYI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "NIKSLDMSRQ",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TKCSILQPDS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "GPLRIGWGTL",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "LYIESRYFRP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HAARIYNVGG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CILRLQCSVE",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "QRWYCEEPYM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HICQFRCDHE",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DKSKTYKPPP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "EQETFQIIIW",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DDICDNTEWV",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "EPIAIMALVF",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IFAAPQTPKR",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "ALMSVFWRAG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "GFLSCVNTCN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MRDMYREPND",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FMIVERCFVH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DYEESRMRDN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "APKFRDNTEV",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MSGKMPDCTM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IFTDIQLNFN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "NDQDSMCQAN",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MRPAVQGITW",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DMLRMAHIEP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "NCHEQLCWSP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YQPDMVMGMF",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "EEGGFEKTNV",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "NQFHIIRAAP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CDQHDEYSIT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "QFYMFVEKLP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "NWWKWNDNVF",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "EYNIAGTLCH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IQQGASWSHT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "LRERFQDHGF",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IGQKYGPHLC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DEIIWWDMTF",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "IWFSCYIYHP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "AGEDNRRCWY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "SHQDPDDKAP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "EDAQLVMCEW",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YAEIMTNKMH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YKSVAVDCHC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "GLCDPWVLTL",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "AEDKDYNPEQ",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RTYADPDYRS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "EGCIDLKAAC",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "GGDEMYVWDS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "KSIDLQEMVT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MELFYVWTSE",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TDSPVLKNHW",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "VHTVDEMLQT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TTWNQGVCMR",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "AMTRKSYICK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "GGMYSLGVSE",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "EPFVRSAHCP",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "VTHEKHWVYH",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MDMYRGFHVW",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YLNVHLFGLM",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "EYPWIIEYGS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MKNQMCVSNL",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HVIRCDFEGD",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DCWIGWNWNS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HQVSPWKKHF",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PYSFQYQPMS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "VMKHLTAIQE",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CYTIWRYKLK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FDFTHQHPMI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "KYCNQIGTED",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CQKYGYWRNS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "NTLQPMAGMI",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "MTKDTAHSQT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PLHGIPRMTE",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "PSCTINMTRG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CYFGVKTTQK",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "RRTEKVPCHA",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "ARGNPMSFFE",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "EYRQDPCHFT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FFCFQNRLNS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TAEKYEWQCF",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "VCYDCWPWQQ",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "LFARYFHEDT",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TFMHPQYFEF",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "HCENRIWAKQ",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TDCFGNETDY",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "CECCETFMWG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "VHTDWHENER",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FTVKQWNLTS",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TVQDWLNAAG",
+      "wt_score": 0.0,
+      "mean_escape": 0.0,
+      "min_escape": 0.0,
+      "retention": 0.0
+    }
+  ],
+  "aggregate": {
+    "mean_wt_score": 0.0,
+    "mean_mean_escape": 2.0135773552788625e-06,
+    "mean_min_escape": 0.0,
+    "mean_retention": 0.0
+  },
+  "inputs": {
+    "designs_json": "results/hiv_stage2/hiv_train_wt_only_stage2_peptiverse.json",
+    "escape_fasta": "data/pre_stage1_split/alignments/test/hiv_test_aligned.fasta",
+    "n_peptides": 500,
+    "n_escape_variants": 9,
+    "affinity_mode": "peptiverse",
+    "peptiverse_normalization": "minmax",
+    "peptiverse_min": 7.0,
+    "peptiverse_max": 9.0
+  }
+}

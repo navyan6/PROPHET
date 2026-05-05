@@ -59,8 +59,8 @@ STAGE1_ABLATION_VARIANT_DIR: Path | None = (
 
 N_DESIGNS      = 500
 BETA           = 5.0
-PEPTIVERSE_NORM = "raw"
-TAU_BIND       = 7.5    # threshold for Ret. column in Tables 2/4/5/6/7
+PEPTIVERSE_NORM = "minmax"
+TAU_BIND       = 0.5    # threshold for Ret. column (minmax scale: 0=pKi 7, 1=pKi 9)
 SEED           = 42
 GPUS           = [4, 5, 6, 7]
 PEPTIDE_LENGTH = 10

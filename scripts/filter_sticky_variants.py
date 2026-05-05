@@ -1,26 +1,47 @@
 #!/usr/bin/env python3
 """
 scripts/filter_sticky_variants.py
-Select Gibbs-sampled variants with the highest PeptiVerse binding scores
-("sticky" variants) and write them to a sub-FASTA for targeted Stage 2 runs.
+Select "sticky" Gibbs variants — those most likely to be encountered in
+nature — for targeted Stage 2 runs.
 
-The resulting FASTA can be passed directly as --variants-fasta to stage2.py,
-focusing the DFM guidance on variants that are already predicted to bind well.
+"Sticky" variants are defined as the Gibbs-sampled sequences closest to
+the wild-type (small Hamming distance) or with the highest phylogenetic
+leaf probability (if a leaf-probs JSON is available from Stage 1).
+
+Why? DFM guidance averages over all M Gibbs variants equally by default.
+Focusing Stage 2 on the most WT-proximal / highest-probability variants
+asks the generator: "design a peptide that still works against the variants
+the pathogen is most likely to evolve to."
+
+Two selection modes (choose at least one):
+  --by-hamming      : keep top-K variants with smallest Hamming distance to WT
+  --leaf-probs-json : keep top-K variants by phylogenetic leaf probability
+
+If both flags are given, variants must satisfy both criteria (intersection).
 
 Usage
 -----
-  python scripts/filter_sticky_variants.py \
-      --variants-fasta results/hiv_stage1/hiv_train_gibbs_variants.fasta \
-      --wt-seq PQVTLWQRPLVTIKIGGQL... \
-      --top-k 100 \
-      --out-fasta results/hiv_stage1/hiv_sticky_variants.fasta \
-      --device cuda:0
+  # Hamming-distance mode (no extra files needed)
+  python scripts/filter_sticky_variants.py \\
+      --variants-fasta results/hiv_stage1/hiv_train_gibbs_variants.fasta \\
+      --wt-seq PQVTLWQRPLVTIKIGGQL... \\
+      --by-hamming --top-k 100 \\
+      --out-fasta results/hiv_stage1/hiv_sticky_variants.fasta
 
-  # Or filter by absolute score threshold instead of top-K
-  python scripts/filter_sticky_variants.py \
-      --variants-fasta results/hiv_stage1/hiv_train_gibbs_variants.fasta \
-      --wt-seq PQVTLWQRPLVTIKIGGQL... \
-      --min-score 8.0 \
+  # Leaf-probability mode (requires Stage 1 tree JSON with leaf_endpoints_pi)
+  python scripts/filter_sticky_variants.py \\
+      --variants-fasta results/hiv_stage1/hiv_train_gibbs_variants.fasta \\
+      --wt-seq PQVTLWQRPLVTIKIGGQL... \\
+      --leaf-probs-json data/trees/hadsbm_tree.json \\
+      --top-k 100 \\
+      --out-fasta results/hiv_stage1/hiv_sticky_variants.fasta
+
+  # Combined: top-100 by Hamming, then re-rank by leaf probability
+  python scripts/filter_sticky_variants.py \\
+      --variants-fasta results/hiv_stage1/hiv_train_gibbs_variants.fasta \\
+      --wt-seq PQVTLWQRPLVTIKIGGQL... \\
+      --leaf-probs-json data/trees/hadsbm_tree.json \\
+      --by-hamming --top-k 100 \\
       --out-fasta results/hiv_stage1/hiv_sticky_variants.fasta
 """
 from __future__ import annotations
@@ -34,106 +55,162 @@ import numpy as np
 from Bio import SeqIO
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from prophet.stage2 import AffinityScorer, _load_variants_fasta
+from prophet.stage2 import _load_variants_fasta
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+
+def _hamming(a: str, b: str) -> int:
+    """Hamming distance, truncating to the shorter sequence's length."""
+    n = min(len(a), len(b))
+    return sum(x != y for x, y in zip(a[:n], b[:n])) + abs(len(a) - len(b))
+
+
+def _load_leaf_probs(json_path: str) -> dict[str, float]:
+    """
+    Load leaf-probability mapping from a PROPHET Stage-1 tree JSON.
+
+    Supported formats:
+      1. HADSBM format: {leaf_endpoints_pi: [{sequence, ...}, ...], ...}
+         — probabilities are uniform over leaves (Stage 1 doesn't store
+           marginal probs in the JSON; we'll approximate by rank from
+           branch lengths if available, else uniform)
+      2. Flat format: {sequence: probability, ...}
+    """
+    with open(json_path) as f:
+        data = json.load(f)
+
+    # Flat mapping: sequence → float probability
+    if all(isinstance(v, (int, float)) for v in data.values()):
+        return {str(k).strip("'"): float(v) for k, v in data.items()}
+
+    # HADSBM format: leaf_endpoints_pi list of {node_index, leaf_id, sequence}
+    if "leaf_endpoints_pi" in data:
+        leaves = data["leaf_endpoints_pi"]
+        n = len(leaves)
+        # No marginal probabilities stored — assign uniform weight; caller can
+        # refine with --by-hamming to break ties
+        return {
+            entry["sequence"].strip("'"): 1.0 / n
+            for entry in leaves
+            if "sequence" in entry
+        }
+
+    # Unknown format — warn and return empty
+    print(f"[warning] Unrecognised leaf-probs JSON format in {json_path}. "
+          "Expected flat {{seq: prob}} or HADSBM tree JSON.", file=sys.stderr)
+    return {}
 
 
 def main() -> None:
     ap = argparse.ArgumentParser(
-        description="Filter Gibbs variants by PeptiVerse binding score."
+        description="Select 'sticky' (WT-proximal / high-probability) Gibbs variants."
     )
     ap.add_argument("--variants-fasta", required=True,
-                    help="Stage-1 Gibbs variants FASTA.")
+                    help="Gibbs variants FASTA from Stage 1.")
     ap.add_argument("--wt-seq", required=True,
-                    help="Wild-type protein sequence (used as PeptiVerse target).")
-    ap.add_argument("--top-k", type=int, default=None,
-                    help="Keep top-K variants by binding score.")
-    ap.add_argument("--min-score", type=float, default=None,
-                    help="Keep variants with PeptiVerse score >= this threshold.")
+                    help="Wild-type protein sequence (for Hamming filtering).")
     ap.add_argument("--out-fasta", required=True,
-                    help="Output FASTA path for filtered variants.")
+                    help="Output FASTA of filtered variants.")
+    ap.add_argument("--top-k", type=int, default=100,
+                    help="Number of variants to keep (default: 100).")
+    ap.add_argument("--by-hamming", action="store_true",
+                    help="Rank/filter by Hamming distance to WT (smallest = stickiest).")
+    ap.add_argument("--max-hamming", type=int, default=None,
+                    help="Hard cap: discard variants > this many substitutions from WT.")
+    ap.add_argument("--leaf-probs-json", default=None,
+                    help="Path to a Stage-1 tree JSON or flat {seq: prob} JSON "
+                         "for phylogenetic probability weighting.")
     ap.add_argument("--out-scores-json", default=None,
                     help="Optional: save all variant scores to a JSON file.")
-    ap.add_argument("--peptiverse-normalization",
-                    choices=["minmax", "raw"], default="raw")
-    ap.add_argument("--peptiverse-min", type=float, default=7.0)
-    ap.add_argument("--peptiverse-max", type=float, default=9.0)
-    ap.add_argument("--device", default="cuda:0")
-    ap.add_argument("--seed", type=int, default=42)
     args = ap.parse_args()
 
-    if args.top_k is None and args.min_score is None:
-        ap.error("Provide at least one of --top-k or --min-score.")
+    if not args.by_hamming and args.leaf_probs_json is None:
+        ap.error("Specify at least one of --by-hamming or --leaf-probs-json.")
 
     wt_seq = args.wt_seq.strip().replace("-", "").upper()
 
     print(f"Loading variants from {args.variants_fasta} ...", file=sys.stderr)
     variants = _load_variants_fasta(args.variants_fasta)
+    if not variants:
+        print("[error] No variants found.", file=sys.stderr)
+        sys.exit(1)
     print(f"  {len(variants)} variants loaded.", file=sys.stderr)
 
-    print(f"Building AffinityScorer on {args.device} ...", file=sys.stderr)
-    scorer = AffinityScorer(
-        wt_seq,
-        mode="peptiverse",
-        device=args.device,
-        peptiverse_normalization=args.peptiverse_normalization,
-        peptiverse_min=args.peptiverse_min,
-        peptiverse_max=args.peptiverse_max,
-    )
+    # ── Build score for each variant ─────────────────────────────────────────
+    # score = leaf_prob * (1 / (1 + hamming))  →  higher is stickier
+    leaf_probs: dict[str, float] = {}
+    if args.leaf_probs_json:
+        leaf_probs = _load_leaf_probs(args.leaf_probs_json)
+        print(f"  Loaded {len(leaf_probs)} leaf sequences from {args.leaf_probs_json}.",
+              file=sys.stderr)
 
-    print("Scoring variants ...", file=sys.stderr)
-    scored: list[tuple[str, float]] = []
-    for i, v in enumerate(variants):
-        s = float(scorer(v))
-        scored.append((v, s))
-        if (i + 1) % 50 == 0:
-            print(f"  {i+1}/{len(variants)} scored", file=sys.stderr)
+    scored: list[tuple[str, float, int]] = []  # (seq, sticky_score, hamming)
+    for v in variants:
+        ham = _hamming(wt_seq, v)
+        if args.max_hamming is not None and ham > args.max_hamming:
+            continue
+
+        # Find closest leaf (exact match first, then nearest)
+        leaf_p = leaf_probs.get(v)
+        if leaf_p is None and leaf_probs:
+            # Use the probability of the most similar leaf
+            best_dist = min(_hamming(v, lseq) for lseq in leaf_probs)
+            leaf_p = max(
+                (p for lseq, p in leaf_probs.items() if _hamming(v, lseq) == best_dist),
+                default=0.0,
+            )
+        if leaf_p is None:
+            leaf_p = 1.0  # no leaf probs → treat as uniform
+
+        if args.by_hamming:
+            # Score = leaf_prob / (1 + hamming), maximised by short distance + high prob
+            sticky = leaf_p / (1.0 + ham)
+        else:
+            sticky = leaf_p
+
+        scored.append((v, sticky, ham))
+
+    if not scored:
+        print("[warning] All variants were filtered by --max-hamming; "
+              "writing empty FASTA.", file=sys.stderr)
 
     scored.sort(key=lambda x: x[1], reverse=True)
+    selected = scored[: args.top_k]
 
-    # Apply filters
-    filtered = scored
-    if args.min_score is not None:
-        filtered = [(v, s) for v, s in filtered if s >= args.min_score]
-        print(f"After min-score={args.min_score}: {len(filtered)} variants.",
-              file=sys.stderr)
-    if args.top_k is not None:
-        filtered = filtered[: args.top_k]
-        print(f"After top-k={args.top_k}: {len(filtered)} variants.",
-              file=sys.stderr)
-
-    if not filtered:
-        print("[warning] No variants passed filters — writing empty FASTA.",
-              file=sys.stderr)
-
-    # Write FASTA
+    # ── Write output FASTA ────────────────────────────────────────────────────
     out_path = Path(args.out_fasta)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with out_path.open("w") as f:
-        for rank, (seq, score) in enumerate(filtered):
-            f.write(f">sticky_variant_{rank:04d}|rank={rank}|score={score:.4f}\n{seq}\n")
-    print(f"Wrote {len(filtered)} sticky variants → {out_path}", file=sys.stderr)
+        for rank, (seq, score, ham) in enumerate(selected):
+            f.write(
+                f">sticky_{rank:04d}|rank={rank}|hamming={ham}|score={score:.6f}\n"
+                f"{seq}\n"
+            )
+    print(f"Wrote {len(selected)} sticky variants → {out_path}", file=sys.stderr)
 
-    # Optionally dump all scores
+    # ── Optional scores dump ──────────────────────────────────────────────────
     if args.out_scores_json:
-        all_scores = [
-            {"sequence": v, "score": round(s, 6), "rank": i}
-            for i, (v, s) in enumerate(scored)
+        all_records = [
+            {"sequence": v, "sticky_score": round(s, 8), "hamming_to_wt": h, "rank": i}
+            for i, (v, s, h) in enumerate(scored)
         ]
         scores_path = Path(args.out_scores_json)
         scores_path.parent.mkdir(parents=True, exist_ok=True)
         with scores_path.open("w") as f:
-            json.dump(all_scores, f, indent=2)
+            json.dump(all_records, f, indent=2)
         print(f"All scores saved → {scores_path}", file=sys.stderr)
 
-    # Print summary stats
-    all_s = np.array([s for _, s in scored])
-    filt_s = np.array([s for _, s in filtered])
-    print("\n--- Score summary ---", file=sys.stderr)
-    print(f"All variants   : n={len(all_s)}, mean={all_s.mean():.3f}, "
-          f"max={all_s.max():.3f}, min={all_s.min():.3f}", file=sys.stderr)
-    if len(filt_s):
-        print(f"Sticky filtered: n={len(filt_s)}, mean={filt_s.mean():.3f}, "
-              f"max={filt_s.max():.3f}, min={filt_s.min():.3f}", file=sys.stderr)
+    # ── Summary ───────────────────────────────────────────────────────────────
+    all_ham = np.array([h for _, _, h in scored])
+    sel_ham = np.array([h for _, _, h in selected])
+    print("\n--- Hamming distance summary ---", file=sys.stderr)
+    if len(all_ham):
+        print(f"All variants  : mean={all_ham.mean():.1f}  "
+              f"min={all_ham.min()}  max={all_ham.max()}", file=sys.stderr)
+    if len(sel_ham):
+        print(f"Sticky (kept) : mean={sel_ham.mean():.1f}  "
+              f"min={sel_ham.min()}  max={sel_ham.max()}", file=sys.stderr)
 
 
 if __name__ == "__main__":

@@ -63,13 +63,15 @@ def _scramble(seq: str) -> str:
 def _score_batch(
     seqs: list[str],
     wt_scorer: AffinityScorer,
+    wt_seq: str,
     variants: list[str],
     eta: float,
 ) -> list[dict]:
+    """Score a batch of peptides against the WT and against all Gibbs variants."""
     results = []
     for seq in seqs:
-        wt_score = float(wt_scorer(seq))
-        per_variant = np.array([float(wt_scorer(v)) for v in variants[:200]])
+        wt_score = float(wt_scorer(seq, wt_seq))
+        per_variant = np.array([float(wt_scorer(seq, v)) for v in variants[:200]])
         robust = float(cvar_robust_score(per_variant, eta))
         results.append({
             "peptide": seq,
@@ -122,9 +124,8 @@ def main() -> None:
     print(f"  {len(variants)} variants loaded.", file=sys.stderr)
 
     print(f"Building AffinityScorer on {args.device} ...", file=sys.stderr)
+    # AffinityScorer(peptide, target) — wt_seq is passed at call time, not construction
     scorer = AffinityScorer(
-        wt_seq,
-        mode="peptiverse",
         device=args.device,
         peptiverse_normalization=args.peptiverse_normalization,
     )
@@ -135,7 +136,7 @@ def main() -> None:
     print(f"Generating {args.n_random} random_aa peptides ...", file=sys.stderr)
     ra_seqs = [_random_peptide(pep_len) for _ in range(args.n_random)]
     for i, seq in enumerate(ra_seqs):
-        wt_score = float(scorer(seq))
+        wt_score = float(scorer(seq, wt_seq))
         all_results.append({
             "method": "random_aa",
             "peptide": seq,
@@ -157,7 +158,7 @@ def main() -> None:
         elif len(base) < pep_len:
             base = base + _random_peptide(pep_len - len(base))
         mutated = _random_mutate(base, args.n_mutations)
-        wt_score = float(scorer(mutated))
+        wt_score = float(scorer(mutated, wt_seq))
         all_results.append({
             "method": "random_mut",
             "peptide": mutated,
@@ -174,7 +175,7 @@ def main() -> None:
     n_scramble = min(args.n_random, len(prophet_seqs))
     for i in range(n_scramble):
         scrambled = _scramble(prophet_seqs[i % len(prophet_seqs)])
-        wt_score = float(scorer(scrambled))
+        wt_score = float(scorer(scrambled, wt_seq))
         all_results.append({
             "method": "scramble",
             "peptide": scrambled,

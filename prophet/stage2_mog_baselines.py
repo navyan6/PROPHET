@@ -547,7 +547,16 @@ def mog_dfm_guided_design(
         for seq in decoded:
             wt_score, var_scores = score_peptide_against_variants(seq, eval_variants, wt_seq, aff_fn)
             if design_mode == "prob_weighted_variants" and guidance_weights is not None:
-                robust = float(np.dot(guidance_weights, var_scores))
+                # guidance_weights aligns with guidance_variants (used for DFM guidance),
+                # while var_scores aligns with eval_variants (used for final scoring).
+                # When they differ in length we must re-score against guidance_variants.
+                if len(guidance_weights) != len(var_scores):
+                    _, guided_scores = score_peptide_against_variants(
+                        seq, guidance_variants, wt_seq, aff_fn
+                    )
+                else:
+                    guided_scores = var_scores
+                robust = float(np.dot(guidance_weights, guided_scores))
             elif design_mode in {"uniform_leaves", "random_variants", "esm_only_variants"}:
                 robust = float(np.mean(var_scores))
             else:

@@ -9,10 +9,12 @@ import numpy as np
 
 
 def _cvar(scores: np.ndarray, eta: float) -> float:
+    """CVaR over the lowest-eta fraction — must match stage2.cvar_robust_score exactly."""
     if scores.size == 0:
         return float("nan")
     eta = float(np.clip(eta, 1e-6, 1.0))
-    k = max(1, int(np.ceil(eta * scores.size)))
+    # Use floor, not ceil, to match prophet/stage2.py::cvar_robust_score
+    k = max(1, int(np.floor(eta * scores.size)))
     return float(np.sort(scores)[:k].mean())
 
 

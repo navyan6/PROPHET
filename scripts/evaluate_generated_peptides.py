@@ -129,7 +129,6 @@ def main() -> None:
         else _default_tau_bind(args.peptiverse_normalization)
     )
     scorer = AffinityScorer(
-        mode="peptiverse",
         device=args.device,
         peptiverse_normalization=args.peptiverse_normalization,
         peptiverse_min=args.peptiverse_min,

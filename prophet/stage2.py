@@ -416,9 +416,14 @@ def mog_dfm_guided_design(
         guidance_variants = eval_variants
 
     # Omega sweep for Pareto front
-    n_grid = int(kwargs.get("omega_samples") or 10)
-    n_grid = max(1, n_grid)
-    weight_grid = [[float(w), 1.0 - float(w)] for w in np.linspace(0, 1, n_grid)]
+    # fixed_omega: if provided, skip the sweep and use this single weight vector
+    fixed_omega = kwargs.get("fixed_omega")
+    if fixed_omega is not None:
+        weight_grid = [[float(fixed_omega[0]), float(fixed_omega[1])]]
+    else:
+        n_grid = int(kwargs.get("omega_samples") or 10)
+        n_grid = max(1, n_grid)
+        weight_grid = [[float(w), 1.0 - float(w)] for w in np.linspace(0, 1, n_grid)]
     all_results = []
     produced = 0
     total_started = 0

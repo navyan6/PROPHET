@@ -52,9 +52,9 @@ from transformers import AutoTokenizer
 def _load_model(dfm_ckpt: str, dfm_device: str):
     """Load MOG-DFM the same way stage2.py main() does."""
     import sys as _sys
-    mogdfm_src = str(ROOT / "MOG-DFM" / "src")
-    if mogdfm_src not in _sys.path:
-        _sys.path.insert(0, mogdfm_src)
+    mogdfm_dir = str(ROOT / "MOG-DFM")
+    if mogdfm_dir not in _sys.path:
+        _sys.path.insert(0, mogdfm_dir)
     from models.peptide_classifiers import load_solver  # noqa: E402
     print(f"Loading DFM model from {dfm_ckpt} ...", file=sys.stderr)
     model = load_solver(dfm_ckpt, vocab_size=24, device=dfm_device)

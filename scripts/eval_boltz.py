@@ -73,8 +73,13 @@ def _write_yaml(path: Path, target: str, peptide: str) -> None:
     path.write_text(_BOLTZ_YAML.format(target=target, peptide=peptide))
 
 
-def _run_boltz(boltz_bin: str, yaml_path: Path, out_dir: Path,
-               device: str = "cuda:0") -> dict:
+def _run_boltz(
+    boltz_bin: str,
+    yaml_path: Path,
+    out_dir: Path,
+    device: str = "cuda:0",
+    cache_dir: str | None = None,
+) -> dict:
     """Run boltz predict and return the parsed predictions dict."""
     out_dir.mkdir(parents=True, exist_ok=True)
     cmd = [
@@ -84,15 +89,24 @@ def _run_boltz(boltz_bin: str, yaml_path: Path, out_dir: Path,
         "--accelerator", "gpu" if device.startswith("cuda") else "cpu",
         "--override",   # allow re-running in same out_dir
     ]
+    if cache_dir:
+        cmd.extend(["--cache", cache_dir])
     env = os.environ.copy()
+    env.setdefault("HF_HOME", "/scratch/pranamlab/kimberly/model_cache/hf")
+    env.setdefault("TRANSFORMERS_CACHE", env["HF_HOME"])
+    env.setdefault("BOLTZ_CACHE", "/scratch/pranamlab/kimberly/boltz_cache")
     if device.startswith("cuda:"):
         gpu_idx = device.split(":")[1]
         env["CUDA_VISIBLE_DEVICES"] = gpu_idx
 
-    result = subprocess.run(
-        cmd, env=env, capture_output=True, text=True
-    )
+    try:
+        result = subprocess.run(cmd, env=env, capture_output=True, text=True)
+    except FileNotFoundError:
+        print(f"[boltz error] CLI not found: {boltz_bin}", file=sys.stderr)
+        return {}
+
     if result.returncode != 0:
+        print(f"[boltz command] {' '.join(cmd)}", file=sys.stderr)
         print(f"[boltz stderr] {result.stderr[-2000:]}", file=sys.stderr)
         return {}
 
@@ -123,6 +137,24 @@ def _run_boltz(boltz_bin: str, yaml_path: Path, out_dir: Path,
         except Exception:
             continue
 
+    manifest = next(out_dir.rglob("manifest.json"), None)
+    if manifest is not None:
+        try:
+            print(f"[boltz manifest] {manifest.read_text()[:2000]}", file=sys.stderr)
+        except Exception:
+            pass
+    files = [str(p.relative_to(out_dir)) for p in out_dir.rglob("*") if p.is_file()]
+    print(
+        "[boltz warning] No affinity prediction JSON found. "
+        "Boltz-2 affinity requires the affinity binder to be a ligand; "
+        "protein-peptide inputs may only produce structure/confidence outputs.",
+        file=sys.stderr,
+    )
+    print(f"[boltz files] {files[:30]}", file=sys.stderr)
+    if result.stdout.strip():
+        print(f"[boltz stdout] {result.stdout[-2000:]}", file=sys.stderr)
+    if result.stderr.strip():
+        print(f"[boltz stderr] {result.stderr[-2000:]}", file=sys.stderr)
     return {}
 
 
@@ -138,6 +170,8 @@ def main() -> None:
                     help="Output JSON path (designs augmented with Boltz scores).")
     ap.add_argument("--boltz-bin", default="boltz",
                     help="Path to `boltz` CLI (default: boltz on PATH).")
+    ap.add_argument("--boltz-cache", default=os.environ.get("BOLTZ_CACHE"),
+                    help="Optional Boltz cache directory for checkpoints/data.")
     ap.add_argument("--device", default="cuda:0")
     ap.add_argument("--top-n", type=int, default=None,
                     help="Only evaluate top-N designs by wt_score.")
@@ -184,7 +218,13 @@ def main() -> None:
             out_dir   = tmp_dir / f"out_{i:05d}"
             _write_yaml(yaml_path, target_seq, peptide)
 
-            pred = _run_boltz(args.boltz_bin, yaml_path, out_dir, args.device)
+            pred = _run_boltz(
+                args.boltz_bin,
+                yaml_path,
+                out_dir,
+                args.device,
+                args.boltz_cache,
+            )
             boltz_cache[peptide] = pred
 
             aff  = pred.get("affinity_pred_value")
@@ -196,6 +236,22 @@ def main() -> None:
     finally:
         if not args.keep_tmp:
             tmp_ctx.cleanup()
+
+    n_success = sum(1 for pred in boltz_cache.values() if pred)
+    if unique_peptides and n_success == 0:
+        print(
+            "[error] Boltz produced no usable affinity predictions. "
+            "For protein-peptide inputs this is expected: Boltz-2 affinity "
+            "currently requires the binder chain to be a ligand.",
+            file=sys.stderr,
+        )
+        sys.exit(2)
+    if n_success < len(unique_peptides):
+        print(
+            f"[warning] Boltz produced affinity predictions for "
+            f"{n_success}/{len(unique_peptides)} unique peptides.",
+            file=sys.stderr,
+        )
 
     # Augment all designs (not just eval subset) — mark unevaluated ones
     augmented = []

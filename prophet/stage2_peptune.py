@@ -83,6 +83,10 @@ def build_peptune_config(
     """Minimal config namespace matching PepTune's YAML structure."""
     return _ns(
         noise=dict(type="loglinear", sigma_min=1e-4, sigma_max=20.0, state_dependent=True),
+        # PepTune's SMILES_SPE_Tokenizer vocab contains "[MASK]" but not
+        # "<mask>". Keeping the config on the upstream default avoids encoding
+        # the de novo root as [UNK] tokens.
+        vocab="old_smiles",
         backbone="roformer",
         parameterization="subs",
         time_conditioning=False,
@@ -431,11 +435,8 @@ def peptune_guided_design(
             score_func_names=score_func_names,
             prot_seqs=[wt_seq],
             num_func=[
-                int(num_iter * 0.0),
-                int(num_iter * 0.2),
-                int(num_iter * 0.4),
-                int(num_iter * 0.6),
-                int(num_iter * 0.8),
+                int(num_iter * i / len(score_func_names))
+                for i in range(len(score_func_names))
             ],
         )
 

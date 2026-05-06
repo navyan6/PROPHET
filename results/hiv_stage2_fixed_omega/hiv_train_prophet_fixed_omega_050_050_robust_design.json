@@ -1,0 +1,3521 @@
+{
+  "per_peptide": [
+    {
+      "peptide": "YMFYYYYYYF",
+      "wt_score": 10.147887229919434,
+      "mean_escape": 10.14431709713406,
+      "min_escape": 10.143036842346191,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YFYFWYFFFF",
+      "wt_score": 10.129883766174316,
+      "mean_escape": 10.12854692671034,
+      "min_escape": 10.125879287719727,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YMFYYWFYFF",
+      "wt_score": 10.136887550354004,
+      "mean_escape": 10.133635838826498,
+      "min_escape": 10.130891799926758,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YVYYYYVWFF",
+      "wt_score": 10.133414268493652,
+      "mean_escape": 10.130833943684896,
+      "min_escape": 10.127455711364746,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YFFYDFWYFF",
+      "wt_score": 10.141966819763184,
+      "mean_escape": 10.137939982944065,
+      "min_escape": 10.135550498962402,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YYVFYVYYYY",
+      "wt_score": 10.130765914916992,
+      "mean_escape": 10.127390013800728,
+      "min_escape": 10.124861717224121,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YFFYYFFFRF",
+      "wt_score": 10.124566078186035,
+      "mean_escape": 10.124032232496473,
+      "min_escape": 10.12143611907959,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IMYVVFYYYF",
+      "wt_score": 10.10374927520752,
+      "mean_escape": 10.109235869513618,
+      "min_escape": 10.098706245422363,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YVYFTFFVYF",
+      "wt_score": 10.13199234008789,
+      "mean_escape": 10.121350076463488,
+      "min_escape": 10.11474895477295,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YYFWYYFFFF",
+      "wt_score": 10.126179695129395,
+      "mean_escape": 10.124663352966309,
+      "min_escape": 10.120776176452637,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YVYYYYYVYF",
+      "wt_score": 10.134057998657227,
+      "mean_escape": 10.129775471157497,
+      "min_escape": 10.127288818359375,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YVYFVFYVYF",
+      "wt_score": 10.12665843963623,
+      "mean_escape": 10.125271373324924,
+      "min_escape": 10.122416496276855,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YWYFVYFYFY",
+      "wt_score": 10.114923477172852,
+      "mean_escape": 10.115575366550022,
+      "min_escape": 10.110953330993652,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YGYYGYGYFW",
+      "wt_score": 10.134849548339844,
+      "mean_escape": 10.136540306939018,
+      "min_escape": 10.13154411315918,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YVYFVYVYYY",
+      "wt_score": 10.123637199401855,
+      "mean_escape": 10.118738068474663,
+      "min_escape": 10.114921569824219,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YMYVVYYVFF",
+      "wt_score": 10.132630348205566,
+      "mean_escape": 10.120207044813368,
+      "min_escape": 10.105786323547363,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YYYYYYYVYF",
+      "wt_score": 10.137919425964355,
+      "mean_escape": 10.133087582058376,
+      "min_escape": 10.126412391662598,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VFYYTFYFVF",
+      "wt_score": 10.112833976745605,
+      "mean_escape": 10.097480456034342,
+      "min_escape": 10.083883285522461,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VVFVWVVFVF",
+      "wt_score": 10.106402397155762,
+      "mean_escape": 10.103404151068794,
+      "min_escape": 10.101548194885254,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YCYYYWMFYF",
+      "wt_score": 10.138936042785645,
+      "mean_escape": 10.126946873135036,
+      "min_escape": 10.114116668701172,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YYFYFYFFWF",
+      "wt_score": 10.115307807922363,
+      "mean_escape": 10.114832984076607,
+      "min_escape": 10.111876487731934,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VFYYYFFWFF",
+      "wt_score": 10.106999397277832,
+      "mean_escape": 10.10216236114502,
+      "min_escape": 10.097513198852539,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GMWVWVWVWW",
+      "wt_score": 10.08768367767334,
+      "mean_escape": 10.079249699910482,
+      "min_escape": 10.067801475524902,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YMYFFYVYFY",
+      "wt_score": 10.115208625793457,
+      "mean_escape": 10.105523957146538,
+      "min_escape": 10.099198341369629,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YMFYFYVMFY",
+      "wt_score": 10.128639221191406,
+      "mean_escape": 10.116375393337673,
+      "min_escape": 10.107693672180176,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YFFYFYFFWY",
+      "wt_score": 10.106223106384277,
+      "mean_escape": 10.107368575202095,
+      "min_escape": 10.104863166809082,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WYIYYYYYIM",
+      "wt_score": 10.09904956817627,
+      "mean_escape": 10.099221653408474,
+      "min_escape": 10.081399917602539,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YILFYYYVFF",
+      "wt_score": 10.092519760131836,
+      "mean_escape": 10.08777936299642,
+      "min_escape": 10.075343132019043,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WFYYFYFYFF",
+      "wt_score": 10.096967697143555,
+      "mean_escape": 10.095332251654732,
+      "min_escape": 10.094642639160156,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WCYYYYYWMF",
+      "wt_score": 10.134262084960938,
+      "mean_escape": 10.13458612230089,
+      "min_escape": 10.132274627685547,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YDFYYYFMFF",
+      "wt_score": 10.138521194458008,
+      "mean_escape": 10.128043492635092,
+      "min_escape": 10.118392944335938,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YVFYYFVYYY",
+      "wt_score": 10.113777160644531,
+      "mean_escape": 10.112164073520237,
+      "min_escape": 10.107182502746582,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IMYFFFYGYF",
+      "wt_score": 10.124659538269043,
+      "mean_escape": 10.118796242607964,
+      "min_escape": 10.107069969177246,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IMYVYVDYFF",
+      "wt_score": 10.115851402282715,
+      "mean_escape": 10.137943267822266,
+      "min_escape": 10.123787879943848,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YFYFYDFFYF",
+      "wt_score": 10.1243257522583,
+      "mean_escape": 10.121830622355143,
+      "min_escape": 10.114194869995117,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VMYVIFYYVV",
+      "wt_score": 10.108500480651855,
+      "mean_escape": 10.073584980434841,
+      "min_escape": 10.062737464904785,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YMYYFFYWFF",
+      "wt_score": 10.117045402526855,
+      "mean_escape": 10.107593854268393,
+      "min_escape": 10.095943450927734,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YVFYFYVYFW",
+      "wt_score": 10.115448951721191,
+      "mean_escape": 10.116040229797363,
+      "min_escape": 10.112175941467285,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VYFWYFVYFF",
+      "wt_score": 10.113510131835938,
+      "mean_escape": 10.10776392618815,
+      "min_escape": 10.103450775146484,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WMFVAFVFFR",
+      "wt_score": 10.125304222106934,
+      "mean_escape": 10.114597850375706,
+      "min_escape": 10.101652145385742,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IMYVFYVNFF",
+      "wt_score": 10.106101036071777,
+      "mean_escape": 10.098810513814291,
+      "min_escape": 10.073193550109863,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WMWVWVFVFR",
+      "wt_score": 10.104413032531738,
+      "mean_escape": 10.082165824042427,
+      "min_escape": 10.049466133117676,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YVYYYYYWFF",
+      "wt_score": 10.126386642456055,
+      "mean_escape": 10.122454961140951,
+      "min_escape": 10.118570327758789,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FVVVWVFVFF",
+      "wt_score": 10.075634002685547,
+      "mean_escape": 10.075430870056152,
+      "min_escape": 10.060258865356445,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YIIYFYMYYF",
+      "wt_score": 10.118206977844238,
+      "mean_escape": 10.106982231140137,
+      "min_escape": 10.090352058410645,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IYYYYMYVYY",
+      "wt_score": 10.105416297912598,
+      "mean_escape": 10.12047979566786,
+      "min_escape": 10.10576057434082,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VFWYFFFWVF",
+      "wt_score": 10.098146438598633,
+      "mean_escape": 10.095610406663683,
+      "min_escape": 10.093493461608887,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YFYYYFFEFF",
+      "wt_score": 10.112466812133789,
+      "mean_escape": 10.107348124186197,
+      "min_escape": 10.105937004089355,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IMYVVVWYFF",
+      "wt_score": 10.117666244506836,
+      "mean_escape": 10.10786501566569,
+      "min_escape": 10.094481468200684,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IMYFYVYYFW",
+      "wt_score": 10.132203102111816,
+      "mean_escape": 10.125984933641222,
+      "min_escape": 10.111815452575684,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVMYYYFFFY",
+      "wt_score": 10.111827850341797,
+      "mean_escape": 10.096631050109863,
+      "min_escape": 10.077143669128418,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YIMYMYFYYF",
+      "wt_score": 10.131426811218262,
+      "mean_escape": 10.10984304216173,
+      "min_escape": 10.075515747070312,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IMYVVVYFYV",
+      "wt_score": 10.096365928649902,
+      "mean_escape": 10.10932837592231,
+      "min_escape": 10.10156536102295,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VFEFVFYFFF",
+      "wt_score": 10.080138206481934,
+      "mean_escape": 10.075850698682997,
+      "min_escape": 10.067888259887695,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YGYGYYGMFW",
+      "wt_score": 10.12273120880127,
+      "mean_escape": 10.117715199788412,
+      "min_escape": 10.100930213928223,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IYYFFVVFFY",
+      "wt_score": 10.080227851867676,
+      "mean_escape": 10.082724253336588,
+      "min_escape": 10.073739051818848,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YIFMYMYFFY",
+      "wt_score": 10.125876426696777,
+      "mean_escape": 10.104599422878689,
+      "min_escape": 10.078426361083984,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVMYILFFFY",
+      "wt_score": 10.125555038452148,
+      "mean_escape": 10.113450580173069,
+      "min_escape": 10.097628593444824,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WYVYVFFYFF",
+      "wt_score": 10.070393562316895,
+      "mean_escape": 10.065217230055067,
+      "min_escape": 10.058016777038574,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WYVYVFFYFF",
+      "wt_score": 10.070393562316895,
+      "mean_escape": 10.065217230055067,
+      "min_escape": 10.058016777038574,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YFLFFYYYFF",
+      "wt_score": 10.08864688873291,
+      "mean_escape": 10.086582925584581,
+      "min_escape": 10.083130836486816,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IYFYYYVYVF",
+      "wt_score": 10.103558540344238,
+      "mean_escape": 10.10263188680013,
+      "min_escape": 10.099019050598145,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YYVYYVLFYF",
+      "wt_score": 10.100789070129395,
+      "mean_escape": 10.088484128316244,
+      "min_escape": 10.081629753112793,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YVMFYVYFVF",
+      "wt_score": 10.110442161560059,
+      "mean_escape": 10.11227798461914,
+      "min_escape": 10.107742309570312,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VMYVFVIIFY",
+      "wt_score": 10.090973854064941,
+      "mean_escape": 10.049852053324381,
+      "min_escape": 10.027220726013184,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WMWWWVWVWW",
+      "wt_score": 10.145895004272461,
+      "mean_escape": 10.114716211954752,
+      "min_escape": 10.09887409210205,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WVWMWRMWWW",
+      "wt_score": 10.105071067810059,
+      "mean_escape": 10.113258679707846,
+      "min_escape": 10.092918395996094,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YVYYWFFYYY",
+      "wt_score": 10.071773529052734,
+      "mean_escape": 10.079380459255642,
+      "min_escape": 10.06673812866211,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GEVFFFWVFW",
+      "wt_score": 10.075465202331543,
+      "mean_escape": 10.06836658053928,
+      "min_escape": 10.055277824401855,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVFFYVMEFY",
+      "wt_score": 10.077364921569824,
+      "mean_escape": 10.071738031175402,
+      "min_escape": 10.052605628967285,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VMYYDVVFYY",
+      "wt_score": 10.103682518005371,
+      "mean_escape": 10.06876277923584,
+      "min_escape": 10.023512840270996,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IDFYFFYYYY",
+      "wt_score": 10.056597709655762,
+      "mean_escape": 10.07129987080892,
+      "min_escape": 10.066174507141113,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVYVYVMFVF",
+      "wt_score": 10.03407096862793,
+      "mean_escape": 10.022383477952745,
+      "min_escape": 9.989216804504395,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WYMYYVLFFF",
+      "wt_score": 10.086952209472656,
+      "mean_escape": 10.055506282382542,
+      "min_escape": 10.03242015838623,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WWMAVYWCWW",
+      "wt_score": 10.123614311218262,
+      "mean_escape": 10.11082903544108,
+      "min_escape": 10.095917701721191,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RRWWWWRMFW",
+      "wt_score": 10.073607444763184,
+      "mean_escape": 10.068023469713,
+      "min_escape": 10.03872013092041,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFFWMYFYYF",
+      "wt_score": 10.063979148864746,
+      "mean_escape": 10.099569108751085,
+      "min_escape": 10.085969924926758,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVFCWGWWWW",
+      "wt_score": 10.083573341369629,
+      "mean_escape": 10.074672275119358,
+      "min_escape": 10.042266845703125,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YMFYYYWYWF",
+      "wt_score": 10.128801345825195,
+      "mean_escape": 10.09594652387831,
+      "min_escape": 10.071209907531738,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RMVFFVYFYF",
+      "wt_score": 10.010698318481445,
+      "mean_escape": 10.01010513305664,
+      "min_escape": 9.970625877380371,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVVWVWMVCC",
+      "wt_score": 10.089319229125977,
+      "mean_escape": 10.070426940917969,
+      "min_escape": 10.048630714416504,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YYYYYVYVFD",
+      "wt_score": 10.098145484924316,
+      "mean_escape": 10.084646966722277,
+      "min_escape": 10.076131820678711,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GFYGFYFWFF",
+      "wt_score": 10.06482982635498,
+      "mean_escape": 10.063406732347277,
+      "min_escape": 10.051215171813965,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YVLVFFVYFY",
+      "wt_score": 10.067418098449707,
+      "mean_escape": 10.054192119174534,
+      "min_escape": 10.036276817321777,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WGYYYGFWYY",
+      "wt_score": 10.11156177520752,
+      "mean_escape": 10.082043011983236,
+      "min_escape": 10.071351051330566,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFYFFVVFFE",
+      "wt_score": 10.096962928771973,
+      "mean_escape": 10.09227901034885,
+      "min_escape": 10.070777893066406,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WWMCVWQCVG",
+      "wt_score": 10.105570793151855,
+      "mean_escape": 10.074757152133518,
+      "min_escape": 10.04747486114502,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFYYVFFFVD",
+      "wt_score": 10.072746276855469,
+      "mean_escape": 10.071724679734972,
+      "min_escape": 10.06484317779541,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WWMMFAVVVE",
+      "wt_score": 10.125767707824707,
+      "mean_escape": 10.122682783338758,
+      "min_escape": 10.117646217346191,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WCYVVMAVMW",
+      "wt_score": 10.110172271728516,
+      "mean_escape": 10.106720288594564,
+      "min_escape": 10.099494934082031,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVYVWYVWFW",
+      "wt_score": 10.085684776306152,
+      "mean_escape": 10.071128103468153,
+      "min_escape": 10.05951976776123,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YVVTFVFYFF",
+      "wt_score": 10.073478698730469,
+      "mean_escape": 10.062774552239311,
+      "min_escape": 10.052850723266602,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WMFVFVWFWW",
+      "wt_score": 10.079943656921387,
+      "mean_escape": 10.057258499993218,
+      "min_escape": 10.024441719055176,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFVYCYYFFF",
+      "wt_score": 10.071843147277832,
+      "mean_escape": 10.079283184475369,
+      "min_escape": 10.070813179016113,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IYFYYYYVVY",
+      "wt_score": 10.113154411315918,
+      "mean_escape": 10.110381338331434,
+      "min_escape": 10.104106903076172,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FMVYYFVYYF",
+      "wt_score": 10.036416053771973,
+      "mean_escape": 10.016406271192762,
+      "min_escape": 9.998677253723145,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WMFVVMWVMW",
+      "wt_score": 10.100757598876953,
+      "mean_escape": 10.094831360710991,
+      "min_escape": 10.071487426757812,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFYYYYYVMW",
+      "wt_score": 10.070578575134277,
+      "mean_escape": 10.0767453511556,
+      "min_escape": 10.051907539367676,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GWVWVMYWWW",
+      "wt_score": 10.04594898223877,
+      "mean_escape": 10.020950317382812,
+      "min_escape": 9.983927726745605,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WYYYYCMVVW",
+      "wt_score": 10.121748924255371,
+      "mean_escape": 10.08916876051161,
+      "min_escape": 10.065271377563477,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVYFCVWYVW",
+      "wt_score": 10.102956771850586,
+      "mean_escape": 10.090510686238607,
+      "min_escape": 10.05720329284668,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVVWWVCVMV",
+      "wt_score": 10.059758186340332,
+      "mean_escape": 10.06268999311659,
+      "min_escape": 10.046859741210938,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WIYMYVYFYF",
+      "wt_score": 10.106392860412598,
+      "mean_escape": 10.082059330410427,
+      "min_escape": 10.06826114654541,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VFFFYYFFFF",
+      "wt_score": 10.04993724822998,
+      "mean_escape": 10.047025150722927,
+      "min_escape": 10.042701721191406,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GRWCVMMCWW",
+      "wt_score": 10.100499153137207,
+      "mean_escape": 10.101948314242893,
+      "min_escape": 10.083532333374023,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VFFDFVFVFW",
+      "wt_score": 10.058321952819824,
+      "mean_escape": 10.058652877807617,
+      "min_escape": 10.052851676940918,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WMVVCWWMVW",
+      "wt_score": 10.119758605957031,
+      "mean_escape": 10.103170500861275,
+      "min_escape": 10.09527587890625,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GVVVVWMFYC",
+      "wt_score": 10.130413055419922,
+      "mean_escape": 10.108252419365776,
+      "min_escape": 10.070198059082031,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVYFVTFYFF",
+      "wt_score": 10.075502395629883,
+      "mean_escape": 10.077507866753471,
+      "min_escape": 10.072251319885254,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RVVVMWRMMW",
+      "wt_score": 10.085999488830566,
+      "mean_escape": 10.094975577460396,
+      "min_escape": 10.052376747131348,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFFFWMYFVY",
+      "wt_score": 10.083609580993652,
+      "mean_escape": 10.08481831020779,
+      "min_escape": 10.074172019958496,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WVYYYMYWWY",
+      "wt_score": 10.093109130859375,
+      "mean_escape": 10.08073796166314,
+      "min_escape": 10.069795608520508,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IMFVCFYYFY",
+      "wt_score": 10.081740379333496,
+      "mean_escape": 10.071342680189344,
+      "min_escape": 10.055768966674805,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GFVGWVFWFW",
+      "wt_score": 10.045380592346191,
+      "mean_escape": 10.0455838309394,
+      "min_escape": 10.026658058166504,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WVWWWGWMWW",
+      "wt_score": 10.106705665588379,
+      "mean_escape": 10.0894898308648,
+      "min_escape": 10.058125495910645,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFFMMYYCYF",
+      "wt_score": 10.087403297424316,
+      "mean_escape": 10.081772804260254,
+      "min_escape": 10.053117752075195,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WFFFNMFYFF",
+      "wt_score": 10.067753791809082,
+      "mean_escape": 10.073430697123209,
+      "min_escape": 10.056076049804688,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WFVFFVFFYF",
+      "wt_score": 9.99955940246582,
+      "mean_escape": 9.999172316657173,
+      "min_escape": 9.983977317810059,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVYYYYVRVM",
+      "wt_score": 10.077960014343262,
+      "mean_escape": 10.09964264763726,
+      "min_escape": 10.074882507324219,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YLFFVYVYFF",
+      "wt_score": 10.076604843139648,
+      "mean_escape": 10.061025301615397,
+      "min_escape": 10.048590660095215,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CWMWWCVWYW",
+      "wt_score": 10.068373680114746,
+      "mean_escape": 10.038180033365885,
+      "min_escape": 10.011286735534668,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YVYFYVYVFC",
+      "wt_score": 10.095627784729004,
+      "mean_escape": 10.087539990743002,
+      "min_escape": 10.077010154724121,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CWCVVCCVWW",
+      "wt_score": 10.065717697143555,
+      "mean_escape": 10.07177374098036,
+      "min_escape": 10.047847747802734,
+      "retention": 1.0
+    },
+    {
+      "peptide": "ILFFVFYYFV",
+      "wt_score": 10.051129341125488,
+      "mean_escape": 10.043075455559624,
+      "min_escape": 10.03215217590332,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CCVWYVWCVY",
+      "wt_score": 10.047682762145996,
+      "mean_escape": 10.068168534172905,
+      "min_escape": 10.052294731140137,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FFVYVCVMVY",
+      "wt_score": 10.04179573059082,
+      "mean_escape": 10.034535513983833,
+      "min_escape": 10.013609886169434,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFYFFFWYVM",
+      "wt_score": 10.01330280303955,
+      "mean_escape": 10.022958119710287,
+      "min_escape": 9.963761329650879,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RRMWWWVWWC",
+      "wt_score": 10.111736297607422,
+      "mean_escape": 10.09636804792616,
+      "min_escape": 10.045853614807129,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GVFYYWYVWF",
+      "wt_score": 10.070042610168457,
+      "mean_escape": 10.058462990654839,
+      "min_escape": 10.033376693725586,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CCVFCVYYVY",
+      "wt_score": 10.062788009643555,
+      "mean_escape": 10.060783386230469,
+      "min_escape": 10.046916007995605,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YFYYFYVWVF",
+      "wt_score": 10.108113288879395,
+      "mean_escape": 10.106156984965006,
+      "min_escape": 10.100183486938477,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YVYYYYVFVC",
+      "wt_score": 10.068074226379395,
+      "mean_escape": 10.068248960706923,
+      "min_escape": 10.06335735321045,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VCFFVFVCVF",
+      "wt_score": 10.057638168334961,
+      "mean_escape": 10.058658493889702,
+      "min_escape": 10.055169105529785,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVMYFFFKYF",
+      "wt_score": 10.08387279510498,
+      "mean_escape": 10.033011542426216,
+      "min_escape": 10.003458023071289,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YVFYFFVFFY",
+      "wt_score": 10.065073013305664,
+      "mean_escape": 10.062486860487196,
+      "min_escape": 10.058438301086426,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CFFVYFMVYC",
+      "wt_score": 10.053085327148438,
+      "mean_escape": 10.028993500603569,
+      "min_escape": 10.006583213806152,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WFCVWMCVGW",
+      "wt_score": 10.05797290802002,
+      "mean_escape": 10.054814444647896,
+      "min_escape": 10.02167797088623,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CWMVCCWWWQ",
+      "wt_score": 10.070924758911133,
+      "mean_escape": 10.083480940924751,
+      "min_escape": 10.05979061126709,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YVYFYVCFFY",
+      "wt_score": 10.06729793548584,
+      "mean_escape": 10.062814394632975,
+      "min_escape": 10.057765007019043,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVLFFYVFYY",
+      "wt_score": 10.062993049621582,
+      "mean_escape": 10.057077725728353,
+      "min_escape": 10.043094635009766,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YIFVFMYVYF",
+      "wt_score": 10.071783065795898,
+      "mean_escape": 10.067653550042046,
+      "min_escape": 10.048870086669922,
+      "retention": 1.0
+    },
+    {
+      "peptide": "ILFYFMYFFF",
+      "wt_score": 10.083492279052734,
+      "mean_escape": 10.085766474405924,
+      "min_escape": 10.064220428466797,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YYYYQMMYVY",
+      "wt_score": 10.105755805969238,
+      "mean_escape": 10.10108725229899,
+      "min_escape": 10.093212127685547,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GVVWWVRVWW",
+      "wt_score": 10.040567398071289,
+      "mean_escape": 10.030491511027018,
+      "min_escape": 9.998294830322266,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FMYYIYYVFF",
+      "wt_score": 10.048824310302734,
+      "mean_escape": 10.055215623643663,
+      "min_escape": 10.045729637145996,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WVAWWVWWMW",
+      "wt_score": 10.077266693115234,
+      "mean_escape": 10.09071879916721,
+      "min_escape": 10.076106071472168,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVVYYYCMFF",
+      "wt_score": 10.080936431884766,
+      "mean_escape": 10.044309722052681,
+      "min_escape": 9.997902870178223,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVVVMYYFYC",
+      "wt_score": 10.057936668395996,
+      "mean_escape": 10.057512177361382,
+      "min_escape": 10.018427848815918,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WVAWWWVFWW",
+      "wt_score": 10.092337608337402,
+      "mean_escape": 10.099782943725586,
+      "min_escape": 10.096506118774414,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFFYFYVTFF",
+      "wt_score": 10.08328628540039,
+      "mean_escape": 10.08279832204183,
+      "min_escape": 10.078384399414062,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFYFIYFYFM",
+      "wt_score": 10.04417896270752,
+      "mean_escape": 10.04038535224067,
+      "min_escape": 10.015570640563965,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GEVFWRVFFF",
+      "wt_score": 10.044188499450684,
+      "mean_escape": 10.050168249342176,
+      "min_escape": 10.012614250183105,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WVMMWVFGGW",
+      "wt_score": 10.099322319030762,
+      "mean_escape": 10.072161992390951,
+      "min_escape": 10.053616523742676,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YCIYYIMYIY",
+      "wt_score": 10.09836483001709,
+      "mean_escape": 10.089975780910915,
+      "min_escape": 10.066702842712402,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WVVMIAVFFY",
+      "wt_score": 10.060559272766113,
+      "mean_escape": 10.00013362036811,
+      "min_escape": 9.941669464111328,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVMYYCYYYF",
+      "wt_score": 10.10680103302002,
+      "mean_escape": 10.080354902479383,
+      "min_escape": 10.064047813415527,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GYYYGGGYYW",
+      "wt_score": 10.056796073913574,
+      "mean_escape": 10.047037442525228,
+      "min_escape": 10.020058631896973,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFMYVKFYFF",
+      "wt_score": 10.063580513000488,
+      "mean_escape": 10.056758032904732,
+      "min_escape": 10.019919395446777,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FMFYYFFFYY",
+      "wt_score": 10.048641204833984,
+      "mean_escape": 10.071108182271322,
+      "min_escape": 10.051280975341797,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVFYEVMVFY",
+      "wt_score": 10.007359504699707,
+      "mean_escape": 10.026079919603136,
+      "min_escape": 9.960745811462402,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FYFVFCCVFF",
+      "wt_score": 10.010947227478027,
+      "mean_escape": 10.00662284427219,
+      "min_escape": 9.985428810119629,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IYYYIWIVMY",
+      "wt_score": 10.101585388183594,
+      "mean_escape": 10.07396019829644,
+      "min_escape": 10.060250282287598,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WMFVAFAVFW",
+      "wt_score": 10.044320106506348,
+      "mean_escape": 10.041547669304741,
+      "min_escape": 10.02431583404541,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FMYYYIIFFF",
+      "wt_score": 10.035721778869629,
+      "mean_escape": 10.034616152445475,
+      "min_escape": 10.028291702270508,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YYYYCMWIYV",
+      "wt_score": 10.079930305480957,
+      "mean_escape": 10.051502015855577,
+      "min_escape": 10.016568183898926,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WVVAWWVWWV",
+      "wt_score": 10.050135612487793,
+      "mean_escape": 10.050701565212673,
+      "min_escape": 10.032889366149902,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CCFVMVMFFR",
+      "wt_score": 10.006272315979004,
+      "mean_escape": 10.006010373433432,
+      "min_escape": 9.979313850402832,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CYYYDCFMFF",
+      "wt_score": 10.028630256652832,
+      "mean_escape": 10.015680736965603,
+      "min_escape": 9.985288619995117,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WVDCVVVWWM",
+      "wt_score": 10.05844783782959,
+      "mean_escape": 10.06308322482639,
+      "min_escape": 10.030557632446289,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CMVFYYCFVY",
+      "wt_score": 10.046534538269043,
+      "mean_escape": 10.01464811960856,
+      "min_escape": 9.976426124572754,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WVMVMMWVFF",
+      "wt_score": 10.049212455749512,
+      "mean_escape": 10.06159136030409,
+      "min_escape": 10.011704444885254,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WCVRMCWRWW",
+      "wt_score": 10.076910972595215,
+      "mean_escape": 10.064445389641655,
+      "min_escape": 10.042553901672363,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVWCFVYVFF",
+      "wt_score": 10.055594444274902,
+      "mean_escape": 10.046697616577148,
+      "min_escape": 10.01987075805664,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RVVMCVMAWW",
+      "wt_score": 10.098641395568848,
+      "mean_escape": 10.069956249660915,
+      "min_escape": 10.049908638000488,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVVCFVWCFC",
+      "wt_score": 10.064728736877441,
+      "mean_escape": 10.048632515801323,
+      "min_escape": 10.024453163146973,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IAFVFVMYVV",
+      "wt_score": 10.021451950073242,
+      "mean_escape": 10.026072290208605,
+      "min_escape": 10.004611015319824,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WVWMFMWVFF",
+      "wt_score": 10.043307304382324,
+      "mean_escape": 10.013591872321236,
+      "min_escape": 9.96353816986084,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YYYYWMVFYF",
+      "wt_score": 10.079639434814453,
+      "mean_escape": 10.062726232740614,
+      "min_escape": 10.043206214904785,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFYYFFEMFY",
+      "wt_score": 10.060763359069824,
+      "mean_escape": 10.05113771226671,
+      "min_escape": 10.03417682647705,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CCFYYCVVYY",
+      "wt_score": 10.062714576721191,
+      "mean_escape": 10.044005499945747,
+      "min_escape": 10.028538703918457,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVYFCFVYVC",
+      "wt_score": 10.072428703308105,
+      "mean_escape": 10.055492083231607,
+      "min_escape": 10.029582977294922,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CCFRFCVMVW",
+      "wt_score": 10.027563095092773,
+      "mean_escape": 10.02018313937717,
+      "min_escape": 9.9794921875,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CYVYYYVCVM",
+      "wt_score": 10.049992561340332,
+      "mean_escape": 10.042988777160645,
+      "min_escape": 10.027303695678711,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VFFYVFFFKF",
+      "wt_score": 10.017207145690918,
+      "mean_escape": 10.000395139058432,
+      "min_escape": 9.982287406921387,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RVVVMMWAFW",
+      "wt_score": 10.003323554992676,
+      "mean_escape": 9.986482726203072,
+      "min_escape": 9.943346977233887,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GVMWWVWWWF",
+      "wt_score": 10.036293983459473,
+      "mean_escape": 9.987295574612087,
+      "min_escape": 9.947880744934082,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GFFGGWVFFW",
+      "wt_score": 10.03763484954834,
+      "mean_escape": 10.027457978990343,
+      "min_escape": 10.020118713378906,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVVMVFWFCW",
+      "wt_score": 10.069668769836426,
+      "mean_escape": 10.04393524593777,
+      "min_escape": 10.002236366271973,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WVCMWVFRRW",
+      "wt_score": 10.06218147277832,
+      "mean_escape": 10.044921451144749,
+      "min_escape": 10.027722358703613,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVVWYCVWVE",
+      "wt_score": 10.069546699523926,
+      "mean_escape": 10.060894118414986,
+      "min_escape": 10.018309593200684,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YCVYYYVCFF",
+      "wt_score": 10.051336288452148,
+      "mean_escape": 10.04004552629259,
+      "min_escape": 10.026535987854004,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GVMCVMWMRW",
+      "wt_score": 10.08830738067627,
+      "mean_escape": 10.076817300584581,
+      "min_escape": 10.065186500549316,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GGEFMFFVFW",
+      "wt_score": 9.989290237426758,
+      "mean_escape": 9.937347306145561,
+      "min_escape": 9.893474578857422,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFFYFVVYYV",
+      "wt_score": 10.038107872009277,
+      "mean_escape": 10.030420303344727,
+      "min_escape": 10.02325439453125,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IMFVYFVCFY",
+      "wt_score": 10.06871223449707,
+      "mean_escape": 10.018985430399576,
+      "min_escape": 9.980525016784668,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFYFYVYWFF",
+      "wt_score": 10.064640998840332,
+      "mean_escape": 10.069720268249512,
+      "min_escape": 10.059138298034668,
+      "retention": 1.0
+    },
+    {
+      "peptide": "KKMFFFFFYF",
+      "wt_score": 9.992693901062012,
+      "mean_escape": 9.976903173658583,
+      "min_escape": 9.96114444732666,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GRRMWVWWVC",
+      "wt_score": 10.11501407623291,
+      "mean_escape": 10.044442812601725,
+      "min_escape": 10.017477989196777,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YFIYYILMYY",
+      "wt_score": 10.051541328430176,
+      "mean_escape": 10.026219897800022,
+      "min_escape": 10.001351356506348,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IMYFCFFVYV",
+      "wt_score": 10.042716026306152,
+      "mean_escape": 10.029992633395725,
+      "min_escape": 10.006264686584473,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVMFDFFYYV",
+      "wt_score": 10.019560813903809,
+      "mean_escape": 10.034851286146376,
+      "min_escape": 10.005455017089844,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFFYFCVVFF",
+      "wt_score": 10.033933639526367,
+      "mean_escape": 10.035167164272732,
+      "min_escape": 10.025873184204102,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVMMIFYFFV",
+      "wt_score": 9.964179039001465,
+      "mean_escape": 9.909973568386501,
+      "min_escape": 9.880462646484375,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GCWWGMWVWW",
+      "wt_score": 10.063520431518555,
+      "mean_escape": 10.076596366034615,
+      "min_escape": 10.061654090881348,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RRWWCCWWMW",
+      "wt_score": 10.097790718078613,
+      "mean_escape": 10.094543562995064,
+      "min_escape": 10.076420783996582,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YFMYWYYYYY",
+      "wt_score": 10.048189163208008,
+      "mean_escape": 10.045422024197048,
+      "min_escape": 10.025384902954102,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YIYIMYYDFF",
+      "wt_score": 10.046481132507324,
+      "mean_escape": 10.040322409735786,
+      "min_escape": 10.00639820098877,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVMYVAVYFW",
+      "wt_score": 10.041939735412598,
+      "mean_escape": 10.05970319112142,
+      "min_escape": 10.043702125549316,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFYFFFMYGV",
+      "wt_score": 10.073145866394043,
+      "mean_escape": 10.043051825629341,
+      "min_escape": 9.985313415527344,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WFFFVVMFEW",
+      "wt_score": 10.033778190612793,
+      "mean_escape": 9.990884251064724,
+      "min_escape": 9.94870662689209,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GVFWVFYVWF",
+      "wt_score": 10.073824882507324,
+      "mean_escape": 10.049457550048828,
+      "min_escape": 10.04098129272461,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IYMYYWIYYI",
+      "wt_score": 10.102433204650879,
+      "mean_escape": 10.086385938856337,
+      "min_escape": 10.048539161682129,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVYVCFYYFW",
+      "wt_score": 10.028728485107422,
+      "mean_escape": 10.036203384399414,
+      "min_escape": 10.010661125183105,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WVFMFWMWWV",
+      "wt_score": 10.021127700805664,
+      "mean_escape": 10.011958440144857,
+      "min_escape": 9.967936515808105,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFFFVVMFGV",
+      "wt_score": 10.028179168701172,
+      "mean_escape": 9.978861808776855,
+      "min_escape": 9.9335355758667,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GMVWVVWYWV",
+      "wt_score": 9.986892700195312,
+      "mean_escape": 9.98099093967014,
+      "min_escape": 9.946043968200684,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CWRCWMVWWC",
+      "wt_score": 10.069062232971191,
+      "mean_escape": 10.054101202223036,
+      "min_escape": 10.023872375488281,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVFMFYYFYC",
+      "wt_score": 10.03538703918457,
+      "mean_escape": 10.021943728129068,
+      "min_escape": 9.99022102355957,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GVFYVMCYYF",
+      "wt_score": 10.050675392150879,
+      "mean_escape": 10.034528838263618,
+      "min_escape": 9.992083549499512,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WYMFVFNYFF",
+      "wt_score": 10.070103645324707,
+      "mean_escape": 10.009432156880697,
+      "min_escape": 9.975396156311035,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RVMWIVMVVV",
+      "wt_score": 10.030292510986328,
+      "mean_escape": 9.999268743726942,
+      "min_escape": 9.970452308654785,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVVMWYYFYW",
+      "wt_score": 10.002765655517578,
+      "mean_escape": 9.975582228766548,
+      "min_escape": 9.944594383239746,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CCFMCYFVYY",
+      "wt_score": 10.047724723815918,
+      "mean_escape": 10.007403479682075,
+      "min_escape": 9.982150077819824,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GWWVVMWWNW",
+      "wt_score": 9.99177074432373,
+      "mean_escape": 9.974980884128147,
+      "min_escape": 9.928911209106445,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WVVFNFWMFW",
+      "wt_score": 10.035775184631348,
+      "mean_escape": 10.019761085510254,
+      "min_escape": 9.995950698852539,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVMFVFVYCY",
+      "wt_score": 10.024296760559082,
+      "mean_escape": 9.99913247426351,
+      "min_escape": 9.959714889526367,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WVMRVVMWIV",
+      "wt_score": 10.025643348693848,
+      "mean_escape": 10.017606205410427,
+      "min_escape": 9.964268684387207,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FFYFMVYYYY",
+      "wt_score": 10.014798164367676,
+      "mean_escape": 9.973134252760145,
+      "min_escape": 9.940268516540527,
+      "retention": 1.0
+    },
+    {
+      "peptide": "ICYYYVFVMY",
+      "wt_score": 10.070929527282715,
+      "mean_escape": 10.040907753838432,
+      "min_escape": 10.016852378845215,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVWVYWWWCW",
+      "wt_score": 10.058629035949707,
+      "mean_escape": 10.012179056803385,
+      "min_escape": 9.949884414672852,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WCMMVVFAAW",
+      "wt_score": 10.08499813079834,
+      "mean_escape": 10.052620040045845,
+      "min_escape": 10.014678955078125,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVFYFYVMYC",
+      "wt_score": 10.0586519241333,
+      "mean_escape": 10.028714179992676,
+      "min_escape": 10.01685619354248,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WGVMMAFVFW",
+      "wt_score": 10.025146484375,
+      "mean_escape": 9.988262600368923,
+      "min_escape": 9.964348793029785,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVAMYWFVYW",
+      "wt_score": 9.967077255249023,
+      "mean_escape": 9.95687378777398,
+      "min_escape": 9.900294303894043,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YFYIYFCMFV",
+      "wt_score": 10.062125205993652,
+      "mean_escape": 10.040261374579536,
+      "min_escape": 10.0263671875,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YVYVYYYYFH",
+      "wt_score": 9.986472129821777,
+      "mean_escape": 9.992522027757433,
+      "min_escape": 9.968472480773926,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CGGVVVWMNW",
+      "wt_score": 10.001582145690918,
+      "mean_escape": 9.951557371351454,
+      "min_escape": 9.930556297302246,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WVAWWWWVYW",
+      "wt_score": 10.062540054321289,
+      "mean_escape": 10.05335267384847,
+      "min_escape": 10.0370454788208,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RVVVCVWMAW",
+      "wt_score": 10.060603141784668,
+      "mean_escape": 10.043981128268772,
+      "min_escape": 10.021641731262207,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVFFCMFFVV",
+      "wt_score": 9.999493598937988,
+      "mean_escape": 9.986400604248047,
+      "min_escape": 9.961400985717773,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WVFVWMIVAV",
+      "wt_score": 10.024208068847656,
+      "mean_escape": 10.003802087571886,
+      "min_escape": 9.948136329650879,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YIMFYIYYYI",
+      "wt_score": 10.080632209777832,
+      "mean_escape": 10.046388520134819,
+      "min_escape": 10.017659187316895,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVMYCFFYVM",
+      "wt_score": 10.064602851867676,
+      "mean_escape": 9.987804942660862,
+      "min_escape": 9.975438117980957,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FVFYVCFVFF",
+      "wt_score": 10.00476360321045,
+      "mean_escape": 10.004801008436415,
+      "min_escape": 9.997896194458008,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CWWVCWRMFW",
+      "wt_score": 10.0656156539917,
+      "mean_escape": 10.03585116068522,
+      "min_escape": 10.007094383239746,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FFFYVVMVVY",
+      "wt_score": 10.010767936706543,
+      "mean_escape": 9.993776109483507,
+      "min_escape": 9.97929859161377,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVMIFCYYFV",
+      "wt_score": 9.967129707336426,
+      "mean_escape": 9.97600163353814,
+      "min_escape": 9.938389778137207,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GVVMWNGVWW",
+      "wt_score": 10.048927307128906,
+      "mean_escape": 9.986605750189888,
+      "min_escape": 9.901150703430176,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GVWYFGVWFR",
+      "wt_score": 10.051716804504395,
+      "mean_escape": 10.052060551113552,
+      "min_escape": 10.021377563476562,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WVMIFFVMWV",
+      "wt_score": 10.027377128601074,
+      "mean_escape": 9.951001591152615,
+      "min_escape": 9.89097785949707,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CGEVFFFVVW",
+      "wt_score": 9.934417724609375,
+      "mean_escape": 9.903154373168945,
+      "min_escape": 9.854644775390625,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RCRCCWWWMF",
+      "wt_score": 10.009673118591309,
+      "mean_escape": 9.988952848646376,
+      "min_escape": 9.948155403137207,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFCMVYFFFV",
+      "wt_score": 10.034590721130371,
+      "mean_escape": 9.982139587402344,
+      "min_escape": 9.95339584350586,
+      "retention": 1.0
+    },
+    {
+      "peptide": "SVAWMVVAVW",
+      "wt_score": 10.093609809875488,
+      "mean_escape": 10.085116810268826,
+      "min_escape": 10.070119857788086,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RVMYVWWYVY",
+      "wt_score": 10.0240478515625,
+      "mean_escape": 10.005667898390028,
+      "min_escape": 9.973347663879395,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WNYYFVMMFY",
+      "wt_score": 9.999711036682129,
+      "mean_escape": 9.989414956834581,
+      "min_escape": 9.955580711364746,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVMWYYYYCW",
+      "wt_score": 10.022130966186523,
+      "mean_escape": 10.010030958387587,
+      "min_escape": 9.986793518066406,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GWCVWCVEVM",
+      "wt_score": 9.9846830368042,
+      "mean_escape": 9.970719125535753,
+      "min_escape": 9.942256927490234,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GYYGDGGYYW",
+      "wt_score": 10.009886741638184,
+      "mean_escape": 10.012595388624403,
+      "min_escape": 9.970674514770508,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GVFMMMWVVC",
+      "wt_score": 10.059785842895508,
+      "mean_escape": 9.992659462822807,
+      "min_escape": 9.93384838104248,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFWFVFFYVF",
+      "wt_score": 10.02796459197998,
+      "mean_escape": 10.01784218682183,
+      "min_escape": 9.996805191040039,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FVFQVFYFFC",
+      "wt_score": 10.00438404083252,
+      "mean_escape": 10.003154118855795,
+      "min_escape": 9.974255561828613,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CGMVVWWVVF",
+      "wt_score": 9.994811058044434,
+      "mean_escape": 9.93753433227539,
+      "min_escape": 9.892779350280762,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WGVMVAVVEF",
+      "wt_score": 9.956186294555664,
+      "mean_escape": 9.955542140536839,
+      "min_escape": 9.895627975463867,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YFFMCVYYFM",
+      "wt_score": 10.0702543258667,
+      "mean_escape": 10.045969751146105,
+      "min_escape": 10.025506973266602,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVVYCMFFFF",
+      "wt_score": 9.99603271484375,
+      "mean_escape": 10.005476951599121,
+      "min_escape": 9.973761558532715,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WCMFVYGFVF",
+      "wt_score": 10.048800468444824,
+      "mean_escape": 10.008540471394857,
+      "min_escape": 9.933646202087402,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFIYMYYFYY",
+      "wt_score": 10.081510543823242,
+      "mean_escape": 10.065877808464897,
+      "min_escape": 10.044581413269043,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFFMKFKFFV",
+      "wt_score": 9.980182647705078,
+      "mean_escape": 9.997172567579481,
+      "min_escape": 9.93923568725586,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFFVMMYYFC",
+      "wt_score": 10.069689750671387,
+      "mean_escape": 9.99399036831326,
+      "min_escape": 9.948232650756836,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WMFAAVWFVV",
+      "wt_score": 10.036805152893066,
+      "mean_escape": 10.009041786193848,
+      "min_escape": 9.967358589172363,
+      "retention": 1.0
+    },
+    {
+      "peptide": "ICFYYVMYYW",
+      "wt_score": 10.042243003845215,
+      "mean_escape": 10.016942236158583,
+      "min_escape": 9.977575302124023,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YIMYIIFFYF",
+      "wt_score": 10.048820495605469,
+      "mean_escape": 10.048950831095377,
+      "min_escape": 10.039349555969238,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFYVMCKYFF",
+      "wt_score": 10.064166069030762,
+      "mean_escape": 9.99860922495524,
+      "min_escape": 9.955546379089355,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WFVWMVAVMV",
+      "wt_score": 9.990801811218262,
+      "mean_escape": 9.963666915893555,
+      "min_escape": 9.945068359375,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFFVVAVMAV",
+      "wt_score": 9.910597801208496,
+      "mean_escape": 9.869549857245552,
+      "min_escape": 9.829169273376465,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CFYFIMYCIF",
+      "wt_score": 9.965161323547363,
+      "mean_escape": 9.968383259243435,
+      "min_escape": 9.942912101745605,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CRWRWFWWMW",
+      "wt_score": 9.981493949890137,
+      "mean_escape": 9.976876576741537,
+      "min_escape": 9.930779457092285,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WMVYYYWVCY",
+      "wt_score": 10.027029991149902,
+      "mean_escape": 10.000224007500542,
+      "min_escape": 9.950352668762207,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FMYFVFFFYR",
+      "wt_score": 9.98828411102295,
+      "mean_escape": 10.002737363179525,
+      "min_escape": 9.967252731323242,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFFCVYFFVM",
+      "wt_score": 10.002835273742676,
+      "mean_escape": 9.995068973965115,
+      "min_escape": 9.989710807800293,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WVWVCWYVMY",
+      "wt_score": 10.041800498962402,
+      "mean_escape": 10.021320978800455,
+      "min_escape": 9.981694221496582,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFYFFDMYFV",
+      "wt_score": 9.952871322631836,
+      "mean_escape": 9.95129002465142,
+      "min_escape": 9.872928619384766,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IMCYVFKYFF",
+      "wt_score": 9.979113578796387,
+      "mean_escape": 9.930826716952854,
+      "min_escape": 9.888957023620605,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFYVMNVYFF",
+      "wt_score": 10.069804191589355,
+      "mean_escape": 10.032189899020725,
+      "min_escape": 10.00183391571045,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVYFCVCCVG",
+      "wt_score": 10.01864242553711,
+      "mean_escape": 9.997100194295248,
+      "min_escape": 9.980525016784668,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RVFWECFFFW",
+      "wt_score": 10.029577255249023,
+      "mean_escape": 9.99994330936008,
+      "min_escape": 9.954835891723633,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GVYVYVMWFC",
+      "wt_score": 10.050589561462402,
+      "mean_escape": 10.011199845208061,
+      "min_escape": 9.986187934875488,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GIFIAMIFVW",
+      "wt_score": 9.939969062805176,
+      "mean_escape": 9.90310001373291,
+      "min_escape": 9.857749938964844,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YIYYYVYDMV",
+      "wt_score": 10.052435874938965,
+      "mean_escape": 10.021660910712349,
+      "min_escape": 9.971402168273926,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFYVCMDFFF",
+      "wt_score": 10.00969123840332,
+      "mean_escape": 9.994793997870552,
+      "min_escape": 9.939576148986816,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WRVMWAFVCV",
+      "wt_score": 10.03477954864502,
+      "mean_escape": 9.974212222629124,
+      "min_escape": 9.944012641906738,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVVMIFCFWV",
+      "wt_score": 9.924775123596191,
+      "mean_escape": 9.932250552707249,
+      "min_escape": 9.866181373596191,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WVAMYFYVFF",
+      "wt_score": 9.949951171875,
+      "mean_escape": 9.918996069166395,
+      "min_escape": 9.867945671081543,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVFFVMMWGV",
+      "wt_score": 10.004122734069824,
+      "mean_escape": 9.998983065287272,
+      "min_escape": 9.961052894592285,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFFMVFRFFV",
+      "wt_score": 9.97206974029541,
+      "mean_escape": 9.881945927937826,
+      "min_escape": 9.843135833740234,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFYVLMYYVL",
+      "wt_score": 9.966532707214355,
+      "mean_escape": 9.929604742262098,
+      "min_escape": 9.902812004089355,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVFFVGMEVW",
+      "wt_score": 9.970027923583984,
+      "mean_escape": 9.823049439324272,
+      "min_escape": 9.739974975585938,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RVMYVYYWVY",
+      "wt_score": 10.017909049987793,
+      "mean_escape": 9.901388274298775,
+      "min_escape": 9.864649772644043,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YIFFVMYIFF",
+      "wt_score": 10.004969596862793,
+      "mean_escape": 9.989048957824707,
+      "min_escape": 9.9789400100708,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GFVMYYVEFW",
+      "wt_score": 9.9462251663208,
+      "mean_escape": 9.925724877251518,
+      "min_escape": 9.873023986816406,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CRWWWPAMFW",
+      "wt_score": 9.911947250366211,
+      "mean_escape": 9.893737369113499,
+      "min_escape": 9.855145454406738,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FLFFVFFLFY",
+      "wt_score": 9.964788436889648,
+      "mean_escape": 9.90873114267985,
+      "min_escape": 9.886656761169434,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RRYYRRVVYF",
+      "wt_score": 9.896283149719238,
+      "mean_escape": 9.930355495876736,
+      "min_escape": 9.894247055053711,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFCFWMYFFF",
+      "wt_score": 9.989500045776367,
+      "mean_escape": 9.970868958367241,
+      "min_escape": 9.948358535766602,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVFAVMYVAF",
+      "wt_score": 9.957690238952637,
+      "mean_escape": 9.922555181715223,
+      "min_escape": 9.899232864379883,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVYVYVMYFN",
+      "wt_score": 10.02194881439209,
+      "mean_escape": 9.968076176113552,
+      "min_escape": 9.934985160827637,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RRMWFCWAAW",
+      "wt_score": 9.977032661437988,
+      "mean_escape": 9.953864733378092,
+      "min_escape": 9.914508819580078,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GYVYYVYYFF",
+      "wt_score": 10.039705276489258,
+      "mean_escape": 10.039324548509386,
+      "min_escape": 10.030487060546875,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVYFFFVCMF",
+      "wt_score": 10.016692161560059,
+      "mean_escape": 9.952385796440971,
+      "min_escape": 9.92455768585205,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFVMYGVVMW",
+      "wt_score": 10.024367332458496,
+      "mean_escape": 9.931725713941786,
+      "min_escape": 9.895113945007324,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FFYFCWMFFW",
+      "wt_score": 10.005695343017578,
+      "mean_escape": 9.968790266248915,
+      "min_escape": 9.933937072753906,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WGYYGMVVYY",
+      "wt_score": 9.980755805969238,
+      "mean_escape": 9.973592546251085,
+      "min_escape": 9.899846076965332,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GVFMMFFCVW",
+      "wt_score": 10.009771347045898,
+      "mean_escape": 9.980855623881022,
+      "min_escape": 9.94428825378418,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IYYYFFGMFF",
+      "wt_score": 9.962361335754395,
+      "mean_escape": 9.914917839898003,
+      "min_escape": 9.861557960510254,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IMYCFGVFVV",
+      "wt_score": 10.021719932556152,
+      "mean_escape": 10.00257036421034,
+      "min_escape": 9.97508716583252,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IYLYYFMYLY",
+      "wt_score": 9.86143684387207,
+      "mean_escape": 9.816644032796225,
+      "min_escape": 9.77076530456543,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVCFWGVVFW",
+      "wt_score": 9.940491676330566,
+      "mean_escape": 9.941765679253471,
+      "min_escape": 9.918371200561523,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVWWFVVWYF",
+      "wt_score": 9.930379867553711,
+      "mean_escape": 9.892276022169325,
+      "min_escape": 9.82397747039795,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FFFYFVMCWN",
+      "wt_score": 9.965190887451172,
+      "mean_escape": 9.949118190341526,
+      "min_escape": 9.92471981048584,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFFMVYDCFF",
+      "wt_score": 10.034728050231934,
+      "mean_escape": 9.923674371507433,
+      "min_escape": 9.866872787475586,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GRVVFIVMIV",
+      "wt_score": 9.956968307495117,
+      "mean_escape": 9.907647874620226,
+      "min_escape": 9.841361045837402,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFFVFFYYFY",
+      "wt_score": 9.964619636535645,
+      "mean_escape": 9.964978959825304,
+      "min_escape": 9.955364227294922,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CYYYVFVWVC",
+      "wt_score": 9.970776557922363,
+      "mean_escape": 9.975686815049913,
+      "min_escape": 9.959229469299316,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IYMYFCFFFY",
+      "wt_score": 10.00217342376709,
+      "mean_escape": 9.957417805989584,
+      "min_escape": 9.937458992004395,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GVIMWIGMVW",
+      "wt_score": 10.05465030670166,
+      "mean_escape": 9.994946161905924,
+      "min_escape": 9.875914573669434,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVFDFVMFYG",
+      "wt_score": 9.899569511413574,
+      "mean_escape": 9.866982248094347,
+      "min_escape": 9.807991027832031,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GVVYWDEYVY",
+      "wt_score": 9.836628913879395,
+      "mean_escape": 9.812696986728245,
+      "min_escape": 9.749337196350098,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VMFYKCFVFF",
+      "wt_score": 10.010451316833496,
+      "mean_escape": 9.989152272542318,
+      "min_escape": 9.931748390197754,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RVMIACFVFV",
+      "wt_score": 9.9550199508667,
+      "mean_escape": 9.938352266947428,
+      "min_escape": 9.914161682128906,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFYFFYCFFV",
+      "wt_score": 9.929701805114746,
+      "mean_escape": 9.900606791178385,
+      "min_escape": 9.883705139160156,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GGRKVVMWRW",
+      "wt_score": 9.99932861328125,
+      "mean_escape": 9.976534631517199,
+      "min_escape": 9.917805671691895,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GWYYWFWWFC",
+      "wt_score": 10.054291725158691,
+      "mean_escape": 9.991254594590929,
+      "min_escape": 9.978851318359375,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CFFDWVVFVW",
+      "wt_score": 9.923028945922852,
+      "mean_escape": 9.888007587856716,
+      "min_escape": 9.82976245880127,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WGYYGDYWGW",
+      "wt_score": 9.9102201461792,
+      "mean_escape": 9.893847041659885,
+      "min_escape": 9.868608474731445,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CYGVCFFVYV",
+      "wt_score": 9.919672012329102,
+      "mean_escape": 9.845083130730522,
+      "min_escape": 9.775501251220703,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WWMIAMFVFV",
+      "wt_score": 9.961780548095703,
+      "mean_escape": 9.89082400004069,
+      "min_escape": 9.798569679260254,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FMFCFYFFYF",
+      "wt_score": 9.9747953414917,
+      "mean_escape": 9.967475361294216,
+      "min_escape": 9.946555137634277,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GCWWGRRMFW",
+      "wt_score": 9.979762077331543,
+      "mean_escape": 9.911400583055284,
+      "min_escape": 9.831345558166504,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GFRFFVFFFF",
+      "wt_score": 9.903512001037598,
+      "mean_escape": 9.93484624226888,
+      "min_escape": 9.901780128479004,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVMWVAGYVM",
+      "wt_score": 10.012162208557129,
+      "mean_escape": 9.926862398783365,
+      "min_escape": 9.909079551696777,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RVFRCFWWRW",
+      "wt_score": 9.931504249572754,
+      "mean_escape": 9.932056638929579,
+      "min_escape": 9.894953727722168,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IDMYFIFYYF",
+      "wt_score": 9.99708366394043,
+      "mean_escape": 9.91641362508138,
+      "min_escape": 9.867768287658691,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FFYYYWMCIY",
+      "wt_score": 9.882394790649414,
+      "mean_escape": 9.8752228418986,
+      "min_escape": 9.84368896484375,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CFCYYMVIFF",
+      "wt_score": 9.907261848449707,
+      "mean_escape": 9.867094463772244,
+      "min_escape": 9.811653137207031,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WVVFYAVMYC",
+      "wt_score": 10.001070976257324,
+      "mean_escape": 9.961800363328722,
+      "min_escape": 9.89182186126709,
+      "retention": 1.0
+    },
+    {
+      "peptide": "SVMYVYYFVY",
+      "wt_score": 10.06659984588623,
+      "mean_escape": 10.046893331739637,
+      "min_escape": 10.028886795043945,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VCVYVCYVCY",
+      "wt_score": 9.946414947509766,
+      "mean_escape": 9.94977855682373,
+      "min_escape": 9.93671989440918,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GVMCFFFGYW",
+      "wt_score": 9.89525032043457,
+      "mean_escape": 9.911995146009657,
+      "min_escape": 9.87222671508789,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CECEVVVMWE",
+      "wt_score": 9.78018856048584,
+      "mean_escape": 9.75120989481608,
+      "min_escape": 9.674091339111328,
+      "retention": 1.0
+    },
+    {
+      "peptide": "KKFFKKMFFW",
+      "wt_score": 10.00144100189209,
+      "mean_escape": 9.998873816596138,
+      "min_escape": 9.98224925994873,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WYYVYVYMNV",
+      "wt_score": 9.930563926696777,
+      "mean_escape": 9.83881696065267,
+      "min_escape": 9.775781631469727,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CYFFNKVVFF",
+      "wt_score": 9.906200408935547,
+      "mean_escape": 9.843505329555935,
+      "min_escape": 9.770492553710938,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFCFYFFMYY",
+      "wt_score": 9.946932792663574,
+      "mean_escape": 9.91301409403483,
+      "min_escape": 9.897906303405762,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GGVVWWVCVD",
+      "wt_score": 9.997239112854004,
+      "mean_escape": 9.988798035515678,
+      "min_escape": 9.964863777160645,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CWFWWYYRWW",
+      "wt_score": 9.8591947555542,
+      "mean_escape": 9.841675652398003,
+      "min_escape": 9.783020973205566,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FMIAYFFVMV",
+      "wt_score": 9.846919059753418,
+      "mean_escape": 9.822830941942003,
+      "min_escape": 9.775959014892578,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVYYVCYYFM",
+      "wt_score": 9.975594520568848,
+      "mean_escape": 9.93793445163303,
+      "min_escape": 9.910933494567871,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VVVRMWVARW",
+      "wt_score": 9.845112800598145,
+      "mean_escape": 9.829596201578775,
+      "min_escape": 9.779237747192383,
+      "retention": 1.0
+    },
+    {
+      "peptide": "NGFFVWMFFW",
+      "wt_score": 9.8058443069458,
+      "mean_escape": 9.748796463012695,
+      "min_escape": 9.647180557250977,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CFFFVVVPFW",
+      "wt_score": 9.789728164672852,
+      "mean_escape": 9.791634665595161,
+      "min_escape": 9.720810890197754,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YVYYYYCMFH",
+      "wt_score": 10.025467872619629,
+      "mean_escape": 9.974851926167807,
+      "min_escape": 9.939248085021973,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YMCYVCFYYM",
+      "wt_score": 9.958693504333496,
+      "mean_escape": 9.892895486619738,
+      "min_escape": 9.85457706451416,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VMVAIFMVFV",
+      "wt_score": 9.834798812866211,
+      "mean_escape": 9.777660581800673,
+      "min_escape": 9.718512535095215,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVVIMVYFYV",
+      "wt_score": 9.831751823425293,
+      "mean_escape": 9.81402979956733,
+      "min_escape": 9.785414695739746,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CFEFYMYVFF",
+      "wt_score": 9.782171249389648,
+      "mean_escape": 9.772289699978298,
+      "min_escape": 9.685425758361816,
+      "retention": 1.0
+    },
+    {
+      "peptide": "KVMKFCFFFK",
+      "wt_score": 9.925154685974121,
+      "mean_escape": 9.863680521647135,
+      "min_escape": 9.807381629943848,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WIIFFMFFGV",
+      "wt_score": 9.831253051757812,
+      "mean_escape": 9.81340397728814,
+      "min_escape": 9.707321166992188,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IIMYYWYWIC",
+      "wt_score": 9.884347915649414,
+      "mean_escape": 9.837494638231066,
+      "min_escape": 9.802777290344238,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IMCVFFYYYY",
+      "wt_score": 9.784504890441895,
+      "mean_escape": 9.705512470669216,
+      "min_escape": 9.641843795776367,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RVVCFWMMFV",
+      "wt_score": 9.88598918914795,
+      "mean_escape": 9.894991132948133,
+      "min_escape": 9.826952934265137,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CWFYFFCVFG",
+      "wt_score": 9.91518497467041,
+      "mean_escape": 9.868437237209744,
+      "min_escape": 9.811070442199707,
+      "retention": 1.0
+    },
+    {
+      "peptide": "KVMFECFYFF",
+      "wt_score": 9.957303047180176,
+      "mean_escape": 9.870691617329916,
+      "min_escape": 9.802980422973633,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WYYYFILVMY",
+      "wt_score": 9.789938926696777,
+      "mean_escape": 9.794729232788086,
+      "min_escape": 9.732150077819824,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VFVFTFFFWW",
+      "wt_score": 9.873425483703613,
+      "mean_escape": 9.838360256618923,
+      "min_escape": 9.803390502929688,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YMYFLFVCVF",
+      "wt_score": 9.945616722106934,
+      "mean_escape": 9.935141881306967,
+      "min_escape": 9.89321231842041,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IMYYYYFLFC",
+      "wt_score": 9.873984336853027,
+      "mean_escape": 9.834737777709961,
+      "min_escape": 9.749741554260254,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WMWVFVCVCK",
+      "wt_score": 9.9032564163208,
+      "mean_escape": 9.871300485399034,
+      "min_escape": 9.832669258117676,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CYFVNVWYFW",
+      "wt_score": 9.694446563720703,
+      "mean_escape": 9.680170694986979,
+      "min_escape": 9.618996620178223,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IYIHYYYYMW",
+      "wt_score": 9.81995677947998,
+      "mean_escape": 9.811750729878744,
+      "min_escape": 9.758810043334961,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VVMYVVAFWY",
+      "wt_score": 9.952418327331543,
+      "mean_escape": 9.938208791944716,
+      "min_escape": 9.90127182006836,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VFAYVCVFMW",
+      "wt_score": 9.864228248596191,
+      "mean_escape": 9.828756332397461,
+      "min_escape": 9.799235343933105,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVAFVAMMVV",
+      "wt_score": 9.638163566589355,
+      "mean_escape": 9.636563936869303,
+      "min_escape": 9.598095893859863,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FFVCVMVWFH",
+      "wt_score": 9.792284965515137,
+      "mean_escape": 9.782590124342176,
+      "min_escape": 9.748333930969238,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVIAWMCYFV",
+      "wt_score": 9.761772155761719,
+      "mean_escape": 9.676858054267036,
+      "min_escape": 9.631853103637695,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CVVSVVWWMW",
+      "wt_score": 9.640130996704102,
+      "mean_escape": 9.58635319603814,
+      "min_escape": 9.507105827331543,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YCYYYCDFCF",
+      "wt_score": 9.801764488220215,
+      "mean_escape": 9.805612352159288,
+      "min_escape": 9.78186321258545,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FFFVFVLCFW",
+      "wt_score": 9.755902290344238,
+      "mean_escape": 9.6963742574056,
+      "min_escape": 9.633500099182129,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VCFYGVMGFF",
+      "wt_score": 9.478151321411133,
+      "mean_escape": 9.433437983194986,
+      "min_escape": 9.361313819885254,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CDWFCWWWWR",
+      "wt_score": 9.832955360412598,
+      "mean_escape": 9.8094515270657,
+      "min_escape": 9.769639015197754,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFVLMYVFVL",
+      "wt_score": 9.707289695739746,
+      "mean_escape": 9.64590115017361,
+      "min_escape": 9.573699951171875,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CIWICYWMYY",
+      "wt_score": 9.749252319335938,
+      "mean_escape": 9.770548396640354,
+      "min_escape": 9.718537330627441,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RVYFYMYIIF",
+      "wt_score": 9.681248664855957,
+      "mean_escape": 9.60632356007894,
+      "min_escape": 9.554160118103027,
+      "retention": 1.0
+    },
+    {
+      "peptide": "KKFFFMFFRF",
+      "wt_score": 9.553631782531738,
+      "mean_escape": 9.585756513807508,
+      "min_escape": 9.514243125915527,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FAIVAFVVMW",
+      "wt_score": 9.583808898925781,
+      "mean_escape": 9.570346938239204,
+      "min_escape": 9.526759147644043,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFWAVMAYVA",
+      "wt_score": 9.360371589660645,
+      "mean_escape": 9.297571500142416,
+      "min_escape": 9.241142272949219,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RMWWYVAVDF",
+      "wt_score": 9.70885181427002,
+      "mean_escape": 9.695506837632921,
+      "min_escape": 9.64039421081543,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YGQYYGGWCF",
+      "wt_score": 9.452980995178223,
+      "mean_escape": 9.364533318413628,
+      "min_escape": 9.313023567199707,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FVFVLMLWYW",
+      "wt_score": 9.631674766540527,
+      "mean_escape": 9.571430948045519,
+      "min_escape": 9.507864952087402,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YYYWCMCFCY",
+      "wt_score": 9.497990608215332,
+      "mean_escape": 9.460794448852539,
+      "min_escape": 9.428085327148438,
+      "retention": 1.0
+    },
+    {
+      "peptide": "ICYVYYYYCM",
+      "wt_score": 9.803688049316406,
+      "mean_escape": 9.815228992038303,
+      "min_escape": 9.778825759887695,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WNWYVCVMVY",
+      "wt_score": 9.69995403289795,
+      "mean_escape": 9.708117167154947,
+      "min_escape": 9.673221588134766,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FIVCFFFYFV",
+      "wt_score": 9.54390811920166,
+      "mean_escape": 9.54973358578152,
+      "min_escape": 9.495843887329102,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFYYFYFAVM",
+      "wt_score": 9.660993576049805,
+      "mean_escape": 9.624665684170193,
+      "min_escape": 9.528944969177246,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GGRWPAWWWF",
+      "wt_score": 9.69588851928711,
+      "mean_escape": 9.590601285298666,
+      "min_escape": 9.535026550292969,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WVAMYCYYFY",
+      "wt_score": 9.332198143005371,
+      "mean_escape": 9.267058372497559,
+      "min_escape": 9.213025093078613,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VCFMRVCVCV",
+      "wt_score": 9.697775840759277,
+      "mean_escape": 9.605161666870117,
+      "min_escape": 9.537432670593262,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VWLWWWVWLW",
+      "wt_score": 9.667798042297363,
+      "mean_escape": 9.651443693372938,
+      "min_escape": 9.62168025970459,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YVFVLMWYYL",
+      "wt_score": 9.516470909118652,
+      "mean_escape": 9.473127683003744,
+      "min_escape": 9.416237831115723,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVVAMAVYFF",
+      "wt_score": 9.368205070495605,
+      "mean_escape": 9.294365988837349,
+      "min_escape": 9.24613094329834,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IYYYVQMCVY",
+      "wt_score": 9.523993492126465,
+      "mean_escape": 9.490714179144966,
+      "min_escape": 9.427220344543457,
+      "retention": 1.0
+    },
+    {
+      "peptide": "NKYYMYMCFY",
+      "wt_score": 9.516764640808105,
+      "mean_escape": 9.542652977837456,
+      "min_escape": 9.514897346496582,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVCFLFFFMY",
+      "wt_score": 9.487174034118652,
+      "mean_escape": 9.43905915154351,
+      "min_escape": 9.40424919128418,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GFCWRPRRWW",
+      "wt_score": 9.530659675598145,
+      "mean_escape": 9.54373508029514,
+      "min_escape": 9.496992111206055,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YGPMYRGYYY",
+      "wt_score": 9.355679512023926,
+      "mean_escape": 9.356836954752604,
+      "min_escape": 9.305570602416992,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GCGWYYDYYY",
+      "wt_score": 9.519843101501465,
+      "mean_escape": 9.454634348551432,
+      "min_escape": 9.406242370605469,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WVWWWVCWLW",
+      "wt_score": 9.470032691955566,
+      "mean_escape": 9.444879425896538,
+      "min_escape": 9.4036283493042,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VGMCIIFVFW",
+      "wt_score": 9.29417610168457,
+      "mean_escape": 9.24245834350586,
+      "min_escape": 9.073552131652832,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FMCVLVLFLF",
+      "wt_score": 9.420554161071777,
+      "mean_escape": 9.408480220370823,
+      "min_escape": 9.374688148498535,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFFVFVFVVP",
+      "wt_score": 9.412413597106934,
+      "mean_escape": 9.357001940409342,
+      "min_escape": 9.290117263793945,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CSYYCVFVFY",
+      "wt_score": 9.39126968383789,
+      "mean_escape": 9.372219615512424,
+      "min_escape": 9.320792198181152,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IYEYIYYYMW",
+      "wt_score": 9.016700744628906,
+      "mean_escape": 8.964422119988335,
+      "min_escape": 8.900229454040527,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FVFYMLCFFF",
+      "wt_score": 9.421616554260254,
+      "mean_escape": 9.361597696940104,
+      "min_escape": 9.295891761779785,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CYVGMYVCDV",
+      "wt_score": 9.313251495361328,
+      "mean_escape": 9.269382582770454,
+      "min_escape": 9.200511932373047,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IMYVFFYSFV",
+      "wt_score": 9.427577018737793,
+      "mean_escape": 9.380943616231283,
+      "min_escape": 9.323548316955566,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IFFPVVMVCV",
+      "wt_score": 9.11967658996582,
+      "mean_escape": 9.048938221401638,
+      "min_escape": 8.969862937927246,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FFVCMYFFFA",
+      "wt_score": 9.400020599365234,
+      "mean_escape": 9.404522683885363,
+      "min_escape": 9.355690956115723,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GEKIGYEMVW",
+      "wt_score": 9.269980430603027,
+      "mean_escape": 9.242622163560656,
+      "min_escape": 9.16630744934082,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CYPMYWGYYW",
+      "wt_score": 9.383787155151367,
+      "mean_escape": 9.312318801879883,
+      "min_escape": 9.24814510345459,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GRRDVMCYFF",
+      "wt_score": 9.31047534942627,
+      "mean_escape": 9.309472825792101,
+      "min_escape": 9.263138771057129,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CYYMKICYVY",
+      "wt_score": 9.197284698486328,
+      "mean_escape": 9.20038233862983,
+      "min_escape": 9.129338264465332,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VVMRAEVWAW",
+      "wt_score": 9.178235054016113,
+      "mean_escape": 9.180021815829807,
+      "min_escape": 9.134154319763184,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VQMWVCVRYV",
+      "wt_score": 9.267343521118164,
+      "mean_escape": 9.223262574937609,
+      "min_escape": 9.157544136047363,
+      "retention": 1.0
+    },
+    {
+      "peptide": "NEYWDEEYDW",
+      "wt_score": 9.112879753112793,
+      "mean_escape": 9.077310880025228,
+      "min_escape": 9.008074760437012,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GCGSVWWDWW",
+      "wt_score": 9.141444206237793,
+      "mean_escape": 9.046185387505425,
+      "min_escape": 8.975826263427734,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RFMIAVFWGW",
+      "wt_score": 9.436244010925293,
+      "mean_escape": 9.447288513183594,
+      "min_escape": 9.404706001281738,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GHWWCDWWFW",
+      "wt_score": 9.240477561950684,
+      "mean_escape": 9.21274079216851,
+      "min_escape": 9.179590225219727,
+      "retention": 1.0
+    },
+    {
+      "peptide": "ICYYYWYSFD",
+      "wt_score": 9.20112133026123,
+      "mean_escape": 9.19606516096327,
+      "min_escape": 9.156322479248047,
+      "retention": 1.0
+    },
+    {
+      "peptide": "KMWWRKRKCW",
+      "wt_score": 9.098312377929688,
+      "mean_escape": 9.032800250583225,
+      "min_escape": 8.96887493133545,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CWSWSRPCWW",
+      "wt_score": 8.935195922851562,
+      "mean_escape": 8.91178830464681,
+      "min_escape": 8.835079193115234,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CDVMVCWVWE",
+      "wt_score": 9.157610893249512,
+      "mean_escape": 9.144054730733236,
+      "min_escape": 9.070505142211914,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VVCWAMRVAY",
+      "wt_score": 8.952496528625488,
+      "mean_escape": 8.945490519205729,
+      "min_escape": 8.895292282104492,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WMWMCFAFFF",
+      "wt_score": 9.153128623962402,
+      "mean_escape": 9.15824423895942,
+      "min_escape": 9.111897468566895,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YHMFWYVCFY",
+      "wt_score": 8.95328426361084,
+      "mean_escape": 8.944037437438965,
+      "min_escape": 8.90281867980957,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GVWMYWMCDW",
+      "wt_score": 9.200045585632324,
+      "mean_escape": 9.19866508907742,
+      "min_escape": 9.154080390930176,
+      "retention": 1.0
+    },
+    {
+      "peptide": "AMCWVWWWWW",
+      "wt_score": 9.257054328918457,
+      "mean_escape": 9.226815965440538,
+      "min_escape": 9.196555137634277,
+      "retention": 1.0
+    },
+    {
+      "peptide": "KCVVWVRMEW",
+      "wt_score": 8.686102867126465,
+      "mean_escape": 8.666090541415745,
+      "min_escape": 8.616532325744629,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VMIAITCFWV",
+      "wt_score": 9.17300796508789,
+      "mean_escape": 9.159961276584202,
+      "min_escape": 9.085864067077637,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VLVLMYALMC",
+      "wt_score": 9.038784980773926,
+      "mean_escape": 9.032477378845215,
+      "min_escape": 8.964629173278809,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IVYYYYFCFA",
+      "wt_score": 9.239116668701172,
+      "mean_escape": 9.228008164299858,
+      "min_escape": 9.173552513122559,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IAVLFVYVML",
+      "wt_score": 9.165535926818848,
+      "mean_escape": 9.117534107632107,
+      "min_escape": 9.065394401550293,
+      "retention": 1.0
+    },
+    {
+      "peptide": "NVVIECFWAW",
+      "wt_score": 9.082759857177734,
+      "mean_escape": 9.051033655802408,
+      "min_escape": 8.984540939331055,
+      "retention": 1.0
+    },
+    {
+      "peptide": "HMIAICFVFV",
+      "wt_score": 8.755654335021973,
+      "mean_escape": 8.76510238647461,
+      "min_escape": 8.729348182678223,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IACFMYLFFY",
+      "wt_score": 9.10321044921875,
+      "mean_escape": 9.083738644917807,
+      "min_escape": 9.020148277282715,
+      "retention": 1.0
+    },
+    {
+      "peptide": "ILCWWWWWVW",
+      "wt_score": 9.121538162231445,
+      "mean_escape": 9.050020535786947,
+      "min_escape": 8.992450714111328,
+      "retention": 1.0
+    },
+    {
+      "peptide": "IRIFFYLFMC",
+      "wt_score": 8.96672534942627,
+      "mean_escape": 8.936707390679253,
+      "min_escape": 8.880486488342285,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RESWFFWCFF",
+      "wt_score": 8.955296516418457,
+      "mean_escape": 8.992407162984213,
+      "min_escape": 8.946057319641113,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YEYECMLWYW",
+      "wt_score": 8.962706565856934,
+      "mean_escape": 8.950698640611437,
+      "min_escape": 8.884243965148926,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RRVRVKMWFE",
+      "wt_score": 8.71212100982666,
+      "mean_escape": 8.727311982048882,
+      "min_escape": 8.66171932220459,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WCFVLFWMAA",
+      "wt_score": 9.11365795135498,
+      "mean_escape": 9.076255480448404,
+      "min_escape": 9.025816917419434,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VREYMCEYAY",
+      "wt_score": 8.878527641296387,
+      "mean_escape": 8.853882259792751,
+      "min_escape": 8.800555229187012,
+      "retention": 1.0
+    },
+    {
+      "peptide": "NDDGGREWMC",
+      "wt_score": 8.552175521850586,
+      "mean_escape": 8.491724756028917,
+      "min_escape": 8.447125434875488,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FRMCFLFMWY",
+      "wt_score": 8.724223136901855,
+      "mean_escape": 8.734200053744846,
+      "min_escape": 8.66131591796875,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RWTCWWWWGG",
+      "wt_score": 8.900969505310059,
+      "mean_escape": 8.928605397542318,
+      "min_escape": 8.886801719665527,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CSVKIFWMWV",
+      "wt_score": 8.541762351989746,
+      "mean_escape": 8.49945460425483,
+      "min_escape": 8.420977592468262,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FMLWWVCVML",
+      "wt_score": 8.828544616699219,
+      "mean_escape": 8.828465249803331,
+      "min_escape": 8.78030776977539,
+      "retention": 1.0
+    },
+    {
+      "peptide": "CRHWFAWWWR",
+      "wt_score": 8.373505592346191,
+      "mean_escape": 8.389123598734537,
+      "min_escape": 8.34107494354248,
+      "retention": 1.0
+    },
+    {
+      "peptide": "PIYCKMCMEV",
+      "wt_score": 8.344705581665039,
+      "mean_escape": 8.293362299601236,
+      "min_escape": 8.256074905395508,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WYMCACAMFY",
+      "wt_score": 8.483510971069336,
+      "mean_escape": 8.444374932183159,
+      "min_escape": 8.38741397857666,
+      "retention": 1.0
+    },
+    {
+      "peptide": "ICEVMQQQFV",
+      "wt_score": 8.361678123474121,
+      "mean_escape": 8.306411955091688,
+      "min_escape": 8.208182334899902,
+      "retention": 1.0
+    },
+    {
+      "peptide": "RGEWFSAAMW",
+      "wt_score": 8.008896827697754,
+      "mean_escape": 8.0256044599745,
+      "min_escape": 7.952772617340088,
+      "retention": 0.5555555555555556
+    },
+    {
+      "peptide": "FVAVVATWWC",
+      "wt_score": 8.670272827148438,
+      "mean_escape": 8.682549794514975,
+      "min_escape": 8.619070053100586,
+      "retention": 1.0
+    },
+    {
+      "peptide": "YDYEYPQYYY",
+      "wt_score": 8.513537406921387,
+      "mean_escape": 8.498879538642036,
+      "min_escape": 8.461634635925293,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GGPYKCEKCW",
+      "wt_score": 8.369917869567871,
+      "mean_escape": 8.318859312269423,
+      "min_escape": 8.28229808807373,
+      "retention": 1.0
+    },
+    {
+      "peptide": "GVCWEMCPEG",
+      "wt_score": 8.132400512695312,
+      "mean_escape": 8.116781764560276,
+      "min_escape": 8.066388130187988,
+      "retention": 1.0
+    },
+    {
+      "peptide": "ICVKMREYYY",
+      "wt_score": 8.41880989074707,
+      "mean_escape": 8.403134028116861,
+      "min_escape": 8.343347549438477,
+      "retention": 1.0
+    },
+    {
+      "peptide": "PQMYYCYVCV",
+      "wt_score": 8.265510559082031,
+      "mean_escape": 8.255932066175673,
+      "min_escape": 8.185744285583496,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VAMYVRLCWW",
+      "wt_score": 8.498823165893555,
+      "mean_escape": 8.482557614644369,
+      "min_escape": 8.425209045410156,
+      "retention": 1.0
+    },
+    {
+      "peptide": "WEDGRWMCED",
+      "wt_score": 8.418538093566895,
+      "mean_escape": 8.344059838189018,
+      "min_escape": 8.299283027648926,
+      "retention": 1.0
+    },
+    {
+      "peptide": "DGMAQMCDWM",
+      "wt_score": 8.298983573913574,
+      "mean_escape": 8.278504053751627,
+      "min_escape": 8.223822593688965,
+      "retention": 1.0
+    },
+    {
+      "peptide": "KCYVCKKQRM",
+      "wt_score": 8.229681968688965,
+      "mean_escape": 8.214484214782715,
+      "min_escape": 8.174914360046387,
+      "retention": 1.0
+    },
+    {
+      "peptide": "FVATCWWWWM",
+      "wt_score": 8.790968894958496,
+      "mean_escape": 8.783193164401585,
+      "min_escape": 8.725245475769043,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VLVVSCWWLW",
+      "wt_score": 8.295329093933105,
+      "mean_escape": 8.319951057434082,
+      "min_escape": 8.23582649230957,
+      "retention": 1.0
+    },
+    {
+      "peptide": "SDDSDDKCFW",
+      "wt_score": 8.005085945129395,
+      "mean_escape": 8.01589192284478,
+      "min_escape": 7.9557414054870605,
+      "retention": 0.4444444444444444
+    },
+    {
+      "peptide": "EDWDEEQEWW",
+      "wt_score": 7.729972839355469,
+      "mean_escape": 7.746927526262072,
+      "min_escape": 7.694406509399414,
+      "retention": 0.0
+    },
+    {
+      "peptide": "GKKESMACGA",
+      "wt_score": 8.028226852416992,
+      "mean_escape": 8.03343931833903,
+      "min_escape": 7.962226867675781,
+      "retention": 0.7777777777777778
+    },
+    {
+      "peptide": "VKVYPCFKMY",
+      "wt_score": 7.730560779571533,
+      "mean_escape": 7.754722224341498,
+      "min_escape": 7.653370380401611,
+      "retention": 0.0
+    },
+    {
+      "peptide": "FRSRKTCWWW",
+      "wt_score": 7.893676280975342,
+      "mean_escape": 7.897338072458903,
+      "min_escape": 7.825832366943359,
+      "retention": 0.1111111111111111
+    },
+    {
+      "peptide": "GGYAQVYSQW",
+      "wt_score": 7.408149242401123,
+      "mean_escape": 7.427191681332058,
+      "min_escape": 7.3535990715026855,
+      "retention": 0.0
+    },
+    {
+      "peptide": "ACFVAMIFYV",
+      "wt_score": 8.046916007995605,
+      "mean_escape": 8.065649456448025,
+      "min_escape": 8.020509719848633,
+      "retention": 1.0
+    },
+    {
+      "peptide": "VCTVFALWWY",
+      "wt_score": 8.062663078308105,
+      "mean_escape": 8.054818577236599,
+      "min_escape": 7.99398136138916,
+      "retention": 0.8888888888888888
+    },
+    {
+      "peptide": "SMEFEPIACV",
+      "wt_score": 7.8987884521484375,
+      "mean_escape": 7.887170791625977,
+      "min_escape": 7.806707859039307,
+      "retention": 0.0
+    },
+    {
+      "peptide": "SDEQCYAYQW",
+      "wt_score": 7.753655910491943,
+      "mean_escape": 7.7392006980048285,
+      "min_escape": 7.675105571746826,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YWENDGYCEY",
+      "wt_score": 7.425282955169678,
+      "mean_escape": 7.420889112684462,
+      "min_escape": 7.363490581512451,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DMAYEYQCAV",
+      "wt_score": 7.5218505859375,
+      "mean_escape": 7.513123300340441,
+      "min_escape": 7.439953804016113,
+      "retention": 0.0
+    },
+    {
+      "peptide": "YDKNEYVRKA",
+      "wt_score": 7.276150703430176,
+      "mean_escape": 7.272548675537109,
+      "min_escape": 7.20060396194458,
+      "retention": 0.0
+    },
+    {
+      "peptide": "DMSNEVCIAV",
+      "wt_score": 7.243606090545654,
+      "mean_escape": 7.187375439537896,
+      "min_escape": 7.129076957702637,
+      "retention": 0.0
+    },
+    {
+      "peptide": "QDYYDDERWY",
+      "wt_score": 7.0876030921936035,
+      "mean_escape": 7.1018152766757545,
+      "min_escape": 7.036412715911865,
+      "retention": 0.0
+    },
+    {
+      "peptide": "AVATICWNMM",
+      "wt_score": 6.930115222930908,
+      "mean_escape": 6.916415267520481,
+      "min_escape": 6.8631110191345215,
+      "retention": 0.0
+    },
+    {
+      "peptide": "TRRSALRCFW",
+      "wt_score": 6.508387088775635,
+      "mean_escape": 6.505400233798557,
+      "min_escape": 6.429520606994629,
+      "retention": 0.0
+    }
+  ],
+  "aggregate": {
+    "mean_wt_score": 9.773197955131531,
+    "mean_mean_escape": 9.754104563713074,
+    "mean_min_escape": 9.71872138595581,
+    "mean_retention": 0.9715555555555555
+  },
+  "inputs": {
+    "designs_json": "results/hiv_stage2_fixed_omega/hiv_train_prophet_fixed_omega_050_050_stage2_peptiverse.json",
+    "escape_fasta": "data/pre_stage1_split/alignments/test/hiv_test_aligned.fasta",
+    "n_peptides": 500,
+    "n_escape_variants": 9,
+    "affinity_mode": "peptiverse",
+    "peptiverse_normalization": "raw",
+    "peptiverse_min": 7.0,
+    "peptiverse_max": 9.0,
+    "tau_bind": 8.0
+  }
+}

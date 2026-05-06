@@ -41,7 +41,7 @@ CUDA_VISIBLE_DEVICES="${GPU_INDEX}" PYTHONUNBUFFERED=1 "${PYTHON}" prophet/stage
   --wt-seq "${WT_SEQ}" \
   --out-json "${DESIGNS_JSON}" \
   --n-designs 500 \
-  --n-steps 200 \
+  --n-steps 50 \
   --peptide-length 10 \
   --eta 0.1 \
   --seed 42 \

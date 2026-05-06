@@ -1,0 +1,40 @@
+{
+  "designs_json": "results/hiv_stage2_fixed_omega_smoke/hiv_train_prophet_fixed_omega_050_050_stage2_peptiverse.json",
+  "eta_metrics": {
+    "0.05": {
+      "n_designs": 1,
+      "mean_cvar": 4.255688896179199,
+      "median_cvar": 4.255688896179199,
+      "min_cvar": 4.255688896179199,
+      "max_cvar": 4.255688896179199
+    },
+    "0.1": {
+      "n_designs": 1,
+      "mean_cvar": 4.328750410079956,
+      "median_cvar": 4.328750410079956,
+      "min_cvar": 4.328750410079956,
+      "max_cvar": 4.328750410079956
+    },
+    "0.2": {
+      "n_designs": 1,
+      "mean_cvar": 4.445276355743408,
+      "median_cvar": 4.445276355743408,
+      "min_cvar": 4.445276355743408,
+      "max_cvar": 4.445276355743408
+    },
+    "0.5": {
+      "n_designs": 1,
+      "mean_cvar": 4.678920570373535,
+      "median_cvar": 4.678920570373535,
+      "min_cvar": 4.678920570373535,
+      "max_cvar": 4.678920570373535
+    },
+    "1.0": {
+      "n_designs": 1,
+      "mean_cvar": 5.089053463935852,
+      "median_cvar": 5.089053463935852,
+      "min_cvar": 5.089053463935852,
+      "max_cvar": 5.089053463935852
+    }
+  }
+}

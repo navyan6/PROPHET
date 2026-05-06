@@ -689,6 +689,12 @@ def main() -> None:
                    help="Half-angle of Pareto hypercone filter (degrees)")
     p.add_argument("--omega-grid",     type=int,   default=None,
                    help="If set, sweep omega over this many evenly-spaced grid points")
+    p.add_argument("--omega-binding-weight", type=float, default=None,
+                   help=(
+                       "If set, skip the omega sweep and use this binding weight; "
+                       "robustness receives 1 - weight. Example: 0.5 gives "
+                       "omega=(0.5, 0.5)."
+                   ))
     p.add_argument("--variant-limit",  type=int,   default=None,
                    help="Randomly subsample this many variants (None = use all)")
     p.add_argument("--guidance-variants-fasta", default=None,
@@ -798,6 +804,14 @@ def main() -> None:
         diagnose_scoring_speed(scorer, wt_seq, variants)
         import sys as _sys; _sys.exit(0)
     hypercone_rad = math.radians(args.hypercone_angle)
+    fixed_omega = None
+    if args.omega_binding_weight is not None:
+        binding_weight = min(max(float(args.omega_binding_weight), 0.0), 1.0)
+        fixed_omega = [binding_weight, 1.0 - binding_weight]
+        print(
+            f"Using fixed omega=({fixed_omega[0]:.3f},{fixed_omega[1]:.3f}); "
+            "omega sweep disabled."
+        )
 
     # Load DFM model if requested
     dfm_model = None
@@ -847,6 +861,7 @@ def main() -> None:
         delta_alpha=args.delta_alpha,
         hypercone_angle=hypercone_rad,
         omega_samples=args.omega_grid,
+        fixed_omega=fixed_omega,
         seed=args.seed,
         verbose=args.verbose_sampling,
         dfm_model=dfm_model,

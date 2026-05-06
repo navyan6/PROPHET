@@ -34,6 +34,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import pdb 
 from pathlib import Path
 
 import numpy as np
@@ -227,6 +228,7 @@ def main() -> None:
           file=sys.stderr)
     for i, w in enumerate(omega_values):
         omega = [float(w), float(1.0 - w)]
+        pdb.set_trace()
         print(f"[{i+1}/{args.n_omega}] omega=({omega[0]:.2f}, {omega[1]:.2f})",
               file=sys.stderr)
         rows = _run_omega(

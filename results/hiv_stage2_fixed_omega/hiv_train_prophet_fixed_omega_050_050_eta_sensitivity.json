@@ -1,0 +1,40 @@
+{
+  "designs_json": "results/hiv_stage2_fixed_omega/hiv_train_prophet_fixed_omega_050_050_stage2_peptiverse.json",
+  "eta_metrics": {
+    "0.05": {
+      "n_designs": 500,
+      "mean_cvar": 9.562896054725647,
+      "median_cvar": 10.008900241851807,
+      "min_cvar": 4.984935092926025,
+      "max_cvar": 10.153330345153808
+    },
+    "0.1": {
+      "n_designs": 500,
+      "mean_cvar": 9.622429725971221,
+      "median_cvar": 10.030039548873901,
+      "min_cvar": 5.0552840900421145,
+      "max_cvar": 10.15613920211792
+    },
+    "0.2": {
+      "n_designs": 500,
+      "mean_cvar": 9.680189873495102,
+      "median_cvar": 10.047556366920471,
+      "min_cvar": 5.147452187538147,
+      "max_cvar": 10.15875199317932
+    },
+    "0.5": {
+      "n_designs": 500,
+      "mean_cvar": 9.764221991516113,
+      "median_cvar": 10.071892961502076,
+      "min_cvar": 5.304517261505127,
+      "max_cvar": 10.1628518409729
+    },
+    "1.0": {
+      "n_designs": 500,
+      "mean_cvar": 9.844148366590499,
+      "median_cvar": 10.090962350845338,
+      "min_cvar": 5.576647427558899,
+      "max_cvar": 10.167036640167236
+    }
+  }
+}

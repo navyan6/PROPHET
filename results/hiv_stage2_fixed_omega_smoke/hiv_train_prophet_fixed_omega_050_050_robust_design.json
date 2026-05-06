@@ -1,0 +1,28 @@
+{
+  "per_peptide": [
+    {
+      "peptide": "CSQKKVCQFC",
+      "wt_score": 5.741929054260254,
+      "mean_escape": 5.713524076673719,
+      "min_escape": 5.656399250030518,
+      "retention": 0.0
+    }
+  ],
+  "aggregate": {
+    "mean_wt_score": 5.741929054260254,
+    "mean_mean_escape": 5.713524076673719,
+    "mean_min_escape": 5.656399250030518,
+    "mean_retention": 0.0
+  },
+  "inputs": {
+    "designs_json": "results/hiv_stage2_fixed_omega_smoke/hiv_train_prophet_fixed_omega_050_050_stage2_peptiverse.json",
+    "escape_fasta": "data/pre_stage1_split/alignments/test/hiv_test_aligned.fasta",
+    "n_peptides": 1,
+    "n_escape_variants": 9,
+    "affinity_mode": "peptiverse",
+    "peptiverse_normalization": "raw",
+    "peptiverse_min": 7.0,
+    "peptiverse_max": 9.0,
+    "tau_bind": 8.0
+  }
+}

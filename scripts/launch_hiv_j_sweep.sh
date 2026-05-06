@@ -1,23 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+if [[ $# -lt 1 ]]; then
+  echo "usage: $0 GPU_LIST [OUT_BASE]" >&2
+  echo "example: $0 0,1,2,3 results/hiv_stage2_j_sweep" >&2
+  echo "override: J_VALUES='25 50 100 200' $0 0,1,2,3" >&2
+  exit 2
+fi
+
+GPU_LIST="$1"
+OUT_BASE="${2:-${OUT_BASE:-results/hiv_stage2_j_sweep}}"
+
 cd /scratch/pranamlab/kimberly/PROPHET
 
-BASE_DIR="${BASE_DIR:-results/hiv_j_sweep}"
-J_VALUES="${J_VALUES:-1 5 10 25 50 100 144}"
-
-mkdir -p "${BASE_DIR}/logs"
-
-read -r -a J_ARRAY <<< "${J_VALUES}"
-
-echo "[launcher start] $(date)"
-echo "[launcher config] J_VALUES=${J_VALUES} BASE_DIR=${BASE_DIR}"
-
-for J in "${J_ARRAY[@]}"; do
-  log="${BASE_DIR}/J_${J}/hiv_train_J_${J}_stage1.log"
-  mkdir -p "${BASE_DIR}/J_${J}"
-  echo "[stage1] J=${J} log=${log}"
-  BASE_DIR="${BASE_DIR}" scripts/run_hiv_j_stage1.sh "${J}" > "${log}" 2>&1
-done
-
-echo "[launcher done] $(date)"
+exec scripts/run_hiv_J.sh "${GPU_LIST}" "${OUT_BASE}"

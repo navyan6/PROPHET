@@ -1,0 +1,137 @@
+2026-05-06 00:40:46,351 Running colabfold 1.5.5 (a838b6451306a7bfd9280625f155cd799bbc81f5)
+2026-05-06 00:40:46,709 WARNING: no GPU detected, will be using CPU
+2026-05-06 00:40:47,291 Found 5 citations for tools or databases
+2026-05-06 00:40:47,292 Query 1/20: prophet_0000_rb0.22_wt0.24 (length 109)
+2026-05-06 00:40:47,323 Could not generate input features prophet_0000_rb0.22_wt0.24: operands could not be broadcast together with shapes (5,76) (1,109) (5,76) 
+Traceback (most recent call last):
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/colabfold/batch.py", line 1407, in run
+    = generate_input_feature(query_seqs_unique, query_seqs_cardinality, unpaired_msa, paired_msa,
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/colabfold/batch.py", line 950, in generate_input_feature
+    input_feature = process_multimer_features(features_for_chain, min_num_seq=max_seq + 4)
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/colabfold/batch.py", line 874, in process_multimer_features
+    np_example = feature_processing.process_final(np_example)
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/alphafold/data/feature_processing.py", line 167, in process_final
+    np_example = _make_msa_mask(np_example)
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/alphafold/data/feature_processing.py", line 191, in _make_msa_mask
+    np_example['msa_mask'] *= seq_mask[None]
+ValueError: operands could not be broadcast together with shapes (5,76) (1,109) (5,76) 
+2026-05-06 00:40:47,333 Query 2/20: prophet_0001_rb0.22_wt0.24 (length 109)
+2026-05-06 00:40:47,354 Could not generate input features prophet_0001_rb0.22_wt0.24: operands could not be broadcast together with shapes (5,76) (1,109) (5,76) 
+Traceback (most recent call last):
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/colabfold/batch.py", line 1407, in run
+    = generate_input_feature(query_seqs_unique, query_seqs_cardinality, unpaired_msa, paired_msa,
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/colabfold/batch.py", line 950, in generate_input_feature
+    input_feature = process_multimer_features(features_for_chain, min_num_seq=max_seq + 4)
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/colabfold/batch.py", line 874, in process_multimer_features
+    np_example = feature_processing.process_final(np_example)
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/alphafold/data/feature_processing.py", line 167, in process_final
+    np_example = _make_msa_mask(np_example)
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/alphafold/data/feature_processing.py", line 191, in _make_msa_mask
+    np_example['msa_mask'] *= seq_mask[None]
+ValueError: operands could not be broadcast together with shapes (5,76) (1,109) (5,76) 
+2026-05-06 00:40:47,355 Query 3/20: prophet_0002_rb0.22_wt0.24 (length 109)
+2026-05-06 00:40:47,379 Could not generate input features prophet_0002_rb0.22_wt0.24: operands could not be broadcast together with shapes (5,76) (1,109) (5,76) 
+Traceback (most recent call last):
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/colabfold/batch.py", line 1407, in run
+    = generate_input_feature(query_seqs_unique, query_seqs_cardinality, unpaired_msa, paired_msa,
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/colabfold/batch.py", line 950, in generate_input_feature
+    input_feature = process_multimer_features(features_for_chain, min_num_seq=max_seq + 4)
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/colabfold/batch.py", line 874, in process_multimer_features
+    np_example = feature_processing.process_final(np_example)
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/alphafold/data/feature_processing.py", line 167, in process_final
+    np_example = _make_msa_mask(np_example)
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/alphafold/data/feature_processing.py", line 191, in _make_msa_mask
+    np_example['msa_mask'] *= seq_mask[None]
+ValueError: operands could not be broadcast together with shapes (5,76) (1,109) (5,76) 
+2026-05-06 00:40:47,380 Query 4/20: prophet_0003_rb0.22_wt0.24 (length 109)
+2026-05-06 00:40:47,399 Could not generate input features prophet_0003_rb0.22_wt0.24: operands could not be broadcast together with shapes (5,76) (1,109) (5,76) 
+Traceback (most recent call last):
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/colabfold/batch.py", line 1407, in run
+    = generate_input_feature(query_seqs_unique, query_seqs_cardinality, unpaired_msa, paired_msa,
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/colabfold/batch.py", line 950, in generate_input_feature
+    input_feature = process_multimer_features(features_for_chain, min_num_seq=max_seq + 4)
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/colabfold/batch.py", line 874, in process_multimer_features
+    np_example = feature_processing.process_final(np_example)
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/alphafold/data/feature_processing.py", line 167, in process_final
+    np_example = _make_msa_mask(np_example)
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/alphafold/data/feature_processing.py", line 191, in _make_msa_mask
+    np_example['msa_mask'] *= seq_mask[None]
+ValueError: operands could not be broadcast together with shapes (5,76) (1,109) (5,76) 
+2026-05-06 00:40:47,400 Query 5/20: prophet_0004_rb0.22_wt0.24 (length 109)
+2026-05-06 00:40:47,419 Could not generate input features prophet_0004_rb0.22_wt0.24: operands could not be broadcast together with shapes (5,76) (1,109) (5,76) 
+Traceback (most recent call last):
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/colabfold/batch.py", line 1407, in run
+    = generate_input_feature(query_seqs_unique, query_seqs_cardinality, unpaired_msa, paired_msa,
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/colabfold/batch.py", line 950, in generate_input_feature
+    input_feature = process_multimer_features(features_for_chain, min_num_seq=max_seq + 4)
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/colabfold/batch.py", line 874, in process_multimer_features
+    np_example = feature_processing.process_final(np_example)
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/alphafold/data/feature_processing.py", line 167, in process_final
+    np_example = _make_msa_mask(np_example)
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/alphafold/data/feature_processing.py", line 191, in _make_msa_mask
+    np_example['msa_mask'] *= seq_mask[None]
+ValueError: operands could not be broadcast together with shapes (5,76) (1,109) (5,76) 
+2026-05-06 00:40:47,420 Query 6/20: prophet_0005_rb0.22_wt0.24 (length 109)
+2026-05-06 00:40:47,439 Could not generate input features prophet_0005_rb0.22_wt0.24: operands could not be broadcast together with shapes (5,76) (1,109) (5,76) 
+Traceback (most recent call last):
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/colabfold/batch.py", line 1407, in run
+    = generate_input_feature(query_seqs_unique, query_seqs_cardinality, unpaired_msa, paired_msa,
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/colabfold/batch.py", line 950, in generate_input_feature
+    input_feature = process_multimer_features(features_for_chain, min_num_seq=max_seq + 4)
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/colabfold/batch.py", line 874, in process_multimer_features
+    np_example = feature_processing.process_final(np_example)
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/alphafold/data/feature_processing.py", line 167, in process_final
+    np_example = _make_msa_mask(np_example)
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/alphafold/data/feature_processing.py", line 191, in _make_msa_mask
+    np_example['msa_mask'] *= seq_mask[None]
+ValueError: operands could not be broadcast together with shapes (5,76) (1,109) (5,76) 
+2026-05-06 00:40:47,439 Query 7/20: prophet_0006_rb0.22_wt0.24 (length 109)
+2026-05-06 00:40:47,463 Could not generate input features prophet_0006_rb0.22_wt0.24: operands could not be broadcast together with shapes (5,76) (1,109) (5,76) 
+Traceback (most recent call last):
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/colabfold/batch.py", line 1407, in run
+    = generate_input_feature(query_seqs_unique, query_seqs_cardinality, unpaired_msa, paired_msa,
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/colabfold/batch.py", line 950, in generate_input_feature
+    input_feature = process_multimer_features(features_for_chain, min_num_seq=max_seq + 4)
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/colabfold/batch.py", line 874, in process_multimer_features
+    np_example = feature_processing.process_final(np_example)
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/alphafold/data/feature_processing.py", line 167, in process_final
+    np_example = _make_msa_mask(np_example)
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/alphafold/data/feature_processing.py", line 191, in _make_msa_mask
+    np_example['msa_mask'] *= seq_mask[None]
+ValueError: operands could not be broadcast together with shapes (5,76) (1,109) (5,76) 
+2026-05-06 00:40:47,463 Query 8/20: prophet_0007_rb0.22_wt0.24 (length 109)
+2026-05-06 00:40:47,487 Could not generate input features prophet_0007_rb0.22_wt0.24: operands could not be broadcast together with shapes (5,76) (1,109) (5,76) 
+Traceback (most recent call last):
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/colabfold/batch.py", line 1407, in run
+    = generate_input_feature(query_seqs_unique, query_seqs_cardinality, unpaired_msa, paired_msa,
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/colabfold/batch.py", line 950, in generate_input_feature
+    input_feature = process_multimer_features(features_for_chain, min_num_seq=max_seq + 4)
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/colabfold/batch.py", line 874, in process_multimer_features
+    np_example = feature_processing.process_final(np_example)
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/alphafold/data/feature_processing.py", line 167, in process_final
+    np_example = _make_msa_mask(np_example)
+  File "/vast/projects/pranam/lab/shared/localcolabfold/colabfold-conda/lib/python3.10/site-packages/alphafold/data/feature_processing.py", line 191, in _make_msa_mask
+    np_example['msa_mask'] *= seq_mask[None]
+ValueError: operands could not be broadcast together with shapes (5,76) (1,109) (5,76) 
+2026-05-06 00:40:47,488 Query 9/20: prophet_0008_rb0.22_wt0.24 (length 109)
+2026-05-06 00:40:48,153 Sleeping for 6s. Reason: PENDING
+2026-05-06 00:40:54,799 Sleeping for 10s. Reason: RUNNING
+2026-05-06 00:41:05,463 Sleeping for 10s. Reason: RUNNING
+2026-05-06 00:41:16,126 Sleeping for 5s. Reason: RUNNING
+2026-05-06 00:41:23,120 Sleeping for 8s. Reason: PENDING
+2026-05-06 00:41:31,761 Sleeping for 6s. Reason: RUNNING
+2026-05-06 00:54:23,393 alphafold2_multimer_v3_model_1_seed_000 recycle=0 pLDDT=38.8 pTM=0.244 ipTM=0.034
+2026-05-06 01:07:03,878 alphafold2_multimer_v3_model_1_seed_000 recycle=1 pLDDT=39.5 pTM=0.247 ipTM=0.0703 tol=7.89
+2026-05-06 01:19:36,194 alphafold2_multimer_v3_model_1_seed_000 recycle=2 pLDDT=37.5 pTM=0.241 ipTM=0.0782 tol=3.95
+2026-05-06 01:32:01,599 alphafold2_multimer_v3_model_1_seed_000 recycle=3 pLDDT=37.2 pTM=0.24 ipTM=0.0794 tol=2.19
+2026-05-06 01:32:05,709 alphafold2_multimer_v3_model_1_seed_000 took 3022.6s (3 recycles)
+2026-05-06 01:44:34,574 alphafold2_multimer_v3_model_2_seed_000 recycle=0 pLDDT=42.4 pTM=0.249 ipTM=0.0246
+2026-05-06 01:57:14,499 alphafold2_multimer_v3_model_2_seed_000 recycle=1 pLDDT=42.7 pTM=0.253 ipTM=0.0322 tol=15.5
+2026-05-06 02:18:00,069 alphafold2_multimer_v3_model_2_seed_000 recycle=2 pLDDT=42.4 pTM=0.26 ipTM=0.0378 tol=4.25
+2026-05-06 02:40:58,848 alphafold2_multimer_v3_model_2_seed_000 recycle=3 pLDDT=42.1 pTM=0.262 ipTM=0.0339 tol=4.25
+2026-05-06 02:40:59,533 alphafold2_multimer_v3_model_2_seed_000 took 4133.7s (3 recycles)
+2026-05-06 03:04:26,043 alphafold2_multimer_v3_model_3_seed_000 recycle=0 pLDDT=35.7 pTM=0.25 ipTM=0.0555
+2026-05-06 03:27:46,489 alphafold2_multimer_v3_model_3_seed_000 recycle=1 pLDDT=37.2 pTM=0.261 ipTM=0.0735 tol=5.22
+2026-05-06 03:51:07,453 alphafold2_multimer_v3_model_3_seed_000 recycle=2 pLDDT=37.5 pTM=0.264 ipTM=0.0808 tol=4.63
+2026-05-06 04:16:55,854 alphafold2_multimer_v3_model_3_seed_000 recycle=3 pLDDT=38.2 pTM=0.272 ipTM=0.0847 tol=1.72
+2026-05-06 04:16:56,757 alphafold2_multimer_v3_model_3_seed_000 took 5757.1s (3 recycles)

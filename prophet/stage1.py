@@ -300,29 +300,26 @@ def maybe_subsample_trees(trees: list[str], j: int | None, seed: int) -> list[st
         raise ValueError("--tree-subsample-j must be positive when provided.")
     if j >= len(trees):
         return trees
-    if not trees:
-        return trees
-    if j == 1:
-        return [trees[0]]
     rng = random.Random(seed)
-    return [trees[0], *rng.sample(trees[1:], j - 1)]
+    return rng.sample(trees, j)
 
 
 # DCA via pseudolikelihood maximization (PLM)
 
 def _sequence_weights(X: np.ndarray, threshold: float = 0.9) -> np.ndarray:
+
     N, L = X.shape
-    valid = (X < GAP).astype(np.float32)          # (N, L)
-    n_both = valid @ valid.T                        # (N, N) — non-gap position counts
-    # n_match[i,j] = positions where both seqs have the same non-gap AA.
-    # Build it as sum_a (ind_a @ ind_a.T) where ind_a[n,l] = 1 iff X[n,l]==a and valid.
-    n_match = np.zeros((N, N), dtype=np.float32)
-    for a in range(GAP):
-        ind = ((X == a) & (valid.astype(bool))).astype(np.float32)
-        n_match += ind @ ind.T
-    identity = np.divide(n_match, n_both, out=np.zeros((N, N), dtype=np.float32), where=n_both > 0)
-    neighbours = (identity >= threshold).sum(axis=1).astype(np.float64)
-    return 1.0 / np.maximum(neighbours, 1.0)
+    valid = (X < GAP).astype(np.float32)
+    weights = np.ones(N)
+
+    for n in range(N):
+        both     = valid[n] * valid                                  # (N, L)
+        n_both   = both.sum(axis=1)                                  # (N,)
+        n_match  = ((X[n] == X).astype(np.float32) * both).sum(axis=1)
+        identity = np.divide(n_match, n_both, out=np.zeros(N), where=n_both > 0)
+        weights[n] = 1.0 / max((identity >= threshold).sum(), 1)
+
+    return weights
 
 
 def _fit_position(i: int, X: np.ndarray, weights: np.ndarray, l2_reg: float) -> tuple:
@@ -337,15 +334,15 @@ def _fit_position(i: int, X: np.ndarray, weights: np.ndarray, l2_reg: float) -> 
     w_v = weights[valid_rows]
     X_v = X[valid_rows]
 
-    n_valid = int(valid_rows.sum())
-    F = np.zeros((n_valid, (L - 1) * 20), dtype=np.float32)
-    other_cols = np.delete(np.arange(L), i)          # positions j != i
-    X_other = X_v[:, other_cols]                      # (n_valid, L-1)
-    nongap_mask = X_other < GAP                       # (n_valid, L-1)
-    col_offsets = np.arange(L - 1, dtype=np.int32) * 20  # (L-1,)
-    row_idx, j_idx = np.where(nongap_mask)
-    aa_vals = X_other[row_idx, j_idx].astype(np.int32)
-    F[row_idx, col_offsets[j_idx] + aa_vals] = 1.0
+    F = np.zeros((valid_rows.sum(), (L - 1) * 20), dtype=np.float32)
+    col = 0
+    for j in range(L):
+        if j == i:
+            continue
+        nongap = X_v[:, j] < GAP
+        aa_idx = X_v[nongap, j].astype(np.int32, copy=False)
+        F[nongap, col + aa_idx] = 1.0
+        col += 20
 
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
@@ -369,9 +366,13 @@ def _fit_position(i: int, X: np.ndarray, weights: np.ndarray, l2_reg: float) -> 
         if cls_a >= 20:
             return
         h_i[cls_a] = clf.intercept_[k]
-        other_cols = np.delete(np.arange(L), i)      # (L-1,)
-        coef_block = clf.coef_[k].reshape(L - 1, 20) # (L-1, 20)
-        J_row[other_cols, cls_a, :] = coef_block
+        col = 0
+        for j in range(L):
+            if j == i:
+                continue
+            for b in range(20):
+                J_row[j, cls_a, b] = clf.coef_[k, col + b]
+            col += 20
 
     if n_rows == 1:
         # Binary: the single row encodes P(classes_[1]) vs P(classes_[0])
@@ -481,17 +482,15 @@ def _sample_site_conditional(
             e += lambda_i[i] * np.log(qi[i, current_aa, :].astype(np.float64) + 1e-9)
     elif energy_mode != "paper_dca":
         raise ValueError(f"Unsupported energy_mode: {energy_mode}")
-    # pairwise term with all other sites (vectorized over j)
-    x_int = x.astype(np.int32)
-    valid_j = (x_int < 20)
-    valid_j[i] = False
-    j_idx = np.where(valid_j)[0]
-    if j_idx.size > 0:
-        b_idx = x_int[j_idx]
-        # J[i, j_idx, :, b_idx] has shape (len(j_idx), 20) via advanced indexing
-        e += lambda_i[i] * J[i][j_idx, :, b_idx].sum(axis=0).astype(np.float64)
-    # stable softmax over -E/T
-    logits = -e / max(t_evo, 1e-8)
+    # pairwise term with all other sites (scale J by lambda_i)
+    for j in range(x.shape[0]):
+        if j == i:
+            continue
+        b = int(x[j])
+        if 0 <= b < 20:
+            e += lambda_i[i] * J[i, j, :, b].astype(np.float64)
+    # PLM h/J are log-probability fields: sample proportional to exp(+e/T)
+    logits = e / max(t_evo, 1e-8)
     logits -= logits.max()
     p = np.exp(logits)
     p /= p.sum()
@@ -503,13 +502,9 @@ def _pll_esm2(
     tokenizer,
     model,
     device: str,
-    batch_size: int = 128,
 ) -> float:
     """
     Compute pseudo-log-likelihood by masking each position.
-
-    Batches all L masked sequences into a single (or a few) forward pass(es)
-    instead of running L separate passes — ~L× faster than the naive loop.
     """
     import torch
 
@@ -517,35 +512,31 @@ def _pll_esm2(
     if seq_len == 0:
         return float("-inf")
 
+    total = 0.0
+    aa_to_tok = {aa: tokenizer.convert_tokens_to_ids(aa) for aa in AA}
     mask_id = tokenizer.mask_token_id
     if mask_id is None:
         raise ValueError("Tokenizer has no mask token id.")
 
-    aa_tok_ids = [tokenizer.convert_tokens_to_ids(aa) for aa in seq]
-
-    # Build all L masked sequences up front
-    masked_seqs = [seq[:i] + tokenizer.mask_token + seq[i + 1:] for i in range(seq_len)]
-
-    total = 0.0
-    for start in range(0, seq_len, batch_size):
-        end = min(start + batch_size, seq_len)
-        batch_seqs = masked_seqs[start:end]
-        enc = tokenizer(batch_seqs, return_tensors="pt", padding=True)
+    for i, aa in enumerate(seq):
+        tok_id = aa_to_tok.get(aa, None)
+        if tok_id is None:
+            continue
+        masked = seq[:i] + tokenizer.mask_token + seq[i + 1 :]
+        enc = tokenizer(masked, return_tensors="pt")
         input_ids = enc["input_ids"].to(device)
         attn = enc.get("attention_mask")
         if attn is not None:
             attn = attn.to(device)
         with torch.no_grad():
-            logits = model(input_ids=input_ids, attention_mask=attn).logits  # (B, T, V)
-        for b_idx, abs_i in enumerate(range(start, end)):
-            tok_id = aa_tok_ids[abs_i]
-            if tok_id is None or (isinstance(tok_id, int) and tok_id < 0):
-                continue
-            # CLS token is at position 0 → masked residue is at abs_i + 1
-            mask_pos = abs_i + 1
-            logp = torch.log_softmax(logits[b_idx, mask_pos], dim=-1)[tok_id].item()
-            total += float(logp)
-
+            out = model(input_ids=input_ids, attention_mask=attn)
+            logits = out.logits[0]
+        mask_pos = (input_ids[0] == mask_id).nonzero(as_tuple=True)[0]
+        if len(mask_pos) == 0:
+            continue
+        m = int(mask_pos[0].item())
+        logp = torch.log_softmax(logits[m], dim=-1)[tok_id].item()
+        total += float(logp)
     return total
 
 
@@ -563,7 +554,6 @@ def gibbs_sample_variants(
     esm_filter_delta: float | None = None,
     esm_model_name: str = "facebook/esm2_t6_8M_UR50D",
     esm_device: str = "cpu",
-    esm_filter_max_attempts: int | None = None,
 ) -> tuple[list[str], list[float]]:
     """
     Algorithm 1 variant sampling from p_evo with optional ESM pLL filtering.
@@ -592,41 +582,26 @@ def gibbs_sample_variants(
 
     out_variants: list[str] = []
     out_pll: list[float] = []
-    if pll_model is None:
-        max_post_burn_attempts = n_samples
-    elif esm_filter_max_attempts is not None:
-        max_post_burn_attempts = max(n_samples, int(esm_filter_max_attempts))
-    else:
-        max_post_burn_attempts = max(n_samples, n_samples * 100)
+    total_steps = burn_in + n_samples
     L = len(wt_seq)
-    post_burn_attempts = 0
-    t = 0
-    while post_burn_attempts < max_post_burn_attempts and len(out_variants) < n_samples:
+    for t in range(total_steps):
         for i in rng.permutation(L):  # random scan Gibbs
             x[i] = _sample_site_conditional(
                 i, x, lambda_i, qi, h, J, t_evo, energy_mode, rng
             )
 
         if t >= burn_in:
-            post_burn_attempts += 1
             seq = "".join(AA[int(a)] for a in x)
             if pll_model is not None and wt_pll is not None:
                 pll = _pll_esm2(seq, pll_tokenizer, pll_model, esm_device)
                 if pll < (wt_pll - float(esm_filter_delta)):
-                    t += 1
                     continue
             else:
                 pll = float("nan")
             out_variants.append(seq)
             out_pll.append(pll)
-        t += 1
-
-    if len(out_variants) < n_samples:
-        print(
-            "  [gibbs] WARNING: accepted "
-            f"{len(out_variants)}/{n_samples} variants after "
-            f"{post_burn_attempts} post-burn attempts."
-        )
+            if len(out_variants) >= n_samples:
+                break
 
     return out_variants, out_pll
 
@@ -724,51 +699,38 @@ def calibrate_t_evo(
     return float(best_t), metrics
 
 
+
 def _eval_metrics(
     variants: list[str],
-    leaves: list[str],
+    alignment_seqs: list[str],
     lambda_i: np.ndarray,
     h: np.ndarray,
     J: np.ndarray,
     wt_seq: str,
-) -> dict[str, float]:
-    """
-    Lightweight variant-quality summary printed after Gibbs sampling.
-
-    The fuller paper table is produced by eval scripts, but Stage 1 should not
-    crash just because optional reporting is unavailable.
-    """
+) -> None:
+    """Print basic variant quality metrics after Gibbs sampling."""
     if not variants:
-        metrics = {
-            "n_variants": 0,
-            "mean_wt_edit": float("nan"),
-            "mean_nearest_leaf_edit": float("nan"),
-            "mean_dca_energy": float("nan"),
-        }
-    else:
-        from prophet.common import dca_energy, hamming_distance, nearest_leaf_edit_distance
-
-        wt_dist = np.array([hamming_distance(v, wt_seq) for v in variants], dtype=np.float64)
-        leaf_dist = np.array([nearest_leaf_edit_distance(v, leaves) for v in variants], dtype=np.float64)
-        energies = np.array([dca_energy(v, lambda_i, h, J) for v in variants], dtype=np.float64)
-        metrics = {
-            "n_variants": float(len(variants)),
-            "mean_wt_edit": float(np.mean(wt_dist)),
-            "median_wt_edit": float(np.median(wt_dist)),
-            "mean_nearest_leaf_edit": float(np.mean(leaf_dist)),
-            "median_nearest_leaf_edit": float(np.median(leaf_dist)),
-            "mean_dca_energy": float(np.mean(energies)),
-            "median_dca_energy": float(np.median(energies)),
-        }
-
-    print("  Variant quality summary:")
-    for key, val in metrics.items():
-        if isinstance(val, float):
-            print(f"    {key}: {val:.4f}")
-        else:
-            print(f"    {key}: {val}")
-    return metrics
-
+        print("  [eval] No variants to evaluate.")
+        return
+    edits = [sum(a != b for a, b in zip(v, wt_seq)) for v in variants]
+    energies = []
+    L = len(wt_seq)
+    for v in variants:
+        x = np.array([AA_TO_IDX.get(a, GAP) for a in v], dtype=np.int8)
+        e = float(np.sum(lambda_i[:L] * h[np.arange(L), x[:L].clip(0, 19)]))
+        for ii in range(L):
+            for jj in range(ii + 1, L):
+                if x[ii] < 20 and x[jj] < 20:
+                    e += float(J[ii, jj, int(x[ii]), int(x[jj])])
+        energies.append(-e)
+    print(f"  [eval] Edit distance to WT: mean={np.mean(edits):.1f}  "
+          f"min={np.min(edits)}  max={np.max(edits)}")
+    print(f"  [eval] DCA energy:          mean={np.mean(energies):.3f}  "
+          f"std={np.std(energies):.3f}")
+    print(f"  [eval] Sample variants:")
+    for v in variants[:3]:
+        ed = sum(a != b for a, b in zip(v, wt_seq))
+        print(f"    {v}  edit={ed}")
 
 
 def main():
@@ -809,20 +771,13 @@ def main():
                    help="Evolutionary temperature for Gibbs sampling (calibrate to held-out edit distances)")
     p.add_argument("--energy-mode",  choices=["paper_dca", "dca_plus_qi"], default="paper_dca",
                    help="Energy model for Gibbs sampling: paper DCA only or DCA+Qi extension (default: paper_dca)")
-    p.add_argument("--ablate-zero-dca-couplings", "--ablate-zero-j",
-                   dest="ablate_zero_dca_couplings", action="store_true",
-                   help="Ablation: zero DCA pairwise couplings J before sampling/evaluation")
-    p.add_argument("--ablate-flatten-lambda", "--ablate-unit-lambda",
-                   dest="ablate_flatten_lambda", action="store_true",
-                   help="Ablation: flatten phylogenetic lambda weights to their learned mean before sampling/evaluation")
+    # ...existing code...
     p.add_argument("--seed",         type=int, default=42,
                    help="Random seed for DCA bootstraps and Gibbs sampling")
     p.add_argument("--wt-seq-id",    default=None,
                    help="Optional FASTA ID to use as WT for Gibbs initialization")
     p.add_argument("--esm-filter-delta", type=float, default=None,
                    help="Enable ESM pLL filter with threshold pLL(x) >= pLL(wt)-delta")
-    p.add_argument("--esm-filter-max-attempts", type=int, default=None,
-                   help="Maximum post-burn Gibbs attempts when ESM filtering rejects samples (default: 100x requested samples)")
     p.add_argument("--esm-model",    default="facebook/esm2_t6_8M_UR50D",
                    help="ESM masked LM model name for pLL filtering")
     p.add_argument("--esm-device",   default="cpu",
@@ -866,7 +821,19 @@ def main():
             rec.id: str(rec.seq)
             for rec in SeqIO.parse(str(fasta_path), "fasta")
         }
-        print(f"  Loaded {len(protein_seqs)} sequences, length {len(next(iter(protein_seqs.values())))}")
+        raw_len = len(next(iter(protein_seqs.values())))
+        print(f"  Loaded {len(protein_seqs)} sequences, raw alignment length {raw_len}")
+        # Filter gap-heavy columns (same logic as translate_alignment)
+        seqs = list(protein_seqs.values())
+        N = len(seqs)
+        keep = [
+            i for i in range(raw_len)
+            if sum(1 for s in seqs if s[i] in "-X*.") / N <= 0.5
+        ]
+        if len(keep) < raw_len:
+            print(f"  Gap filter: {raw_len} → {len(keep)} columns kept (≤50% gaps)")
+            protein_seqs = {sid: "".join(seq[i] for i in keep)
+                            for sid, seq in protein_seqs.items()}
 
     protein_seqs = normalize_protein_alignment(protein_seqs)
 
@@ -876,29 +843,14 @@ def main():
     print(f"\n[2/3] Computing per-site mutation rates (L={L})...")
     lambda_runs = []
     qi_runs = []
-    skipped_trees = []
     for idx, tree_path in enumerate(tree_paths, start=1):
         if len(tree_paths) > 1:
             print(f"  [lambda] tree {idx}/{len(tree_paths)}: {tree_path}")
-        try:
-            lam_i, qi_i = compute_lambda_and_qi(tree_path, protein_seqs)
-        except Exception as exc:
-            skipped_trees.append((tree_path, exc))
-            print(f"  [lambda] WARNING: skipping tree {tree_path}: {exc}")
-            continue
+        lam_i, qi_i = compute_lambda_and_qi(tree_path, protein_seqs)
         lambda_runs.append(lam_i)
         qi_runs.append(qi_i)
-    if not lambda_runs:
-        skipped = "; ".join(f"{path} ({exc})" for path, exc in skipped_trees[:5])
-        raise RuntimeError(f"No valid trees remained for lambda/Qi estimation. Skipped: {skipped}")
-    if skipped_trees:
-        print(f"  [lambda] skipped {len(skipped_trees)} / {len(tree_paths)} trees")
     lambda_i = np.mean(np.stack(lambda_runs, axis=0), axis=0)
     qi = np.mean(np.stack(qi_runs, axis=0), axis=0)
-    if args.ablate_flatten_lambda:
-        flat_lambda = float(np.mean(lambda_i)) if lambda_i.size else 0.0
-        print(f"  [ablation] flattening lambda_i to learned mean {flat_lambda:.6f}")
-        lambda_i = np.full_like(lambda_i, flat_lambda)
 
     lam_path = out_dir / f"{args.prefix}_lambda.npy"
     np.save(lam_path, lambda_i)
@@ -926,10 +878,6 @@ def main():
             n_jobs=args.n_jobs,
             seed=args.seed,
         )
-        if args.ablate_zero_dca_couplings:
-            print("  [ablation] zeroing DCA pairwise couplings J")
-            J = np.zeros_like(J)
-            J_std = np.zeros_like(J_std)
 
         np.save(out_dir / f"{args.prefix}_h.npy",     h)
         np.save(out_dir / f"{args.prefix}_h_std.npy", h_std)
@@ -973,7 +921,10 @@ def main():
                 ]
                 if not t_candidates:
                     raise ValueError("--calibration-ts provided no valid candidates.")
-                leaves = list(protein_seqs.values())
+                leaves = [s for s in protein_seqs.values()
+                          if all(a in AA_TO_IDX for a in s)]
+                print(f"  [calibrate] {len(leaves)} clean leaves for calibration "
+                      f"(filtered ambiguous aa)")
                 print(
                     f"  [calibrate] tuning t_evo over {t_candidates} "
                     f"with {args.calibration_samples} samples/candidate..."
@@ -1023,7 +974,6 @@ def main():
                 esm_filter_delta=args.esm_filter_delta,
                 esm_model_name=args.esm_model,
                 esm_device=args.esm_device,
-                esm_filter_max_attempts=args.esm_filter_max_attempts,
             )
             v_path = out_dir / f"{args.prefix}_gibbs_variants.fasta"
             with open(v_path, "w", encoding="utf-8") as f:

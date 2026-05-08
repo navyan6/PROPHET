@@ -32,12 +32,17 @@ def dca_energy(variant: str, lambda_i: np.ndarray, h: np.ndarray, J: np.ndarray)
     L = min(len(x), h.shape[0], lambda_i.shape[0], J.shape[0], J.shape[1])
     if L <= 0:
         return float("nan")
-    x_L = x[:L]
-    if np.any(x_L >= 20):
+    if np.any(x[:L] >= 20):
         raise ValueError("Variant contains unsupported amino acids.")
-    x_int = x_L.astype(np.int32)
-    unary = float(np.sum(lambda_i[:L] * h[np.arange(L), x_int]))
-    i_idx, j_idx = np.triu_indices(L, k=1)
-    pairwise = float(np.sum(J[i_idx, j_idx, x_int[i_idx], x_int[j_idx]]))
-    return unary + pairwise
+    unary = 0.0
+    pairwise = 0.0
+    for i in range(L):
+        a = int(x[i])
+        unary += float(lambda_i[i] * h[i, a])
+    for i in range(L):
+        ai = int(x[i])
+        for j in range(i + 1, L):
+            aj = int(x[j])
+            pairwise += float(J[i, j, ai, aj])
+    return -(unary + pairwise)
 

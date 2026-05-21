@@ -194,6 +194,7 @@ def write_csv(rows: list[dict[str, Any]], path: Path) -> None:
         "binding_score",
         "wt_score",
         "mean_score",
+        "cvar10_score",
         "min_score",
         "retention_at_tau",
         "tau_bind",
@@ -272,7 +273,7 @@ def main() -> None:
         default=None,
         help="Evaluate only the first N loaded rows; useful for quick PeptiVerse tests.",
     )
-    parser.add_argument("--device", default="cuda:0")
+    parser.add_argument("--device", default="mps")
     parser.add_argument(
         "--escape-fasta",
         default=None,
@@ -291,14 +292,9 @@ def main() -> None:
     )
     parser.add_argument(
         "--sort-by",
-        choices=["binding_score", "wt_score", "mean_score", "min_score", "retention_at_tau"],
-        default="binding_score",
+        choices=["binding_score", "wt_score", "mean_score", "cvar10_score", "min_score", "retention_at_tau"],
+        default="mean_score",
         help="Column to rank by after scoring.",
-    )
-    parser.add_argument(
-        "--affinity-mode",
-        choices=["surrogate", "peptiverse"],
-        default="peptiverse",
     )
     parser.add_argument(
         "--peptiverse-normalization",
@@ -330,7 +326,6 @@ def main() -> None:
         raise ValueError("No peptide rows loaded.")
 
     scorer = AffinityScorer(
-        mode=args.affinity_mode,
         device=args.device,
         peptiverse_normalization=args.peptiverse_normalization,
         peptiverse_min=args.peptiverse_min,
@@ -340,38 +335,42 @@ def main() -> None:
     variants = load_fasta(Path(args.escape_fasta)) if args.escape_fasta else []
     if args.escape_fasta and not variants:
         raise ValueError(f"No variants loaded from {args.escape_fasta}")
+    variant_seqs = [v["sequence"] for v in variants]
 
     for i, row in enumerate(rows, start=1):
-        wt_score = float(scorer(row["peptide"], row["target"]))
+        # Score against WT using batched path
+        wt_scores = scorer.score_variants_batched(row["peptide"], [row["target"]])
+        wt_score = float(wt_scores[0])
         row["binding_score"] = wt_score
         row["wt_score"] = wt_score
 
-        if variants:
-            variant_scores = [
-                float(scorer(row["peptide"], variant["sequence"])) for variant in variants
-            ]
-            row["mean_score"] = sum(variant_scores) / len(variant_scores)
-            row["min_score"] = min(variant_scores)
-            row["retention_at_tau"] = (
-                sum(score >= args.tau_bind for score in variant_scores) / len(variant_scores)
-            )
+        if variant_seqs:
+            import numpy as np
+            var_arr = scorer.score_variants_batched(row["peptide"], variant_seqs)
+            eta = 0.1
+            k = max(1, int(len(var_arr) * eta))
+            cvar = float(np.sort(var_arr)[:k].mean())
+            row["mean_score"] = float(var_arr.mean())
+            row["min_score"] = float(var_arr.min())
+            row["cvar10_score"] = cvar
+            row["retention_at_tau"] = float((var_arr >= args.tau_bind).mean())
             row["tau_bind"] = args.tau_bind
-            row["n_variants"] = len(variant_scores)
+            row["n_variants"] = len(var_arr)
             if args.include_per_variant:
                 row["per_variant"] = [
-                    {"name": variant["name"], "score": score}
-                    for variant, score in zip(variants, variant_scores)
+                    {"name": variant["name"], "score": float(score)}
+                    for variant, score in zip(variants, var_arr)
                 ]
             print(
                 f"[{i:04d}/{len(rows):04d}] {row['peptide']} "
-                f"wt={wt_score:.6g} mean={row['mean_score']:.6g} "
-                f"min={row['min_score']:.6g} retention={row['retention_at_tau']:.3f}",
+                f"wt={wt_score:.4f} mean={row['mean_score']:.4f} "
+                f"cvar10={cvar:.4f} ret={row['retention_at_tau']:.3f}",
                 flush=True,
             )
         else:
             print(
                 f"[{i:04d}/{len(rows):04d}] {row['peptide']} "
-                f"score={row['binding_score']:.6g}",
+                f"score={row['binding_score']:.4f}",
                 flush=True,
             )
 

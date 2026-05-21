@@ -25,6 +25,7 @@ from __future__ import annotations
 import os
 import shlex
 import subprocess
+import sys
 from datetime import datetime
 from pathlib import Path
 
@@ -32,14 +33,14 @@ from Bio import SeqIO
 from Bio.Align import MultipleSeqAlignment
 
 # ---------------------------------------------------------------------------
-# CONFIG — edit these paths for your cluster environment
+# CONFIG — PARCC paths (vast storage, account pranam-lab)
 # ---------------------------------------------------------------------------
-REPO_ROOT = Path("/scratch/pranamlab/kimberly/PROPHET")
-PYTHON    = REPO_ROOT / "venv" / "bin" / "python"
+REPO_ROOT = Path("/vast/projects/pranam/lab/nnori/hadsbm-hiv")
+PYTHON    = Path(sys.executable)   # uses whichever python launched this script
 ALIGNMENT_FASTA = REPO_ROOT / "alignments" / "hiv_sequences_aligned.fasta"
 VARIANTS_FASTA  = (
-    REPO_ROOT / "results" / "all_trees_stage1_train_only"
-    / "hiv_train_gibbs_variants.fasta"
+    REPO_ROOT / "results" / "hiv_prophet_final"
+    / "hiv_prophet_t015_esm_filtered_d20.fasta"
 )
 CKPT    = (
     REPO_ROOT / "MOG-DFM" / "ckpt" / "peptide"
@@ -62,7 +63,7 @@ BETA           = 5.0
 PEPTIVERSE_NORM = "raw"
 TAU_BIND       = 7.5    # threshold for Ret. column in Tables 2/4/5/6/7
 SEED           = 42
-GPUS           = [4, 5, 6, 7]
+GPUS           = list(range(8))   # 8× B200 on DGX node
 PEPTIDE_LENGTH = 10
 N_STEPS        = 200
 
@@ -71,11 +72,12 @@ ETA_VALUES     = [1.0, 0.5, 0.1]           # Table 5 — CVaR eta
 M_VALUES       = [50, 100, 250, 500, 1000]  # Table 6 — variant subset M
 J_SWEEP_DIRS   = {                          # Table 7 — tree count J
     # Map J value to the variant FASTA produced by a Stage-1 run with that J.
-    # Populate these once you have done the Stage-1 J-sweep runs.
-    25:  REPO_ROOT / "results" / "hiv_j_sweep" / "J_25"  / "hiv_train_gibbs_variants.fasta",
-    50:  REPO_ROOT / "results" / "hiv_j_sweep" / "J_50"  / "hiv_train_gibbs_variants.fasta",
-    100: REPO_ROOT / "results" / "hiv_j_sweep" / "J_100" / "hiv_train_gibbs_variants.fasta",
-    200: REPO_ROOT / "results" / "hiv_j_sweep" / "J_200" / "hiv_train_gibbs_variants.fasta",
+    # J=100 already done (main run). J=25/50 produced by run_stage1_j_sweep.slurm.
+    # J=200 needs 200 bootstrap trees first (run build_trees with --n-bootstraps 200).
+    25:  REPO_ROOT / "results" / "stage1_j_sweep" / "J_25"  / "hiv_train_gibbs_variants.fasta",
+    50:  REPO_ROOT / "results" / "stage1_j_sweep" / "J_50"  / "hiv_train_gibbs_variants.fasta",
+    100: REPO_ROOT / "results" / "hiv_prophet_final" / "hiv_prophet_t015_esm_filtered_d20.fasta",
+    200: REPO_ROOT / "results" / "stage1_j_sweep" / "J_200" / "hiv_train_gibbs_variants.fasta",
 }
 # ---------------------------------------------------------------------------
 
@@ -180,9 +182,9 @@ def _launch(name: str, variants_fasta: Path, extra_args: str, gpu: int) -> None:
     env = os.environ.copy()
     env["CUDA_VISIBLE_DEVICES"] = str(gpu)
     env["PYTHONUNBUFFERED"] = "1"
-    env.setdefault("HF_HOME",       "/scratch/pranamlab/kimberly/model_cache/hf")
-    env.setdefault("TORCH_HOME",    "/scratch/pranamlab/kimberly/model_cache/torch")
-    env.setdefault("XDG_CACHE_HOME","/scratch/pranamlab/kimberly/model_cache")
+    env.setdefault("HF_HOME",       "/vast/projects/pranam/lab/nnori/.cache/huggingface")
+    env.setdefault("TORCH_HOME",    "/vast/projects/pranam/lab/nnori/.cache/torch")
+    env.setdefault("XDG_CACHE_HOME","/vast/projects/pranam/lab/nnori/.cache")
 
     cmd_str = " ".join(shlex.quote(p) for p in cmd)
     print(f"Launching {name} on GPU {gpu}")

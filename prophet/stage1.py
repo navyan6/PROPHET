@@ -468,6 +468,9 @@ def _sample_site_conditional(
     t_evo: float,
     energy_mode: str,
     rng: np.random.Generator,
+    conservation: np.ndarray | None = None,
+    conserv_weight: float = 0.0,
+    wt_x: np.ndarray | None = None,
 ) -> int:
     """
     Sample x_i from p_evo(x_i | x_-i) proportional to exp(-E_i / T).
@@ -475,20 +478,29 @@ def _sample_site_conditional(
     # unary term (DCA field)
     e = lambda_i[i] * h[i].astype(np.float64)
     # Optional extension beyond paper DCA:
-    # incorporate tree-estimated substitution preferences Q_i(a->b)
+    # incorporate tree-estimated substitution preferences Q_i(wt->a)
+    # Always use WT as source so the term measures P(evolve to a | start at WT),
+    # not P(evolve to a | current chain state) which would drift from WT.
     if energy_mode == "dca_plus_qi":
-        current_aa = int(x[i])
-        if 0 <= current_aa < 20:
-            e += lambda_i[i] * np.log(qi[i, current_aa, :].astype(np.float64) + 1e-9)
+        wt_aa = int(wt_x[i]) if wt_x is not None else int(x[i])
+        if 0 <= wt_aa < 20:
+            e += lambda_i[i] * np.log(qi[i, wt_aa, :].astype(np.float64) + 1e-9)
     elif energy_mode != "paper_dca":
         raise ValueError(f"Unsupported energy_mode: {energy_mode}")
-    # pairwise term with all other sites (scale J by lambda_i)
+    # pairwise DCA term — J is NOT scaled by lambda_i per the paper's energy function
     for j in range(x.shape[0]):
         if j == i:
             continue
         b = int(x[j])
         if 0 <= b < 20:
-            e += lambda_i[i] * J[i, j, :, b].astype(np.float64)
+            e += J[i, j, :, b].astype(np.float64)
+    # conservation penalty: discourage mutations at conserved positions
+    if conservation is not None and wt_x is not None and conserv_weight > 0.0:
+        penalty = conservation[i] * conserv_weight
+        wt_aa = int(wt_x[i])
+        for a in range(20):
+            if a != wt_aa:
+                e[a] -= penalty
     # PLM h/J are log-probability fields: sample proportional to exp(+e/T)
     logits = e / max(t_evo, 1e-8)
     logits -= logits.max()
@@ -554,6 +566,11 @@ def gibbs_sample_variants(
     esm_filter_delta: float | None = None,
     esm_model_name: str = "facebook/esm2_t6_8M_UR50D",
     esm_device: str = "cpu",
+    lambda_ensemble: list[np.ndarray] | None = None,
+    qi_ensemble: list[np.ndarray] | None = None,
+    conservation: np.ndarray | None = None,
+    conserv_weight: float = 0.0,
+    wt_x: np.ndarray | None = None,
 ) -> tuple[list[str], list[float]]:
     """
     Algorithm 1 variant sampling from p_evo with optional ESM pLL filtering.
@@ -561,11 +578,16 @@ def gibbs_sample_variants(
     energy_mode:
       - paper_dca:   E_evo uses DCA terms only (lambda*h + J couplings)
       - dca_plus_qi: adds log(Q_i(a->b)) substitution preference term
+
+    If lambda_ensemble and qi_ensemble are provided, a random tree is drawn
+    each sweep instead of using the averaged lambda_i/qi.
     """
     rng = np.random.default_rng(seed)
     x = np.array([AA_TO_IDX.get(a, GAP) for a in wt_seq], dtype=np.int8)
     if np.any(x >= 20):
         raise ValueError("WT sequence contains unsupported amino acids for Gibbs sampling.")
+
+    use_ensemble = lambda_ensemble is not None and qi_ensemble is not None
 
     pll_model = None
     pll_tokenizer = None
@@ -585,9 +607,16 @@ def gibbs_sample_variants(
     total_steps = burn_in + n_samples
     L = len(wt_seq)
     for t in range(total_steps):
+        if use_ensemble:
+            t_idx = rng.integers(len(lambda_ensemble))
+            lam_t = lambda_ensemble[t_idx]
+            qi_t  = qi_ensemble[t_idx]
+        else:
+            lam_t, qi_t = lambda_i, qi
         for i in rng.permutation(L):  # random scan Gibbs
             x[i] = _sample_site_conditional(
-                i, x, lambda_i, qi, h, J, t_evo, energy_mode, rng
+                i, x, lam_t, qi_t, h, J, t_evo, energy_mode, rng,
+                conservation=conservation, conserv_weight=conserv_weight, wt_x=wt_x,
             )
 
         if t >= burn_in:
@@ -626,6 +655,24 @@ def build_consensus_wt(protein_seqs: dict[str, str]) -> str:
         consensus.append(best)
     return "".join(consensus)
 
+def compute_conservation_scores(protein_seqs: dict[str, str]) -> np.ndarray:
+    seqs = list(protein_seqs.values())
+    L = len(seqs[0])
+    conservation = np.zeros(L)
+    for i in range(L):
+        counts = np.zeros(20)
+        for seq in seqs:
+            idx = AA_TO_IDX.get(seq[i], None)
+            if idx is not None:
+                counts[idx] += 1
+        total = counts.sum()
+        if total == 0:
+            continue
+        freqs = counts / total 
+        shannon_entropy = -np.sum(freqs * np.log(freqs + 1e-9))
+        conservation[i] = 1 - (shannon_entropy / np.log(20))
+    
+    return conservation
 
 def _nearest_neighbor_distances(seqs: list[str]) -> np.ndarray:
     """
@@ -670,12 +717,17 @@ def calibrate_t_evo(
     candidate_t: list[float],
     energy_mode: str,
     seed: int,
+    conservation: np.ndarray | None = None,
+    conserv_weight: float = 0.0,
+    wt_x: np.ndarray | None = None,
 ) -> tuple[float, dict[str, float]]:
     """
-    Pick t_evo that best matches sampled nearest-neighbor edit-distance
-    distribution to the observed leaf nearest-neighbor distribution.
+    Pick t_evo that best matches the sampled edit-from-WT distribution to
+    the observed leaf edit-from-WT distribution (L1 distance between CDFs).
     """
-    target = _nearest_neighbor_distances(leaves)
+    target = np.array([sum(a != b for a, b in zip(leaf, wt_seq)) for leaf in leaves], dtype=np.int32)
+    if len(target) < 2:
+        raise ValueError("Need at least two sequences for calibration.")
     metrics: dict[str, float] = {}
     for idx, t in enumerate(candidate_t):
         variants, _ = gibbs_sample_variants(
@@ -689,11 +741,14 @@ def calibrate_t_evo(
             t_evo=float(t),
             energy_mode=energy_mode,
             seed=int(seed + 1000 + idx),
+            conservation=conservation,
+            conserv_weight=conserv_weight,
+            wt_x=wt_x,
         )
         if not variants:
             metrics[str(t)] = float("inf")
             continue
-        sampled = np.array([min(sum(a != b for a, b in zip(v, leaf)) for leaf in leaves) for v in variants], dtype=np.int32)
+        sampled = np.array([sum(a != b for a, b in zip(v, wt_seq)) for v in variants], dtype=np.int32)
         metrics[str(t)] = _empirical_cdf_distance(sampled, target)
     best_t = min(candidate_t, key=lambda x: metrics[str(x)])
     return float(best_t), metrics
@@ -771,7 +826,10 @@ def main():
                    help="Evolutionary temperature for Gibbs sampling (calibrate to held-out edit distances)")
     p.add_argument("--energy-mode",  choices=["paper_dca", "dca_plus_qi"], default="paper_dca",
                    help="Energy model for Gibbs sampling: paper DCA only or DCA+Qi extension (default: paper_dca)")
-    # ...existing code...
+    p.add_argument("--ensemble-mode", action="store_true",
+                   help="Draw a random tree per Gibbs sweep instead of using averaged λ/Qi")
+    p.add_argument("--conserv-weight", type=float, default=0.0,
+                   help="Conservation regularization strength (0=off, try 0.5–2.0)")
     p.add_argument("--seed",         type=int, default=42,
                    help="Random seed for DCA bootstraps and Gibbs sampling")
     p.add_argument("--wt-seq-id",    default=None,
@@ -783,15 +841,23 @@ def main():
     p.add_argument("--esm-device",   default="cpu",
                    help="Device for ESM pLL filtering")
     p.add_argument("--auto-calibrate-tevo", action="store_true",
-
                    help="Automatically calibrate t_evo to leaf edit-distance distribution")
     p.add_argument("--calibration-ts", default="0.5,1.0,2.0,5.0",
                    help="Comma-separated t_evo candidates for auto calibration")
     p.add_argument("--calibration-samples", type=int, default=128,
                    help="Samples per t_evo candidate during calibration")
+    p.add_argument("--calibration-fasta", default=None,
+                   help="Optional held-out FASTA to use as calibration target instead of training sequences")
     p.add_argument("--calibration-json", default=None,
                    help="Optional path to save t_evo calibration metrics JSON")
-    args, _ = p.parse_known_args()  
+    p.add_argument("--dca-max-edit", type=int, default=None,
+                   help="If set, restrict DCA training to sequences with at most this many edits from WT. "
+                        "Tree/lambda/Qi still use all sequences. Keeps DCA landscape near WT.")
+    p.add_argument("--ablate-zero-dca-couplings", action="store_true",
+                   help="Ablation: zero out DCA h and J before Gibbs sampling (removes DCA guidance)")
+    p.add_argument("--ablate-flatten-lambda", action="store_true",
+                   help="Ablation: set all lambda_i to 1 before Gibbs sampling (removes per-site rate weighting)")
+    args, _ = p.parse_known_args()
 
     fasta_path = resolve_user_path(args.fasta)
     out_dir    = resolve_user_path(args.out_dir)
@@ -849,8 +915,11 @@ def main():
         lam_i, qi_i = compute_lambda_and_qi(tree_path, protein_seqs)
         lambda_runs.append(lam_i)
         qi_runs.append(qi_i)
-    lambda_i = np.mean(np.stack(lambda_runs, axis=0), axis=0)
-    qi = np.mean(np.stack(qi_runs, axis=0), axis=0)
+    lambda_ensemble = lambda_runs
+    qi_ensemble = qi_runs
+
+    lambda_i = np.mean(np.stack(lambda_ensemble), axis=0)
+    qi = np.mean(np.stack(qi_ensemble), axis=0)
 
     lam_path = out_dir / f"{args.prefix}_lambda.npy"
     np.save(lam_path, lambda_i)
@@ -868,11 +937,22 @@ def main():
     if args.skip_dca:
         print("\n[3/3] DCA skipped (--skip-dca).")
     else:
-        print(f"\n[3/3] Fitting DCA  (n_bootstraps={args.n_bootstraps}, "
-              f"l2_reg={args.l2_reg}, n_jobs={args.n_jobs})...")
+        # Optionally restrict DCA to sequences close to WT so the energy
+        # landscape is centered in the WT neighborhood, not across all variants.
+        dca_seqs = protein_seqs
+        if args.dca_max_edit is not None:
+            _wt_for_filter = build_consensus_wt(protein_seqs)
+            dca_seqs = {k: v for k, v in protein_seqs.items()
+                        if sum(a != b for a, b in zip(v, _wt_for_filter)) <= args.dca_max_edit}
+            print(f"\n[3/3] DCA restricted to {len(dca_seqs)}/{len(protein_seqs)} sequences "
+                  f"(edit ≤ {args.dca_max_edit} from WT); "
+                  f"n_bootstraps={args.n_bootstraps}, l2_reg={args.l2_reg}, n_jobs={args.n_jobs}...")
+        else:
+            print(f"\n[3/3] Fitting DCA  (n_bootstraps={args.n_bootstraps}, "
+                  f"l2_reg={args.l2_reg}, n_jobs={args.n_jobs})...")
 
         h, J, h_std, J_std = compute_dca(
-            protein_seqs,
+            dca_seqs,
             n_bootstraps=args.n_bootstraps,
             l2_reg=args.l2_reg,
             n_jobs=args.n_jobs,
@@ -915,14 +995,37 @@ def main():
             else:
                 wt_seq = build_consensus_wt(protein_seqs)
 
+            conservation = compute_conservation_scores(protein_seqs)
+            wt_x = np.array([AA_TO_IDX.get(a, GAP) for a in wt_seq], dtype=np.int8)
+            np.save(out_dir / f"{args.prefix}_conservation.npy", conservation)
+            print(f"  Conservation range: [{conservation.min():.3f}, {conservation.max():.3f}]")
+
+            # Controlled ablations: only affect Gibbs, not saved files
+            h_gibbs = np.zeros_like(h) if args.ablate_zero_dca_couplings else h
+            J_gibbs = np.zeros_like(J) if args.ablate_zero_dca_couplings else J
+            lam_gibbs = np.ones_like(lambda_i) if args.ablate_flatten_lambda else lambda_i
+            lam_ens_gibbs = (
+                [np.ones_like(l) for l in lambda_ensemble]
+                if args.ablate_flatten_lambda else lambda_ensemble
+            )
+
             if args.auto_calibrate_tevo:
                 t_candidates = [
                     float(tok.strip()) for tok in str(args.calibration_ts).split(",") if tok.strip()
                 ]
                 if not t_candidates:
                     raise ValueError("--calibration-ts provided no valid candidates.")
-                leaves = [s for s in protein_seqs.values()
-                          if all(a in AA_TO_IDX for a in s)]
+                if args.calibration_fasta:
+                    cal_path = resolve_user_path(args.calibration_fasta)
+                    leaves = [
+                        str(r.seq).replace("-", "")
+                        for r in SeqIO.parse(str(cal_path), "fasta")
+                        if all(a in AA_TO_IDX for a in str(r.seq).replace("-", ""))
+                    ]
+                    print(f"  [calibrate] using held-out FASTA: {cal_path.name}")
+                else:
+                    leaves = [s for s in protein_seqs.values()
+                              if all(a in AA_TO_IDX for a in s)]
                 print(f"  [calibrate] {len(leaves)} clean leaves for calibration "
                       f"(filtered ambiguous aa)")
                 print(
@@ -932,15 +1035,18 @@ def main():
                 best_t, metrics = calibrate_t_evo(
                     wt_seq=wt_seq,
                     leaves=leaves,
-                    lambda_i=lambda_i,
+                    lambda_i=lam_gibbs,
                     qi=qi,
-                    h=h,
-                    J=J,
+                    h=h_gibbs,
+                    J=J_gibbs,
                     burn_in=max(50, args.burn_in // 2),
                     sample_count=args.calibration_samples,
                     candidate_t=t_candidates,
                     energy_mode=args.energy_mode,
                     seed=args.seed,
+                    conservation=conservation,
+                    conserv_weight=args.conserv_weight,
+                    wt_x=wt_x,
                 )
                 args.t_evo = float(best_t)
                 print(f"  [calibrate] selected t_evo = {args.t_evo:.4f}")
@@ -962,10 +1068,10 @@ def main():
                     print(f"  [calibrate] saved -> {cal_path}")
             variants, pll_vals = gibbs_sample_variants(
                 wt_seq=wt_seq,
-                lambda_i=lambda_i,
+                lambda_i=lam_gibbs,
                 qi=qi,
-                h=h,
-                J=J,
+                h=h_gibbs,
+                J=J_gibbs,
                 n_samples=args.sample_variants,
                 burn_in=args.burn_in,
                 t_evo=args.t_evo,
@@ -974,6 +1080,11 @@ def main():
                 esm_filter_delta=args.esm_filter_delta,
                 esm_model_name=args.esm_model,
                 esm_device=args.esm_device,
+                lambda_ensemble=lam_ens_gibbs if args.ensemble_mode else None,
+                qi_ensemble=qi_ensemble if args.ensemble_mode else None,
+                conservation=conservation,
+                conserv_weight=args.conserv_weight,
+                wt_x=wt_x,
             )
             v_path = out_dir / f"{args.prefix}_gibbs_variants.fasta"
             with open(v_path, "w", encoding="utf-8") as f:
@@ -987,9 +1098,6 @@ def main():
             # --- Evaluation metrics ---
             _eval_metrics(variants, list(protein_seqs.values()), lambda_i, h, J, wt_seq=wt_seq)
 
-    print("\n" + "=" * 60)
-    print("Stage 1 complete.")
-    print("=" * 60)
 
 
 if __name__ == "__main__":

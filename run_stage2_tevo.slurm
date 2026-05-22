@@ -26,8 +26,7 @@
 REPO=/vast/projects/pranam/lab/$USER/hadsbm-hiv
 export HF_HOME=/vast/projects/pranam/lab/$USER/.cache/huggingface
 
-module load miniconda3/25.5.1
-source activate hadsbm
+PYTHON=/vast/home/n/nnori/.conda/envs/hadsbm/bin/python
 
 cd "$REPO"
 
@@ -53,7 +52,7 @@ if [ ! -f "$VARIANTS" ]; then
     exit 1
 fi
 
-python prophet/stage2.py \
+$PYTHON prophet/stage2.py \
     --variants-fasta  "$VARIANTS" \
     --wt-seq          "$WT_SEQ" \
     --device          cuda:0 \

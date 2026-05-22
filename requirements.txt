@@ -1,10 +1,8 @@
 # Core Python packages for binding affinity + tree analysis
 
-# PyTorch and deep learning (GPU support for CUDA 12.4)
+# PyTorch and deep learning — version installed separately via setup_parcc_env.sh
+# to match the target GPU architecture (B200 requires 2.7.0+cu128)
 numpy<2
-torch==2.4.0
-torchvision==0.19.0
-torchaudio==2.4.0
 
 # Transformers — pinned to match PeptiVerse's tested version
 transformers==4.46.0

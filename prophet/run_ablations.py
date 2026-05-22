@@ -157,7 +157,7 @@ print(f"Total experiments to launch: {len(experiments)}\n")
 # ---------------------------------------------------------------------------
 # 3. Launch jobs — round-robin across GPUs
 # ---------------------------------------------------------------------------
-def _launch(name: str, variants_fasta: Path, extra_args: str, gpu: int) -> None:
+def _launch(name: str, variants_fasta: Path, extra_args: str, gpu: int) -> subprocess.Popen:
     out_json = OUTDIR / f"{name}-{RUN_STAMP}.json"
     log_file = OUTDIR / f"{name}-{RUN_STAMP}.log"
     cmd = [
@@ -188,15 +188,14 @@ def _launch(name: str, variants_fasta: Path, extra_args: str, gpu: int) -> None:
 
     cmd_str = " ".join(shlex.quote(p) for p in cmd)
     print(f"Launching {name} on GPU {gpu}")
-    with open(log_file, "w", encoding="utf-8") as log:
-        proc = subprocess.Popen(
-            cmd,
-            cwd=str(REPO_ROOT),
-            env=env,
-            stdout=log,
-            stderr=subprocess.STDOUT,
-            start_new_session=True,
-        )
+    log_fh = open(log_file, "w", encoding="utf-8")
+    proc = subprocess.Popen(
+        cmd,
+        cwd=str(REPO_ROOT),
+        env=env,
+        stdout=log_fh,
+        stderr=subprocess.STDOUT,
+    )
     with open(LAUNCH_LOG, "a", encoding="utf-8") as lf:
         lf.write(
             "\t".join([
@@ -208,12 +207,18 @@ def _launch(name: str, variants_fasta: Path, extra_args: str, gpu: int) -> None:
                 f"cmd={cmd_str}",
             ]) + "\n"
         )
+    return proc
 
 
+procs = []
 for idx, (name, vfasta, extra) in enumerate(experiments):
     gpu = GPUS[idx % len(GPUS)]
-    _launch(name, vfasta, extra, gpu)
+    procs.append(_launch(name, vfasta, extra, gpu))
 
-print(f"\nAll {len(experiments)} jobs launched.")
-print("Monitor logs in:", OUTDIR)
+print(f"\nAll {len(experiments)} jobs launched. Waiting for completion...")
+for proc in procs:
+    proc.wait()
+
+print(f"\nAll {len(experiments)} jobs complete.")
+print("Results in:", OUTDIR)
 print("Launch manifest:", LAUNCH_LOG)

@@ -64,6 +64,7 @@ $PYTHON prophet/stage2.py \
     --eta             0.1 \
     --tau-bind        7.5 \
     --peptiverse-normalization raw \
+    --variant-limit   149 \
     --out-json        "$OUT_DIR/t5_tevo_${T_TAG}-${SLURM_JOB_ID}.json" \
     --verbose-sampling
 

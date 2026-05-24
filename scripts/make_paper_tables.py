@@ -27,8 +27,10 @@ import numpy as np
 # ---------------------------------------------------------------------------
 
 def load_designs(path: Path) -> list[dict]:
+    def _drop_per_variant(pairs):
+        return {k: v for k, v in pairs if k != "per_variant"}
     with path.open() as f:
-        data = json.load(f)
+        data = json.load(f, object_pairs_hook=_drop_per_variant)
     if isinstance(data, list):
         return data
     if isinstance(data, dict) and "designs" in data:

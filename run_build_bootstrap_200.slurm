@@ -19,6 +19,7 @@
 
 REPO=/vast/projects/pranam/lab/$USER/hadsbm-hiv
 PYTHON=/vast/home/n/nnori/.conda/envs/hadsbm/bin/python
+export PATH=/vast/home/n/nnori/.conda/envs/hadsbm/bin:$PATH
 
 cd "$REPO"
 mkdir -p logs

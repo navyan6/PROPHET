@@ -17,6 +17,7 @@
 
 REPO=/vast/projects/pranam/lab/$USER/hadsbm-hiv
 PYTHON=/vast/home/n/nnori/.conda/envs/hadsbm/bin/python
+export PATH=/vast/home/n/nnori/.conda/envs/hadsbm/bin:$PATH
 export HF_HOME=/vast/projects/pranam/lab/$USER/.cache/huggingface
 
 set -e   # stop immediately if any step fails

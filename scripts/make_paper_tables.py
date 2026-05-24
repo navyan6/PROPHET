@@ -121,7 +121,8 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--ablations-dir", default="results/ablations")
     ap.add_argument("--out-dir",       default="results/tables")
-    ap.add_argument("--tau",           type=float, default=7.5)
+    ap.add_argument("--tau",           type=float, default=8.0)
+    ap.add_argument("--rfd-json",      default="results/hiv_prophet_final/rfd_baseline_binding.json")
     args = ap.parse_args()
 
     abl_dir = Path(args.ablations_dir)
@@ -153,6 +154,31 @@ def main() -> None:
 
     tau = args.tau
 
+    # Load RFdiffusion baseline (different schema: wt_score/mean_score/min_score/cvar10_score)
+    rfd_agg: dict = {}
+    rfd_scores: np.ndarray | None = None
+    rfd_json = Path(args.rfd_json)
+    if rfd_json.exists():
+        rfd_designs = load_designs(rfd_json)
+        if rfd_designs:
+            wt  = [float(d["wt_score"])   for d in rfd_designs if "wt_score"   in d]
+            mn  = [float(d["mean_score"])  for d in rfd_designs if "mean_score" in d]
+            mi  = [float(d["min_score"])   for d in rfd_designs if "min_score"  in d]
+            rb  = [float(d.get("cvar10_score", d.get("robust_score", float("nan"))))
+                   for d in rfd_designs]
+            rfd_agg = {
+                "n":           len(rfd_designs),
+                "mean_wt":     mean(wt) if wt else float("nan"),
+                "mean_mean":   mean(mn) if mn else float("nan"),
+                "mean_min":    mean(mi) if mi else float("nan"),
+                "wt_ret":      mean(1.0 if w >= tau else 0.0 for w in wt) if wt else float("nan"),
+                "mean_robust": mean(r for r in rb if r == r) if rb else float("nan"),
+            }
+            rfd_scores = np.array([[w, r] for w, r in zip(wt, rb) if r == r])
+        print(f"  RFdiffusion: {len(rfd_designs)} designs loaded from {rfd_json}")
+    else:
+        print(f"  [skip] RFdiffusion: {rfd_json} not found")
+
     # ── Table 2: method comparison ──────────────────────────────────────────
     t2_methods = [
         ("PROPHET",           "t2_prophet"),
@@ -163,6 +189,11 @@ def main() -> None:
         ("ESM only",          "t2_esm_only_variants"),
     ]
     t2_rows_csv, t2_rows_md = [], []
+    if rfd_agg:
+        a = rfd_agg
+        t2_rows_csv.append({"method": "RFdiffusion", **a})
+        t2_rows_md.append(["RFdiffusion", fmt(a["mean_wt"]), fmt(a["mean_mean"]),
+                           fmt(a["mean_min"]), fmt(a["wt_ret"])])
     for label, tag in t2_methods:
         _, d = get(tag)
         if d is None:
@@ -171,7 +202,7 @@ def main() -> None:
         a = aggregate(d, tau)
         t2_rows_csv.append({"method": label, **a})
         t2_rows_md.append([label, fmt(a["mean_wt"]), fmt(a["mean_mean"]),
-                           fmt(a["mean_min"]), fmt(a["mean_ret"])])
+                           fmt(a["mean_min"]), fmt(a["wt_ret"])])
 
     write_csv(t2_rows_csv, out_dir / "table2_method_comparison.csv")
     write_md(["Method", "WT↑", "Mean↑", "Min↑", "Ret.↑"], t2_rows_md,
@@ -191,11 +222,24 @@ def main() -> None:
             t2_scores_by_method[label] = pairs
             all_scores.append(pairs)
 
+    if rfd_scores is not None and rfd_scores.size:
+        t2_scores_by_method["RFdiffusion"] = rfd_scores
+        all_scores.append(rfd_scores)
+
     if all_scores:
         combined = np.vstack(all_scores)
         ref = np.array([combined[:, 0].min(), combined[:, 1].min()])
         t3_rows_csv, t3_rows_md = [], []
         seen = set()
+        rfd_t3_scores = t2_scores_by_method.get("RFdiffusion")
+        if rfd_t3_scores is not None:
+            seen.add("RFdiffusion")
+            front = pareto_front(rfd_t3_scores)
+            hv    = hypervolume(front, ref)
+            t3_rows_csv.append({"method": "RFdiffusion", "n_pareto": len(front),
+                                 "hypervolume": hv,
+                                 "ref_wt": float(ref[0]), "ref_robust": float(ref[1])})
+            t3_rows_md.append(["RFdiffusion", str(len(front)), fmt(hv, 4)])
         for label, tag in t2_methods:
             if label in seen:
                 continue
@@ -239,7 +283,7 @@ def main() -> None:
         a = aggregate(d, tau)
         t4_rows_csv.append({"ablation": label, **a})
         t4_rows_md.append([label, fmt(a["mean_wt"]), fmt(a["mean_mean"]),
-                           fmt(a["mean_min"]), fmt(a["mean_ret"])])
+                           fmt(a["mean_min"]), fmt(a["wt_ret"])])
 
     write_csv(t4_rows_csv, out_dir / "table4_ablations.csv")
     write_md(["Ablation", "WT↑", "Mean↑", "Min↑", "Ret.↑"], t4_rows_md,
@@ -260,7 +304,7 @@ def main() -> None:
         a = aggregate(d, tau)
         t5_rows_csv.append({"eta": label, **a})
         t5_rows_md.append([label, fmt(a["mean_wt"]), fmt(a["mean_mean"]),
-                           fmt(a["mean_min"]), fmt(a["mean_ret"])])
+                           fmt(a["mean_min"]), fmt(a["wt_ret"])])
 
     write_csv(t5_rows_csv, out_dir / "table5_eta_sensitivity.csv")
     write_md(["η", "WT↑", "Mean↑", "Min↑", "Ret.↑"], t5_rows_md,
@@ -286,7 +330,7 @@ def main() -> None:
         a = aggregate(d, tau)
         tevo_rows_csv.append({"T_evo": label, **a})
         tevo_rows_md.append([label, fmt(a["mean_wt"]), fmt(a["mean_mean"]),
-                             fmt(a["mean_min"]), fmt(a["mean_ret"])])
+                             fmt(a["mean_min"]), fmt(a["wt_ret"])])
 
     write_csv(tevo_rows_csv, out_dir / "table5_tevo_sensitivity.csv")
     write_md(["T_evo", "WT↑", "Mean↑", "Min↑", "Ret.↑"], tevo_rows_md,
@@ -309,7 +353,7 @@ def main() -> None:
         a = aggregate(d, tau)
         t6_rows_csv.append({"M": label, **a})
         t6_rows_md.append([label, fmt(a["mean_wt"]), fmt(a["mean_mean"]),
-                           fmt(a["mean_min"]), fmt(a["mean_ret"])])
+                           fmt(a["mean_min"]), fmt(a["wt_ret"])])
 
     write_csv(t6_rows_csv, out_dir / "table6_M_sensitivity.csv")
     write_md(["M", "WT↑", "Mean↑", "Min↑", "Ret.↑"], t6_rows_md,
@@ -331,7 +375,7 @@ def main() -> None:
         a = aggregate(d, tau)
         t7_rows_csv.append({"J": label, **a})
         t7_rows_md.append([label, fmt(a["mean_wt"]), fmt(a["mean_mean"]),
-                           fmt(a["mean_min"]), fmt(a["mean_ret"])])
+                           fmt(a["mean_min"]), fmt(a["wt_ret"])])
 
     write_csv(t7_rows_csv, out_dir / "table7_J_sensitivity.csv")
     write_md(["J", "WT↑", "Mean↑", "Min↑", "Ret.↑"], t7_rows_md,

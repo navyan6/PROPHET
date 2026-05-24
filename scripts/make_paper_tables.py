@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Build Tables 2, 4, 5, 6, 7 from run_ablations.py / run_stage2_tevo.slurm outputs.
+Build Tables 2, 3, 4, 5, 6, 7 from run_ablations.py / run_stage2_tevo.slurm outputs.
 
 Usage (on PARCC after Stage 2 jobs finish):
     python scripts/make_paper_tables.py \
@@ -18,6 +18,8 @@ import json
 import sys
 from pathlib import Path
 from statistics import mean
+
+import numpy as np
 
 
 # ---------------------------------------------------------------------------
@@ -55,6 +57,30 @@ def aggregate(designs: list[dict], tau: float = 7.5) -> dict:
         "mean_robust":  mean(rb)  if rb  else float("nan"),
         "wt_ret":       wt_ret,
     }
+
+
+def pareto_front(scores: np.ndarray) -> np.ndarray:
+    keep = np.ones(len(scores), dtype=bool)
+    for i in range(len(scores)):
+        if not keep[i]:
+            continue
+        dominates = np.all(scores >= scores[i], axis=1) & np.any(scores > scores[i], axis=1)
+        if np.any(dominates):
+            keep[i] = False
+    return scores[keep]
+
+
+def hypervolume(front: np.ndarray, ref: np.ndarray) -> float:
+    if front.size == 0:
+        return 0.0
+    pts = front[np.argsort(front[:, 0])[::-1]]
+    hv, prev_y = 0.0, float(ref[1])
+    for x, y in pts:
+        width  = max(0.0, float(x) - float(ref[0]))
+        height = max(0.0, float(y) - prev_y)
+        hv    += width * height
+        prev_y = max(prev_y, float(y))
+    return float(hv)
 
 
 def fmt(x, decimals: int = 3) -> str:
@@ -150,6 +176,43 @@ def main() -> None:
     write_csv(t2_rows_csv, out_dir / "table2_method_comparison.csv")
     write_md(["Method", "WT↑", "Mean↑", "Min↑", "Ret.↑"], t2_rows_md,
              out_dir / "table2_method_comparison.md")
+
+    # ── Table 3: Hypervolume (shared reference point across Table 2 methods) ─
+    # Collect all (wt_score, robust_score) pairs from Table 2 methods to find global min
+    all_scores: list[np.ndarray] = []
+    t2_scores_by_method: dict[str, np.ndarray] = {}
+    for label, tag in t2_methods:
+        _, d = get(tag)
+        if d is None:
+            continue
+        pairs = np.array([[float(r["wt_score"]), float(r["robust_score"])]
+                          for r in d if "wt_score" in r and "robust_score" in r])
+        if pairs.size:
+            t2_scores_by_method[label] = pairs
+            all_scores.append(pairs)
+
+    if all_scores:
+        combined = np.vstack(all_scores)
+        ref = np.array([combined[:, 0].min(), combined[:, 1].min()])
+        t3_rows_csv, t3_rows_md = [], []
+        seen = set()
+        for label, tag in t2_methods:
+            if label in seen:
+                continue
+            scores = t2_scores_by_method.get(label)
+            if scores is None:
+                continue
+            seen.add(label)
+            front = pareto_front(scores)
+            hv    = hypervolume(front, ref)
+            t3_rows_csv.append({"method": label, "n_pareto": len(front),
+                                 "hypervolume": hv,
+                                 "ref_wt": float(ref[0]), "ref_robust": float(ref[1])})
+            t3_rows_md.append([label, str(len(front)), fmt(hv, 4)])
+
+        write_csv(t3_rows_csv, out_dir / "table3_hypervolume.csv")
+        write_md(["Method", "Pareto pts", "HV↑"], t3_rows_md,
+                 out_dir / "table3_hypervolume.md")
 
     # ── Table 4: Stage-1 ablations ──────────────────────────────────────────
     t4_methods = [

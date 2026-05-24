@@ -19,6 +19,8 @@ REPO=/vast/projects/pranam/lab/$USER/hadsbm-hiv
 PYTHON=/vast/home/n/nnori/.conda/envs/hadsbm/bin/python
 export HF_HOME=/vast/projects/pranam/lab/$USER/.cache/huggingface
 
+set -e   # stop immediately if any step fails
+
 cd "$REPO"
 mkdir -p logs
 
@@ -33,7 +35,7 @@ $PYTHON scripts/prep_virus_protein.py \
     --name          flu_ha \
     --out-dir       data/flu_ha \
     --n-bootstraps  100 \
-    --test-frac     0.2 \
+    --holdout-frac  0.2 \
     --seed          42
 
 # Step 2: Stage 1 — DCA + Gibbs sampling

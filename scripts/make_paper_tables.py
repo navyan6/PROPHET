@@ -171,6 +171,7 @@ def main() -> None:
                 "mean_wt":     mean(wt) if wt else float("nan"),
                 "mean_mean":   mean(mn) if mn else float("nan"),
                 "mean_min":    mean(mi) if mi else float("nan"),
+                "mean_ret":    float("nan"),
                 "wt_ret":      mean(1.0 if w >= tau else 0.0 for w in wt) if wt else float("nan"),
                 "mean_robust": mean(r for r in rb if r == r) if rb else float("nan"),
             }

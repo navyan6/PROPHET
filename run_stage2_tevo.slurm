@@ -16,7 +16,7 @@
 #SBATCH --cpus-per-task=8
 #SBATCH --gres=gpu:B200:1
 #SBATCH --mem=64G
-#SBATCH --time=08:00:00
+#SBATCH --time=10:00:00
 #SBATCH --array=0-3
 #SBATCH --output=logs/hiv_s2_tevo_%a_%j.out
 #SBATCH --error=logs/hiv_s2_tevo_%a_%j.err

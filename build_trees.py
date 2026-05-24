@@ -53,7 +53,7 @@ def build_tree(aligned_path: Path, out_dir: Path) -> Path:
 
 
 def build_bootstrap_trees(
-    aligned_path: Path, out_dir: Path, n_bootstraps: int
+    aligned_path: Path, out_dir: Path, n_bootstraps: int, start: int = 0
 ) -> list[Path]:
     """
     Build n_bootstraps trees from bootstrap-resampled columns of the alignment.
@@ -77,22 +77,22 @@ def build_bootstrap_trees(
     for k in range(n_bootstraps):
         # Resample alignment columns with replacement
         cols = sorted(random.choices(range(L), k=L))
-        boot_fasta = boot_dir / f"boot{k}.fasta"
+        boot_fasta = boot_dir / f"boot{k + start}.fasta"
         with open(boot_fasta, "w") as f:
             for rec in records:
                 resampled_seq = "".join(str(rec.seq)[c] for c in cols)
                 f.write(f">{rec.id}\n{resampled_seq}\n")
 
-        tree_path = boot_dir / f"boot{k}_tree.nwk"
+        tree_path = boot_dir / f"boot{k + start}_tree.nwk"
         stdout = run(
             ["FastTree", "-quiet", "-lg", str(boot_fasta)],
-            desc=f"FastTree bootstrap {k}",
+            desc=f"FastTree bootstrap {k + start}",
         )
         tree_path.write_text(stdout)
         tree_paths.append(tree_path)
 
         if (k + 1) % 10 == 0:
-            print(f"    {k+1}/{n_bootstraps} done")
+            print(f"    {k + start + 1}/{start + n_bootstraps} done")
 
     return tree_paths
 
@@ -120,6 +120,12 @@ def main():
         help="Number of bootstrap trees to build per input file (default: 0 = single tree only)",
     )
     p.add_argument(
+        "--bootstrap-start",
+        type=int,
+        default=0,
+        help="Starting index for bootstrap tree numbering (default: 0). Use 100 to add boot100-boot199 without overwriting existing boot0-boot99.",
+    )
+    p.add_argument(
         "--skip-align",
         action="store_true",
         help="Treat input files as already-aligned FASTAs, skip MAFFT",
@@ -143,7 +149,7 @@ def main():
         build_tree(aligned_path, args.out_dir)
 
         if args.n_bootstraps > 0:
-            build_bootstrap_trees(aligned_path, args.out_dir, args.n_bootstraps)
+            build_bootstrap_trees(aligned_path, args.out_dir, args.n_bootstraps, start=args.bootstrap_start)
 
     print(f"\nDone. Trees written to: {args.out_dir}/")
 

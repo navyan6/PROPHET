@@ -127,9 +127,9 @@ for mode_name, mode_args in TABLE2_MODES:
 if STAGE1_ABLATION_VARIANT_DIR is not None:
     abl_dir = STAGE1_ABLATION_VARIANT_DIR
     stage1_ablations = [
-        ("t4_no_dca",    abl_dir / "hiv_no_dca_gibbs_variants.fasta",    ""),
-        ("t4_no_lambda", abl_dir / "hiv_no_lambda_gibbs_variants.fasta", ""),
-        ("t4_no_esm",    abl_dir / "hiv_no_esm_gibbs_variants.fasta",    ""),
+        ("t4_no_dca",    abl_dir / "hiv_no_dca_gibbs_variants.fasta",    "--variant-limit 149"),
+        ("t4_no_lambda", abl_dir / "hiv_no_lambda_gibbs_variants.fasta", "--variant-limit 149"),
+        ("t4_no_esm",    abl_dir / "hiv_no_esm_gibbs_variants.fasta",    "--variant-limit 149"),
     ]
     for abl_name, abl_fasta, abl_args in stage1_ablations:
         if abl_fasta.exists():

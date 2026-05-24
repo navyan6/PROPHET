@@ -196,7 +196,7 @@ def main() -> None:
         a = rfd_agg
         t2_rows_csv.append({"method": "RFdiffusion", **a})
         t2_rows_md.append(["RFdiffusion", fmt(a["mean_wt"]), fmt(a["mean_mean"]),
-                           fmt(a["mean_min"]), fmt(a["wt_ret"])])
+                           fmt(a["mean_min"]), fmt(a["wt_ret"]), fmt(a["mean_robust"])])
     for label, tag in t2_methods:
         _, d = get(tag)
         if d is None:
@@ -205,10 +205,10 @@ def main() -> None:
         a = aggregate(d, tau)
         t2_rows_csv.append({"method": label, **a})
         t2_rows_md.append([label, fmt(a["mean_wt"]), fmt(a["mean_mean"]),
-                           fmt(a["mean_min"]), fmt(a["wt_ret"])])
+                           fmt(a["mean_min"]), fmt(a["wt_ret"]), fmt(a["mean_robust"])])
 
     write_csv(t2_rows_csv, out_dir / "table2_method_comparison.csv")
-    write_md(["Method", "WT↑", "Mean↑", "Min↑", "Ret.↑"], t2_rows_md,
+    write_md(["Method", "WT↑", "Mean↑", "Min↑", "Ret.↑", "Robust↑"], t2_rows_md,
              out_dir / "table2_method_comparison.md")
 
     # ── Table 3: Hypervolume (shared reference point across Table 2 methods) ─
@@ -227,11 +227,14 @@ def main() -> None:
 
     if rfd_scores is not None and rfd_scores.size:
         t2_scores_by_method["RFdiffusion"] = rfd_scores
-        all_scores.append(rfd_scores)
 
     if all_scores:
+        # Reference point from MOG-DFM methods only (excluding RFdiffusion so
+        # its low scores don't dwarf differences between MOG-DFM methods)
         combined = np.vstack(all_scores)
         ref = np.array([combined[:, 0].min(), combined[:, 1].min()])
+        if rfd_scores is not None and rfd_scores.size:
+            all_scores.append(rfd_scores)
         t3_rows_csv, t3_rows_md = [], []
         seen = set()
         rfd_t3_scores = t2_scores_by_method.get("RFdiffusion")

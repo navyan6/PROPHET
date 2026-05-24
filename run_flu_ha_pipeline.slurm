@@ -9,7 +9,7 @@
 #SBATCH --cpus-per-task=16
 #SBATCH --gres=gpu:B200:1
 #SBATCH --mem=64G
-#SBATCH --time=12:00:00
+#SBATCH --time=24:00:00
 #SBATCH --output=logs/prophet_flu_ha_%j.out
 #SBATCH --error=logs/prophet_flu_ha_%j.err
 #SBATCH --mail-type=END,FAIL

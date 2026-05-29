@@ -61,21 +61,20 @@ echo "=============================="
 # ------------------------------------------------------------------
 # Load target config from configs/targets.py
 # ------------------------------------------------------------------
-eval "$($PYTHON - <<'PYEOF'
+eval "$($PYTHON -c "
 import sys, json
-sys.path.insert(0, ".")
+sys.path.insert(0, '.')
 from configs.targets import get_target
-cfg = get_target("'"$TARGET"'")
+cfg = get_target('$TARGET')
+keys = ('alignment','tree','trees_file','holdout','out_prefix',
+        't_evo','n_bootstraps','sample_variants','burn_in',
+        'energy_mode','adaptive_l2','l2_reg_base',
+        'esm_filter_delta_per_residue','esm_model',
+        'conserv_weight','seed','protein','ensemble_mode')
 for k, v in cfg.items():
-    # Emit shell-safe assignments for the keys we need
-    if k in ("alignment","tree","trees_file","holdout","out_prefix",
-             "t_evo","n_bootstraps","sample_variants","burn_in",
-             "energy_mode","adaptive_l2","l2_reg_base",
-             "esm_filter_delta_per_residue","esm_model",
-             "conserv_weight","seed","protein","ensemble_mode"):
-        print(f"CFG_{k.upper()}={json.dumps(str(v))}")
-PYEOF
-)"
+    if k in keys:
+        print('CFG_' + k.upper() + '=' + json.dumps(str(v)))
+")"
 
 # ------------------------------------------------------------------
 # Derived paths

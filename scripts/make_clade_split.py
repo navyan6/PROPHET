@@ -230,7 +230,7 @@ def main() -> None:
     trees_list = tr_train / f"{t}_bootstrap_trees.txt"
     with open(trees_list, "w") as f:
         for p in boot_paths:
-            f.write(str(p) + "\n")
+            f.write(str(p.relative_to(tr_train)) + "\n")
 
     # Holdout (unaligned)
     test_out = aln_test / f"{t}_test_clade_holdout.fasta"

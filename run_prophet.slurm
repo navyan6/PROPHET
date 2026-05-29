@@ -98,9 +98,6 @@ echo "Train sequences: $(grep -c '^>' "$FASTA")"
 # ------------------------------------------------------------------
 # Stage 1 flags
 # ------------------------------------------------------------------
-PROTEIN_FLAG=""
-[ "$CFG_PROTEIN" = "True" ] && PROTEIN_FLAG="--protein"
-
 ENSEMBLE_FLAG=""
 [ "$CFG_ENSEMBLE_MODE" = "True" ] && ENSEMBLE_FLAG="--ensemble-mode"
 
@@ -117,7 +114,6 @@ $PYTHON prophet/stage1.py \
     --tree              "$TREE" \
     --trees-file        "$TREES_FILE" \
     --fasta             "$FASTA" \
-    $PROTEIN_FLAG \
     --out-dir           "$STAGE1_OUT" \
     --prefix            "$PREFIX" \
     --n-bootstraps      "$CFG_N_BOOTSTRAPS" \

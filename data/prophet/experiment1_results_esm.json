@@ -1,0 +1,42 @@
+[
+  {
+    "label": "Held-out leaves",
+    "n": 2304,
+    "resistance_enrichment": 0.6174940898345154,
+    "edit_dist_mean": 9.1796875,
+    "edit_dist_std": 10.405527572834085,
+    "dca_energy_mean": -389.4690171770939,
+    "dca_energy_std": 55.55411022556008,
+    "esm_pll_mean": -226.9851218985253
+  },
+  {
+    "label": "PROPHET",
+    "n": 500,
+    "resistance_enrichment": 0.5246254211771453,
+    "edit_dist_mean": 55.796,
+    "edit_dist_std": 2.999730654575507,
+    "dca_energy_mean": -542.4080878570504,
+    "dca_energy_std": 29.92406402756446,
+    "esm_pll_mean": -263.9574268821049
+  },
+  {
+    "label": "ESM-only",
+    "n": 500,
+    "resistance_enrichment": 0.40919053365183344,
+    "edit_dist_mean": 81.214,
+    "edit_dist_std": 3.43164741778639,
+    "dca_energy_mean": -21.864043577088587,
+    "dca_energy_std": 16.203828772566823,
+    "esm_pll_mean": -237.34640066318588
+  },
+  {
+    "label": "Random mut.",
+    "n": 500,
+    "resistance_enrichment": 0.39317857142857143,
+    "edit_dist_mean": 56.0,
+    "edit_dist_std": 0.0,
+    "dca_energy_mean": -77.96185386237786,
+    "dca_energy_std": 17.423323602094985,
+    "esm_pll_mean": -302.68673253691196
+  }
+]

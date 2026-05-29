@@ -285,14 +285,16 @@ def main():
     p = argparse.ArgumentParser(description="PROPHET Experiment 1: Variant Quality")
     p.add_argument("--variants",    required=True,  help="PROPHET Gibbs variants FASTA (Stage 1 output)")
     p.add_argument("--alignment",   required=True,  help="Full protein alignment FASTA (used for held-out split)")
-    p.add_argument("--lambda-npy",  required=True,  help="hiv_lambda.npy from Stage 1")
-    p.add_argument("--h-npy",       required=True,  help="hiv_h.npy from Stage 1")
-    p.add_argument("--J-npz",       required=True,  help="hiv_J.npz from Stage 1")
-    p.add_argument("--resistance",  required=True,  help="CSV of resistance positions")
+    p.add_argument("--lambda-npy",  required=True,  help="{prefix}_lambda.npy from Stage 1")
+    p.add_argument("--h-npy",       required=True,  help="{prefix}_h.npy from Stage 1")
+    p.add_argument("--J-npz",       required=True,  help="{prefix}_J.npz from Stage 1")
+    p.add_argument("--resistance",  default=None,   help="CSV of resistance positions (optional; skip for non-HIV targets)")
     p.add_argument("--out-json",    default="data/prophet/experiment1_results.json")
     p.add_argument("--n-random",    type=int, default=500)
     p.add_argument("--held-out-frac", type=float, default=0.2,
                    help="Fraction of alignment to use as held-out leaves")
+    p.add_argument("--held-out-fasta", default=None,
+                   help="Optional separate FASTA of held-out sequences (overrides --held-out-frac)")
     p.add_argument("--no-esm",      action="store_true", help="Skip ESM pLL scoring and ESM-only variants")
     p.add_argument("--hf-esm",      action="store_true", help="Use HF Inference API instead of local ESM-2")
     p.add_argument("--hf-token",    default=None, help="HF API token (default: $HF_TOKEN env var)")
@@ -320,35 +322,75 @@ def main():
     J        = np.load(args.J_npz)["J"]
     print(f"Loaded λ ({lambda_i.shape}), h ({h.shape}), J ({J.shape})")
 
-    # Load resistance positions (zero-indexed)
-    from prophet.utils.hiv_resistance import load_resistance_positions
-    res_pos = load_resistance_positions(args.resistance, one_indexed=True)
-    print(f"Loaded {len(res_pos)} resistance positions: {sorted(res_pos)}")
+    # L is authoritative from the DCA params
+    L = h.shape[0]
+    print(f"Protein length L={L} (from h.shape[0])")
 
-    # Load full alignment, split held-out
-    all_seqs = [(r.id, str(r.seq).replace("-","")) for r in SeqIO.parse(args.alignment, "fasta")]
-    all_seqs = [(sid, s) for sid, s in all_seqs if len(s) == 99 and "X" not in s]
-    rng = random.Random(args.seed)
-    rng.shuffle(all_seqs)
-    n_held = max(10, int(len(all_seqs) * args.held_out_frac))
-    held_out = [s for _, s in all_seqs[:n_held]]
-    print(f"Alignment: {len(all_seqs)} seqs → {n_held} held-out, {len(all_seqs)-n_held} train")
+    # Load resistance positions (optional; skip for non-HIV targets)
+    res_pos: set[int] = set()
+    if args.resistance:
+        from prophet.utils.hiv_resistance import load_resistance_positions
+        res_pos = load_resistance_positions(args.resistance, one_indexed=True)
+        print(f"Loaded {len(res_pos)} resistance positions: {sorted(res_pos)}")
+    else:
+        print("No resistance positions file provided — enrichment will be 0.0")
 
-    # Build consensus WT from training sequences
-    train_seqs = [s for _, s in all_seqs[n_held:]]
-    L = 99
+    # Load alignment; apply the SAME ≤50% column gap-filter as Stage 1 so that
+    # sequences end up in exactly the same coordinate space as the Gibbs variants.
+    aln_recs = [(r.id, str(r.seq)) for r in SeqIO.parse(args.alignment, "fasta")]
+    if not aln_recs:
+        raise ValueError(f"Empty alignment: {args.alignment}")
+    aln_len = len(aln_recs[0][1])
+    N_aln = len(aln_recs)
+    keep_cols = [
+        i for i in range(aln_len)
+        if sum(1 for _, s in aln_recs if s[i] in "-X*.") / N_aln <= 0.5
+    ]
+    print(f"Alignment: {N_aln} seqs, {aln_len} raw columns → {len(keep_cols)} after gap filter")
+
+    def _apply_col_filter(gapped_seq: str) -> str:
+        return "".join(gapped_seq[i] for i in keep_cols if i < len(gapped_seq))
+
+    all_seqs = [(sid, _apply_col_filter(s)) for sid, s in aln_recs]
+    all_seqs = [(sid, s) for sid, s in all_seqs if len(s) == L and "X" not in s]
+    print(f"After gap-filter and length check: {len(all_seqs)} sequences of length {L}")
+
+    if args.held_out_fasta:
+        held_recs = [str(r.seq) for r in SeqIO.parse(args.held_out_fasta, "fasta")]
+        held_out = []
+        for raw in held_recs:
+            if len(raw) == aln_len:
+                s = _apply_col_filter(raw)
+            else:
+                s = raw.replace("-", "").replace("X", "")
+            if len(s) == L:
+                held_out.append(s)
+            elif len(s) > L:
+                held_out.append(s[:L])
+        held_out = [s for s in held_out if "X" not in s]
+        print(f"Held-out: {len(held_out)} sequences from {args.held_out_fasta}")
+        train_seqs = [s for _, s in all_seqs]
+    else:
+        rng = random.Random(args.seed)
+        rng.shuffle(all_seqs)
+        n_held = max(10, int(len(all_seqs) * args.held_out_frac))
+        held_out = [s for _, s in all_seqs[:n_held]]
+        train_seqs = [s for _, s in all_seqs[n_held:]]
+        print(f"Split: {n_held} held-out, {len(train_seqs)} train")
+
+    # Build consensus WT from training sequences (in Stage-1 coordinate space)
     wt = ""
     for i in range(L):
-        counts = {}
+        counts: dict[str, int] = {}
         for s in train_seqs:
             a = s[i] if i < len(s) else "-"
             if a in AA:
                 counts[a] = counts.get(a, 0) + 1
         wt += max(counts, key=counts.get) if counts else "A"
-    print(f"Consensus WT: {wt[:30]}...")
+    print(f"Consensus WT (length {len(wt)}): {wt[:30]}...")
 
     # Load PROPHET variants
-    prophet_variants = [str(r.seq) for r in SeqIO.parse(args.variants, "fasta")]
+    prophet_variants = [str(r.seq).replace("-", "") for r in SeqIO.parse(args.variants, "fasta")]
     prophet_variants = [v for v in prophet_variants if len(v) == L and "X" not in v]
     print(f"PROPHET variants: {len(prophet_variants)}")
 

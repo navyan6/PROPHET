@@ -4,7 +4,6 @@ __pycache__/
 .venv/
 venv/
 .env
-.DS_Store
 *.egg-info/
 .eggs/
 
@@ -15,35 +14,24 @@ venv/
 *.pkl
 *.pickle
 
-# Data files (can be very large)
-*.fasta
-*.nwk
-data/
+# Raw downloaded sequences (too large, re-downloadable)
+*_raw.fasta
+*_uniprot.fasta
+data/*/raw/
 
-# Output files
-results_*.json
-*.png
-*.csv
-*.log
+# Bootstrap alignment FASTAs (100 files × N sequences, regenerable from make_clade_split.py)
+data/*/*/bootstrap/*.fasta
 
-# Exceptions for tree project outputs
-!covid_tree_gen/*.fasta
-!covid_tree_gen/*.nwk
-!covid_tree_gen/*.png
-!flu_tree/*.fasta
-!flu_tree/*.nwk
-!flu_tree/*.png
+# Pipeline outputs (results live on cluster, not in git)
+results/
 
-# IDE
+# IDE / OS
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
-
-# OS
 .DS_Store
 Thumbs.db
-!trees/*.nwk
-!alignments/*.fasta
 *.pdf
+*.log

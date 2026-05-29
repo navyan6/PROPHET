@@ -1,24 +1,20 @@
 #!/usr/bin/env python3
 """
-PROPHET Stage 1: per-site evolutionary parameters from a phylogenetic tree.
-
-Two functions:
-  compute_lambda(tree_nwk, protein_seqs) -> lambda_i  shape (L,)
-
-  compute_dca(protein_seqs, n_bootstraps) -> h (L,20), J (L,L,20,20)
-      DCA parameters via pseudolikelihood maximization.
+PROPHET Stage 1: per-site evolutionary rates (λ_i, Q_i) from a phylogenetic
+tree via Fitch parsimony, plus DCA coupling parameters (h, J) via
+pseudolikelihood maximization. Outputs are used to guide Gibbs sampling of
+escape variants and ESM-2 pLL filtering in Stage 1, and passed to Stage 2
+for CVaR-robust peptide design.
 """
 
 import sys
 import warnings
 import argparse
-import json
 from pathlib import Path
 import random
 
 import numpy as np
 from Bio import SeqIO, Phylo
-from Bio.Data import CodonTable
 from sklearn.linear_model import LogisticRegression
 from joblib import Parallel, delayed
 
@@ -31,15 +27,7 @@ GAP       = 20   # index used for gap / ambiguous / unknown
 
 
 def resolve_user_path(path_like: str | Path, base_dir: str | Path | None = None) -> Path:
-    """
-    Resolve user-provided paths robustly after script moves.
-
-    Resolution order for relative paths:
-      1) base_dir (if provided)
-      2) REPO_ROOT
-      3) current working directory
-      4) directory containing this script
-    """
+    """Resolve a path relative to base_dir, REPO_ROOT, cwd, or script dir (in that order)."""
     p = Path(path_like)
     if p.is_absolute():
         return p
@@ -62,12 +50,7 @@ def resolve_user_path(path_like: str | Path, base_dir: str | Path | None = None)
 
 
 def normalize_protein_alignment(protein_seqs: dict[str, str]) -> dict[str, str]:
-    """
-    Ensure all sequences share one alignment length.
-
-    For mixed lengths, use modal length as target, truncate longer sequences,
-    and right-pad shorter ones with '-' gaps.
-    """
+    """Enforce uniform alignment length: truncate overlength seqs, pad underlength with '-'."""
     cleaned = {k: v.upper() for k, v in protein_seqs.items() if v}
     if not cleaned:
         raise ValueError("No non-empty protein sequences were provided.")
@@ -97,54 +80,12 @@ def normalize_protein_alignment(protein_seqs: dict[str, str]) -> dict[str, str]:
 
     return normalized
 
-def translate_alignment(fasta_path: str | Path) -> dict[str, str]:
-    """
-    Translate a gapped nucleotide MSA to a protein MSA.
-    """
-    fwd   = CodonTable.standard_dna_table.forward_table
-    stops = set(CodonTable.standard_dna_table.stop_codons)
-
-    raw = {}
-    for rec in SeqIO.parse(str(fasta_path), "fasta"):
-        nt = str(rec.seq).upper()
-        aa = []
-        for k in range(0, len(nt) - 2, 3):
-            codon = nt[k : k + 3]
-            if codon == "---":
-                aa.append("-")
-            elif "-" in codon or "N" in codon:
-                aa.append("X")
-            elif codon in stops:
-                aa.append("*")
-            elif codon in fwd:
-                aa.append(fwd[codon])
-            else:
-                aa.append("X")
-        raw[rec.id] = "".join(aa)
-
-    if not raw:
-        return raw
-
-    seqs = list(raw.values())
-    L, N = len(seqs[0]), len(seqs)
-
-    keep = [
-        i for i in range(L)
-        if sum(1 for s in seqs if s[i] in "-X*") / N <= 0.5
-    ]
-    print(f"  [translate] {N} seqs | {L} raw aa positions → {len(keep)} after gap filter")
-
-    return {sid: "".join(seq[i] for i in keep) for sid, seq in raw.items()}
-
 
 def compute_lambda_and_qi(
     tree_nwk: str | Path,
     protein_seqs: dict[str, str],
 ) -> tuple[np.ndarray, np.ndarray]:
-    """
-    Per-site amino acid mutation rate lambda and substitution matrices Qi
-    from a phylogenetic tree.
-    """
+    """Compute per-site evolutionary rates λ_i and substitution matrices Q_i via Fitch parsimony on the tree."""
 
     tree = Phylo.read(str(tree_nwk), "newick")
     tree.root_at_midpoint()
@@ -274,6 +215,7 @@ def compute_lambda_and_qi(
 
 
 def load_tree_list(single_tree: str, trees_file: str | None) -> list[str]:
+    """Combine the main tree with any additional bootstrap trees listed in trees_file."""
     trees = [str(single_tree)]
     if trees_file:
         trees_file_path = resolve_user_path(trees_file)
@@ -283,7 +225,7 @@ def load_tree_list(single_tree: str, trees_file: str | None) -> list[str]:
             str(resolve_user_path(line, base_dir=trees_file_path.parent))
             for line in extra
         )
-    # preserve order, remove duplicates
+    # preserve submission order, deduplicate
     seen = set()
     ordered = []
     for t in trees:
@@ -293,21 +235,9 @@ def load_tree_list(single_tree: str, trees_file: str | None) -> list[str]:
     return ordered
 
 
-def maybe_subsample_trees(trees: list[str], j: int | None, seed: int) -> list[str]:
-    if j is None:
-        return trees
-    if j <= 0:
-        raise ValueError("--tree-subsample-j must be positive when provided.")
-    if j >= len(trees):
-        return trees
-    rng = random.Random(seed)
-    return rng.sample(trees, j)
-
-
-# DCA via pseudolikelihood maximization (PLM)
 
 def _sequence_weights(X: np.ndarray, threshold: float = 0.9) -> np.ndarray:
-
+    """Phylogenetic reweighting: downweight sequences sharing ≥threshold identity with any other."""
     N, L = X.shape
     valid = (X < GAP).astype(np.float32)
     weights = np.ones(N)
@@ -323,6 +253,7 @@ def _sequence_weights(X: np.ndarray, threshold: float = 0.9) -> np.ndarray:
 
 
 def _fit_position(i: int, X: np.ndarray, weights: np.ndarray, l2_reg: float) -> tuple:
+    """Fit one PLM position via weighted L2-regularized logistic regression; returns (i, h_i, J_row)."""
     N, L = X.shape
 
     y = X[:, i].astype(int)
@@ -390,8 +321,9 @@ def compute_dca(
     l2_reg: float = 0.01,
     n_jobs: int = -1,
     seed: int = 42,
+    adaptive_l2_reg_base: float | None = None,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
-
+    """Fit DCA fields h (L,20) and couplings J (L,L,20,20) via PLM; returns (h, J, h_std, J_std)."""
     seqs = list(protein_seqs.values())
     N, L = len(seqs), len(seqs[0])
 
@@ -404,6 +336,12 @@ def compute_dca(
     weights = _sequence_weights(X)
     n_eff = weights.sum()
     print(f"  [dca] N_eff ≈ {n_eff:.1f}  (effective non-redundant sequences)")
+
+    if adaptive_l2_reg_base is not None:
+        l2_reg = adaptive_l2_reg_base * (L ** 2) / n_eff
+        print(f"  [dca] adaptive l2_reg = {adaptive_l2_reg_base:.2e} × {L}² / {n_eff:.1f} = {l2_reg:.4f}")
+    else:
+        print(f"  [dca] l2_reg = {l2_reg:.4f} (fixed)")
 
     rng    = np.random.default_rng(seed)
     n_runs = max(1, n_bootstraps)
@@ -472,15 +410,8 @@ def _sample_site_conditional(
     conserv_weight: float = 0.0,
     wt_x: np.ndarray | None = None,
 ) -> int:
-    """
-    Sample x_i from p_evo(x_i | x_-i) proportional to exp(-E_i / T).
-    """
-    # unary term (DCA field)
+    """Sample position i from p(x_i | x_{-i}) ∝ exp(E_i / T) where E_i combines DCA fields, couplings, and conservation penalty."""
     e = lambda_i[i] * h[i].astype(np.float64)
-    # Optional extension beyond paper DCA:
-    # incorporate tree-estimated substitution preferences Q_i(wt->a)
-    # Always use WT as source so the term measures P(evolve to a | start at WT),
-    # not P(evolve to a | current chain state) which would drift from WT.
     if energy_mode == "dca_plus_qi":
         wt_aa = int(wt_x[i]) if wt_x is not None else int(x[i])
         if 0 <= wt_aa < 20:
@@ -494,14 +425,13 @@ def _sample_site_conditional(
         b = int(x[j])
         if 0 <= b < 20:
             e += J[i, j, :, b].astype(np.float64)
-    # conservation penalty: discourage mutations at conserved positions
     if conservation is not None and wt_x is not None and conserv_weight > 0.0:
         penalty = conservation[i] * conserv_weight
         wt_aa = int(wt_x[i])
         for a in range(20):
             if a != wt_aa:
                 e[a] -= penalty
-    # PLM h/J are log-probability fields: sample proportional to exp(+e/T)
+    # sample proportional to exp(+e/T)
     logits = e / max(t_evo, 1e-8)
     logits -= logits.max()
     p = np.exp(logits)
@@ -515,9 +445,7 @@ def _pll_esm2(
     model,
     device: str,
 ) -> float:
-    """
-    Compute pseudo-log-likelihood by masking each position.
-    """
+    """ESM-2 pseudo-log-likelihood: sum of masked-position log-probs across all residues."""
     import torch
 
     seq_len = len(seq)
@@ -572,16 +500,7 @@ def gibbs_sample_variants(
     conserv_weight: float = 0.0,
     wt_x: np.ndarray | None = None,
 ) -> tuple[list[str], list[float]]:
-    """
-    Algorithm 1 variant sampling from p_evo with optional ESM pLL filtering.
-
-    energy_mode:
-      - paper_dca:   E_evo uses DCA terms only (lambda*h + J couplings)
-      - dca_plus_qi: adds log(Q_i(a->b)) substitution preference term
-
-    If lambda_ensemble and qi_ensemble are provided, a random tree is drawn
-    each sweep instead of using the averaged lambda_i/qi.
-    """
+    """Gibbs-sample escape variants from p_evo(x) with per-residue-scaled ESM-2 pLL filtering. Returns (variants, plls)."""
     rng = np.random.default_rng(seed)
     x = np.array([AA_TO_IDX.get(a, GAP) for a in wt_seq], dtype=np.int8)
     if np.any(x >= 20):
@@ -636,10 +555,7 @@ def gibbs_sample_variants(
 
 
 def build_consensus_wt(protein_seqs: dict[str, str]) -> str:
-    """
-    Build a valid AA-only WT-like sequence from the alignment by majority vote.
-    Non-standard symbols are ignored at each site; fallback is 'A'.
-    """
+    """Majority-vote consensus sequence over the alignment; used as the Gibbs sampling starting point."""
     seqs = list(protein_seqs.values())
     L = len(seqs[0])
     consensus = []
@@ -656,6 +572,7 @@ def build_consensus_wt(protein_seqs: dict[str, str]) -> str:
     return "".join(consensus)
 
 def compute_conservation_scores(protein_seqs: dict[str, str]) -> np.ndarray:
+    """Per-site conservation score in [0,1] based on normalized Shannon entropy (1 = fully conserved)."""
     seqs = list(protein_seqs.values())
     L = len(seqs[0])
     conservation = np.zeros(L)
@@ -674,84 +591,6 @@ def compute_conservation_scores(protein_seqs: dict[str, str]) -> np.ndarray:
     
     return conservation
 
-def _nearest_neighbor_distances(seqs: list[str]) -> np.ndarray:
-    """
-    For each sequence, compute Hamming distance to its nearest *other* sequence.
-    """
-    if len(seqs) < 2:
-        raise ValueError("Need at least two sequences for distance calibration.")
-    arr = np.array([[AA_TO_IDX.get(a, GAP) for a in s] for s in seqs], dtype=np.int16)
-    if np.any(arr >= 20):
-        raise ValueError("Calibration leaves contain unsupported amino acids.")
-    n = arr.shape[0]
-    out = np.zeros(n, dtype=np.int32)
-    for i in range(n):
-        d = np.sum(arr[i] != arr, axis=1)
-        d[i] = np.iinfo(np.int32).max
-        out[i] = int(d.min())
-    return out
-
-
-def _empirical_cdf_distance(a: np.ndarray, b: np.ndarray) -> float:
-    """
-    KS-like L1 distance between empirical CDFs on integer support.
-    """
-    if a.size == 0 or b.size == 0:
-        return float("inf")
-    max_k = int(max(a.max(), b.max()))
-    xs = np.arange(max_k + 1, dtype=np.int32)
-    cdf_a = np.searchsorted(np.sort(a), xs, side="right") / max(len(a), 1)
-    cdf_b = np.searchsorted(np.sort(b), xs, side="right") / max(len(b), 1)
-    return float(np.mean(np.abs(cdf_a - cdf_b)))
-
-
-def calibrate_t_evo(
-    wt_seq: str,
-    leaves: list[str],
-    lambda_i: np.ndarray,
-    qi: np.ndarray,
-    h: np.ndarray,
-    J: np.ndarray,
-    burn_in: int,
-    sample_count: int,
-    candidate_t: list[float],
-    energy_mode: str,
-    seed: int,
-    conservation: np.ndarray | None = None,
-    conserv_weight: float = 0.0,
-    wt_x: np.ndarray | None = None,
-) -> tuple[float, dict[str, float]]:
-    """
-    Pick t_evo that best matches the sampled edit-from-WT distribution to
-    the observed leaf edit-from-WT distribution (L1 distance between CDFs).
-    """
-    target = np.array([sum(a != b for a, b in zip(leaf, wt_seq)) for leaf in leaves], dtype=np.int32)
-    if len(target) < 2:
-        raise ValueError("Need at least two sequences for calibration.")
-    metrics: dict[str, float] = {}
-    for idx, t in enumerate(candidate_t):
-        variants, _ = gibbs_sample_variants(
-            wt_seq=wt_seq,
-            lambda_i=lambda_i,
-            qi=qi,
-            h=h,
-            J=J,
-            n_samples=sample_count,
-            burn_in=burn_in,
-            t_evo=float(t),
-            energy_mode=energy_mode,
-            seed=int(seed + 1000 + idx),
-            conservation=conservation,
-            conserv_weight=conserv_weight,
-            wt_x=wt_x,
-        )
-        if not variants:
-            metrics[str(t)] = float("inf")
-            continue
-        sampled = np.array([sum(a != b for a, b in zip(v, wt_seq)) for v in variants], dtype=np.int32)
-        metrics[str(t)] = _empirical_cdf_distance(sampled, target)
-    best_t = min(candidate_t, key=lambda x: metrics[str(x)])
-    return float(best_t), metrics
 
 
 
@@ -796,16 +635,8 @@ def main():
                    help="Newick tree (default: flu HA)")
     p.add_argument("--trees-file",   default=None,
                    help="Optional file containing additional tree paths (one per line)")
-    p.add_argument("--tree-subsample-j", type=int, default=None,
-                   help="Optional J-sweep support: random subset size of trees to average over")
-    p.add_argument("--tree-subsample-seed", type=int, default=42,
-                   help="Random seed for tree subsampling when --tree-subsample-j is set")
     p.add_argument("--fasta",        default="flu_tree/ha_aligned.fasta",
-                   help="Aligned FASTA (default: flu HA nucleotide MSA)")
-    p.add_argument("--nucleotide",   action="store_true", default=True,
-                   help="FASTA is nucleotide — translate to protein first (default: True)")
-    p.add_argument("--protein",      dest="nucleotide", action="store_false",
-                   help="FASTA is already a protein alignment")
+                   help="Aligned protein FASTA")
     p.add_argument("--out-dir",      default="data/prophet",
                    help="Output directory for .npy files")
     p.add_argument("--prefix",       default="flu",
@@ -835,21 +666,19 @@ def main():
     p.add_argument("--wt-seq-id",    default=None,
                    help="Optional FASTA ID to use as WT for Gibbs initialization")
     p.add_argument("--esm-filter-delta", type=float, default=None,
-                   help="Enable ESM pLL filter with threshold pLL(x) >= pLL(wt)-delta")
+                   help="Enable ESM pLL filter with threshold pLL(x) >= pLL(wt)-delta (absolute)")
+    p.add_argument("--esm-filter-delta-per-residue", type=float, default=None,
+                   help="ESM pLL filter threshold per residue: effective delta = value * L. "
+                        "Takes precedence over --esm-filter-delta when set. "
+                        "Recommended: 0.20 (equivalent to delta=20 for L=99)")
+    p.add_argument("--adaptive-l2",  action="store_true", default=False,
+                   help="Use N_eff + L²-adaptive l2_reg: l2_reg = l2_reg_base * L² / N_eff")
+    p.add_argument("--l2-reg-base",  type=float, default=1e-4,
+                   help="Base for adaptive l2_reg (used only when --adaptive-l2 is set, default: 1e-4)")
     p.add_argument("--esm-model",    default="facebook/esm2_t6_8M_UR50D",
                    help="ESM masked LM model name for pLL filtering")
     p.add_argument("--esm-device",   default="cpu",
                    help="Device for ESM pLL filtering")
-    p.add_argument("--auto-calibrate-tevo", action="store_true",
-                   help="Automatically calibrate t_evo to leaf edit-distance distribution")
-    p.add_argument("--calibration-ts", default="0.5,1.0,2.0,5.0",
-                   help="Comma-separated t_evo candidates for auto calibration")
-    p.add_argument("--calibration-samples", type=int, default=128,
-                   help="Samples per t_evo candidate during calibration")
-    p.add_argument("--calibration-fasta", default=None,
-                   help="Optional held-out FASTA to use as calibration target instead of training sequences")
-    p.add_argument("--calibration-json", default=None,
-                   help="Optional path to save t_evo calibration metrics JSON")
     p.add_argument("--dca-max-edit", type=int, default=None,
                    help="If set, restrict DCA training to sequences with at most this many edits from WT. "
                         "Tree/lambda/Qi still use all sequences. Keeps DCA landscape near WT.")
@@ -862,8 +691,7 @@ def main():
     fasta_path = resolve_user_path(args.fasta)
     out_dir    = resolve_user_path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
-    tree_list = load_tree_list(args.tree, args.trees_file)
-    tree_list = maybe_subsample_trees(tree_list, args.tree_subsample_j, args.tree_subsample_seed)
+    tree_list  = load_tree_list(args.tree, args.trees_file)
     tree_paths = [resolve_user_path(t) for t in tree_list]
 
     print("=" * 60)
@@ -872,34 +700,27 @@ def main():
         print(f"  tree : {tree_paths[0]}")
     else:
         print(f"  trees: {len(tree_paths)} (first: {tree_paths[0]})")
-    if args.tree_subsample_j is not None:
-        print(f"  tree subset J={len(tree_paths)} (seed={args.tree_subsample_seed})")
     print(f"  fasta: {fasta_path}")
     print("=" * 60)
 
     # ── Step 1: load protein sequences ───────────────────────────────────────
-    if args.nucleotide:
-        print("\n[1/3] Translating nucleotide alignment → protein...")
-        protein_seqs = translate_alignment(fasta_path)
-    else:
-        print("\n[1/3] Loading protein alignment...")
-        protein_seqs = {
-            rec.id: str(rec.seq)
-            for rec in SeqIO.parse(str(fasta_path), "fasta")
-        }
-        raw_len = len(next(iter(protein_seqs.values())))
-        print(f"  Loaded {len(protein_seqs)} sequences, raw alignment length {raw_len}")
-        # Filter gap-heavy columns (same logic as translate_alignment)
-        seqs = list(protein_seqs.values())
-        N = len(seqs)
-        keep = [
-            i for i in range(raw_len)
-            if sum(1 for s in seqs if s[i] in "-X*.") / N <= 0.5
-        ]
-        if len(keep) < raw_len:
-            print(f"  Gap filter: {raw_len} → {len(keep)} columns kept (≤50% gaps)")
-            protein_seqs = {sid: "".join(seq[i] for i in keep)
-                            for sid, seq in protein_seqs.items()}
+    print("\n[1/3] Loading protein alignment...")
+    protein_seqs = {
+        rec.id: str(rec.seq)
+        for rec in SeqIO.parse(str(fasta_path), "fasta")
+    }
+    raw_len = len(next(iter(protein_seqs.values())))
+    print(f"  Loaded {len(protein_seqs)} sequences, raw alignment length {raw_len}")
+    seqs = list(protein_seqs.values())
+    N = len(seqs)
+    keep = [
+        i for i in range(raw_len)
+        if sum(1 for s in seqs if s[i] in "-X*.") / N <= 0.5
+    ]
+    if len(keep) < raw_len:
+        print(f"  Gap filter: {raw_len} → {len(keep)} columns kept (≤50% gaps)")
+        protein_seqs = {sid: "".join(seq[i] for i in keep)
+                        for sid, seq in protein_seqs.items()}
 
     protein_seqs = normalize_protein_alignment(protein_seqs)
 
@@ -957,6 +778,7 @@ def main():
             l2_reg=args.l2_reg,
             n_jobs=args.n_jobs,
             seed=args.seed,
+            adaptive_l2_reg_base=args.l2_reg_base if args.adaptive_l2 else None,
         )
 
         np.save(out_dir / f"{args.prefix}_h.npy",     h)
@@ -985,11 +807,6 @@ def main():
                 f"(M={args.sample_variants}, burn_in={args.burn_in}, "
                 f"T={args.t_evo}, mode={args.energy_mode})..."
             )
-            warnings.warn(
-                "t_evo should be calibrated on held-out phylogenies so sampled edit distances "
-                "match observed leaf-sequence distances; using the provided value as-is.",
-                stacklevel=2,
-            )
             if args.wt_seq_id is not None and args.wt_seq_id in protein_seqs:
                 wt_seq = protein_seqs[args.wt_seq_id]
             else:
@@ -1009,63 +826,12 @@ def main():
                 if args.ablate_flatten_lambda else lambda_ensemble
             )
 
-            if args.auto_calibrate_tevo:
-                t_candidates = [
-                    float(tok.strip()) for tok in str(args.calibration_ts).split(",") if tok.strip()
-                ]
-                if not t_candidates:
-                    raise ValueError("--calibration-ts provided no valid candidates.")
-                if args.calibration_fasta:
-                    cal_path = resolve_user_path(args.calibration_fasta)
-                    leaves = [
-                        str(r.seq).replace("-", "")
-                        for r in SeqIO.parse(str(cal_path), "fasta")
-                        if all(a in AA_TO_IDX for a in str(r.seq).replace("-", ""))
-                    ]
-                    print(f"  [calibrate] using held-out FASTA: {cal_path.name}")
-                else:
-                    leaves = [s for s in protein_seqs.values()
-                              if all(a in AA_TO_IDX for a in s)]
-                print(f"  [calibrate] {len(leaves)} clean leaves for calibration "
-                      f"(filtered ambiguous aa)")
-                print(
-                    f"  [calibrate] tuning t_evo over {t_candidates} "
-                    f"with {args.calibration_samples} samples/candidate..."
-                )
-                best_t, metrics = calibrate_t_evo(
-                    wt_seq=wt_seq,
-                    leaves=leaves,
-                    lambda_i=lam_gibbs,
-                    qi=qi,
-                    h=h_gibbs,
-                    J=J_gibbs,
-                    burn_in=max(50, args.burn_in // 2),
-                    sample_count=args.calibration_samples,
-                    candidate_t=t_candidates,
-                    energy_mode=args.energy_mode,
-                    seed=args.seed,
-                    conservation=conservation,
-                    conserv_weight=args.conserv_weight,
-                    wt_x=wt_x,
-                )
-                args.t_evo = float(best_t)
-                print(f"  [calibrate] selected t_evo = {args.t_evo:.4f}")
-                print(f"  [calibrate] distances: {metrics}")
-                if args.calibration_json:
-                    cal_path = resolve_user_path(args.calibration_json)
-                    cal_path.parent.mkdir(parents=True, exist_ok=True)
-                    with open(cal_path, "w", encoding="utf-8") as f:
-                        json.dump(
-                            {
-                                "selected_t_evo": args.t_evo,
-                                "candidates": t_candidates,
-                                "distance_metric": "mean_abs_cdf_delta",
-                                "scores": metrics,
-                            },
-                            f,
-                            indent=2,
-                        )
-                    print(f"  [calibrate] saved -> {cal_path}")
+            # Compute effective ESM filter delta (per-residue takes precedence).
+            esm_delta_effective = args.esm_filter_delta
+            if args.esm_filter_delta_per_residue is not None:
+                L_eff = h.shape[0]
+                esm_delta_effective = args.esm_filter_delta_per_residue * L_eff
+                print(f"  [esm-filter] per-residue delta: {args.esm_filter_delta_per_residue} × L={L_eff} = {esm_delta_effective:.1f}")
             variants, pll_vals = gibbs_sample_variants(
                 wt_seq=wt_seq,
                 lambda_i=lam_gibbs,
@@ -1077,7 +843,7 @@ def main():
                 t_evo=args.t_evo,
                 energy_mode=args.energy_mode,
                 seed=args.seed,
-                esm_filter_delta=args.esm_filter_delta,
+                esm_filter_delta=esm_delta_effective,
                 esm_model_name=args.esm_model,
                 esm_device=args.esm_device,
                 lambda_ensemble=lam_ens_gibbs if args.ensemble_mode else None,

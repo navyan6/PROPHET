@@ -49,11 +49,18 @@ CKPT    = (
 STAGE2  = REPO_ROOT / "prophet" / "stage2.py"
 OUTDIR  = REPO_ROOT / "results" / "ablations"
 
+# Unfiltered Gibbs variants (500) — used for t4_no_esm and M > 149
+UNFILTERED_FASTA = (
+    REPO_ROOT / "results" / "hiv_prophet_final"
+    / "hiv_prophet_t015_variants.fasta"
+)
+# Training alignment sequences — used as guidance for uniform_leaves ablation
+TRAINING_LEAVES_FASTA = (
+    REPO_ROOT / "data" / "pre_stage1_split" / "alignments" / "train"
+    / "hiv_train_aligned.fasta"
+)
+
 # Stage-1 ablation variant FASTAs (Table 4).  Set to None to skip.
-# Expected filenames inside this dir:
-#   hiv_no_dca_gibbs_variants.fasta
-#   hiv_no_lambda_gibbs_variants.fasta
-#   hiv_no_esm_gibbs_variants.fasta
 STAGE1_ABLATION_VARIANT_DIR: Path | None = (
     REPO_ROOT / "results" / "stage1_ablations"
 )
@@ -61,7 +68,7 @@ STAGE1_ABLATION_VARIANT_DIR: Path | None = (
 N_DESIGNS      = 500
 BETA           = 5.0
 PEPTIVERSE_NORM = "raw"
-TAU_BIND       = 7.5    # threshold for Ret. column in Tables 2/4/5/6/7
+TAU_BIND       = 8.0    # threshold for Ret. column in Tables 2/4/5/6/7
 SEED           = 42
 GPUS           = list(range(8))   # 8× B200 on DGX node
 PEPTIDE_LENGTH = 10
@@ -116,7 +123,7 @@ experiments: list[tuple[str, Path, str]] = []
 TABLE2_MODES = [
     ("prophet",            ""),
     ("wt_only",            "--design-mode wt_only"),
-    ("uniform_leaves",     "--design-mode uniform_leaves"),
+    ("uniform_leaves",     f"--design-mode uniform_leaves --guidance-variants-fasta {TRAINING_LEAVES_FASTA}"),
     ("random_variants",    "--design-mode random_variants"),
     ("esm_only_variants",  "--design-mode esm_only_variants"),
 ]
@@ -129,7 +136,7 @@ if STAGE1_ABLATION_VARIANT_DIR is not None:
     stage1_ablations = [
         ("t4_no_dca",    abl_dir / "hiv_no_dca_gibbs_variants.fasta",    "--variant-limit 149"),
         ("t4_no_lambda", abl_dir / "hiv_no_lambda_gibbs_variants.fasta", "--variant-limit 149"),
-        ("t4_no_esm",    abl_dir / "hiv_no_esm_gibbs_variants.fasta",    "--variant-limit 149"),
+        ("t4_no_esm",    UNFILTERED_FASTA,                                ""),
     ]
     for abl_name, abl_fasta, abl_args in stage1_ablations:
         if abl_fasta.exists():
@@ -142,8 +149,10 @@ for eta in ETA_VALUES:
     experiments.append((f"t5_eta_{eta}", VARIANTS_FASTA, f"--eta {eta}"))
 
 # --- Table 6: variant subset M sensitivity ---
+# ESM-filtered set has 149 variants; use unfiltered (500) for M > 149
 for m in M_VALUES:
-    experiments.append((f"t6_M_{m}", VARIANTS_FASTA, f"--variant-limit {m}"))
+    fasta = VARIANTS_FASTA if m <= 149 else UNFILTERED_FASTA
+    experiments.append((f"t6_M_{m}", fasta, f"--variant-limit {m}"))
 
 # --- Table 7: tree count J sensitivity ---
 for j, j_fasta in J_SWEEP_DIRS.items():
@@ -176,6 +185,7 @@ def _launch(name: str, variants_fasta: Path, extra_args: str, gpu: int) -> subpr
         "--peptiverse-normalization", PEPTIVERSE_NORM,
         "--tau-bind",                 str(TAU_BIND),
         "--seed",                     str(SEED),
+        "--guidance-var-limit",       "50",
         "--verbose-sampling",
         *shlex.split(extra_args),
     ]

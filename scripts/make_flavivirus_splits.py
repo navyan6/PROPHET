@@ -136,7 +136,8 @@ def setup_virus(
     boot_paths = build_bootstrap_trees(aligned, boot_dir, n_boot, seed)
     trees_list = tr_train / f"{name}_bootstrap_trees.txt"
     with open(trees_list, "w") as f:
-        f.write(str(train_tree) + "\n")
+        for p in boot_paths:
+            f.write(str(p.relative_to(tr_train)) + "\n")
         for p in boot_paths:
             f.write(str(p) + "\n")
 

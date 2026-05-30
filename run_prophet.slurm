@@ -132,7 +132,9 @@ $PYTHON prophet/stage1.py \
 
 echo ""
 echo "Stage 1 complete."
-N_GIBBS=$(grep -c "^>" "$STAGE1_OUT/${PREFIX}_gibbs_variants.fasta" 2>/dev/null || echo 0)
+N_GIBBS=0
+[ -f "$STAGE1_OUT/${PREFIX}_gibbs_variants.fasta" ] && \
+    N_GIBBS=$(grep -c "^>" "$STAGE1_OUT/${PREFIX}_gibbs_variants.fasta" 2>/dev/null) || true
 echo "  Gibbs variants: $N_GIBBS"
 ESM_FASTA=$(ls "$STAGE1_OUT/${PREFIX}_"*esm_filtered*.fasta 2>/dev/null | head -1 || true)
 if [ -n "$ESM_FASTA" ]; then

@@ -88,6 +88,7 @@ TARGETS: dict[str, dict] = {
         "holdout":    "data/zika_ns3/alignments/test/zika_ns3_test_holdout.fasta",
         "t_evo":      0.15,
         "protein":    True,
+        "esm_filter_delta_per_residue": None,
     },
     "wnv_ns3": {
         "alignment":  "data/wnv_ns3/alignments/train/wnv_ns3_train_aligned.fasta",
@@ -96,6 +97,7 @@ TARGETS: dict[str, dict] = {
         "holdout":    "data/wnv_ns3/alignments/test/wnv_ns3_test_holdout.fasta",
         "t_evo":      0.15,
         "protein":    True,
+        "esm_filter_delta_per_residue": None,
     },
     "denv2_e": {
         "alignment":  "data/denv2_e/alignments/train/denv2_e_train_aligned.fasta",

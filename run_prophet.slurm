@@ -73,7 +73,7 @@ keys = ('alignment','tree','trees_file','holdout','out_prefix',
         'conserv_weight','seed','protein','ensemble_mode')
 for k, v in cfg.items():
     if k in keys:
-        print('CFG_' + k.upper() + '=' + json.dumps(str(v)))
+        print('CFG_' + k.upper() + '=' + (json.dumps(str(v)) if v is not None else '""'))
 ")"
 
 # ------------------------------------------------------------------
@@ -124,7 +124,7 @@ $PYTHON prophet/stage1.py \
     $ENSEMBLE_FLAG \
     --esm-device        cuda:0 \
     --esm-model         "$CFG_ESM_MODEL" \
-    --esm-filter-delta-per-residue "$CFG_ESM_FILTER_DELTA_PER_RESIDUE" \
+    ${CFG_ESM_FILTER_DELTA_PER_RESIDUE:+--esm-filter-delta-per-residue "$CFG_ESM_FILTER_DELTA_PER_RESIDUE"} \
     $ADAPTIVE_L2_FLAG \
     --l2-reg-base       "$CFG_L2_REG_BASE" \
     --conserv-weight    "$CFG_CONSERV_WEIGHT" \

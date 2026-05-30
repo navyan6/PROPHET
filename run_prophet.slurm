@@ -140,7 +140,7 @@ if [ -n "$ESM_FASTA" ]; then
     echo "  ESM-filtered variants: $N_ESM  ($ESM_FASTA)"
 fi
 
-if [ "$N_GIBBS" -eq 0 ] 2>/dev/null; then
+if [ "${N_GIBBS:-0}" -eq 0 ]; then
     echo "ERROR: Stage 1 produced 0 Gibbs variants. Aborting Stage 2."
     exit 1
 fi

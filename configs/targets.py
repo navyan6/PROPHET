@@ -104,6 +104,7 @@ TARGETS: dict[str, dict] = {
         "holdout":    "data/denv2_e/alignments/test/denv2_e_test_clade_holdout.fasta",
         "t_evo":      0.15,
         "protein":    True,
+        "esm_filter_delta_per_residue": None,  # disable ESM filter; 150 train seqs, strict delta rejects all
     },
     "rsv_f": {
         "alignment":  "data/rsv_f/alignments/train/rsv_f_train_aligned.fasta",
@@ -112,6 +113,7 @@ TARGETS: dict[str, dict] = {
         "holdout":    "data/rsv_f/alignments/test/rsv_f_test_clade_holdout.fasta",
         "t_evo":      0.15,
         "protein":    True,
+        "esm_filter_delta_per_residue": None,  # disable ESM filter; strict delta rejects all
     },
 }
 
